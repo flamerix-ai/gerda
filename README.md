@@ -139,7 +139,6 @@ Let's make the Minecraft modding world more interesting together.
 
 - Questions and ideas: [GitHub Discussions](https://github.com/flamerix-ai/gerda/discussions)
 - Bugs and requests: [GitHub Issues](https://github.com/flamerix-ai/gerda/issues)
-- News: [t.me/Flamerix_AI](https://t.me/Flamerix_AI)
 - Contact: [hello@flamerix.ai](mailto:hello@flamerix.ai)
 
 Contributing code: [CONTRIBUTING.md](CONTRIBUTING.md).

@@ -43,13 +43,6 @@ driver rather than a dependency.
 
 ## What we found, and what we built
 
-### The runtime is GraalJS, not Nashorn
-
-jsMacros can run scripts on several engines, and it is easy to assume the old ES5-era Nashorn.
-A probe script (`harness/probes/probe_runtime.js`) runs inside the game and tests the engine and
-every language feature we rely on. The answer: **GraalJS with ECMAScript 2022**. So the bot is
-modern TypeScript — tsup, biome and vitest — instead of hand-concatenated ES5.
-
 ### One seam to the game, with a mock that cannot drift
 
 Only one layer, the runtime facade, may touch jsMacros. It is a TypeScript interface with two
@@ -178,4 +171,6 @@ admins and modders?
 - Code (MPL-2.0): [github.com/flamerix-ai/gerda](https://github.com/flamerix-ai/gerda)
 - Questions and ideas: [GitHub Discussions](https://github.com/flamerix-ai/gerda/discussions)
 - Bugs and requests: [GitHub Issues](https://github.com/flamerix-ai/gerda/issues)
-- News: [t.me/Flamerix_AI](https://t.me/Flamerix_AI) · Contact: [hello@flamerix.ai](mailto:hello@flamerix.ai)
+- Contact: [hello@flamerix.ai](mailto:hello@flamerix.ai)
+
+Made with the help of DRIM by [Flamerix AI](https://flamerix.ai).
