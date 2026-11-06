@@ -1,0 +1,14 @@
+{
+  "desc": "Parkour 2-air gap — a 2-air-block void (x=1,2) → land 3 cells away (x=3), a dist-3 jump that clears at WALK speed (Baritone: dist 2-3 need no sprint). Runway x=-3..0, landing x=3..9, CATCH-FLOOR at y=93 (a miss = ~2-heart fall, not death). greedy_drive to x=8: the planner should pick parkour (cost 3×WALK+penalty < bridging 3 cells) and the executor clears it, landing on x=3+. Tests the cheaper of the two auto-decided gaps.",
+  "ops": [
+    { "op": "clear", "from": [-5, 90, -2], "to": [11, 112, 2] },
+    { "op": "fill", "from": [-5, 93, -2], "to": [11, 93, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [-3, 100, 0], "to": [0, 100, 0], "block": "minecraft:stone" },
+    { "op": "fill", "from": [3, 100, 0], "to": [9, 100, 0], "block": "minecraft:stone" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 64 },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 101, 0] }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "desc": "mineDown registry move — bot stands on a 1-wide stone pillar surrounded by air, so the ONLY way to a buried target is to bore STRAIGHT DOWN through solid rock via greedy A* (not the drill's DIG_TO/DESCEND). Build-only: drive with greedy_drive {x:0,y:93,z:0}; verify the bot descends to y≈94-95 and the rock cells (0,96..100) became air (mineDown broke them). CATCH-FLOOR y=88 so a misstep is a survivable fall, not a wedge.",
+  "ops": [
+    { "op": "clear", "from": [-3, 86, -3], "to": [3, 108, 3] },
+    { "op": "fill", "from": [-3, 88, -3], "to": [3, 88, 3], "block": "minecraft:stone" },
+    { "op": "fill", "from": [0, 92, 0], "to": [0, 100, 0], "block": "minecraft:stone" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 101, 0] }
+  ]
+}

@@ -1,0 +1,157 @@
+#!/usr/bin/env python3
+"""gerda — the single entry point for every host-side tool in this repo.
+
+Thin dispatcher: each subcommand execs the underlying script (on Windows: runs it
+as a child) with the remaining argv passed through untouched, so `gerda ctl status` == `python3
+scripts/ops/bridge_ctl.py status` and every script's own --help keeps working
+(`gerda ctl --help` shows bridge_ctl's help, not this dispatcher's).
+Stdlib-only. Linux/macOS: `./gerda …` (shebang); Windows: `gerda …` via the
+gerda.cmd shim, or `python gerda …`.
+"""
+from __future__ import annotations
+
+import argparse
+import os
+import signal
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+WINDOWS = os.name == "nt"
+
+# name -> (script relpath, one-line help). Grouped for the help screen; the table
+# is drift-gated by scripts/tests/test_gerda.py (every entry must exist on disk).
+COMMANDS: dict[str, dict[str, tuple[str, str]]] = {
+    "everyday": {
+        "ctl": ("scripts/ops/bridge_ctl.py", "drive a live bot over the bridge (status/scan/goto/send/eval …)"),
+        "sync": ("scripts/ops/sync.py", "deploy the built bundle + service harness to every game instance"),
+        "shot": ("scripts/ops/mc_shot.py", "grab + downscale a screenshot from the game for AI eyes"),
+        "config": ("scripts/local_config.py", "resolve machine config (instances_root / instance_dir / get)"),
+    },
+    "fleet ops": {
+        "hub": ("scripts/ops/fleet_hub.py", "run the multi-bot coordinator hub (the daemon)"),
+        "fleet": ("scripts/ops/fleet_ctl.py", "talk to the hub: status/map/queue/want/enqueue/assign …"),
+        "reload-worker": ("scripts/ops/reload_worker.py", "reload the worker kernel without deaf-locking the bridge"),
+        "watchdog": ("scripts/ops/wedge_watchdog.py", "detect + recover a client respawn wedge"),
+        "smoke": ("scripts/ops/facade_smoke.py", "live smoke test of the Runtime facade on a running bot"),
+        "platform": ("scripts/ops/build_platform.py", "expand a void-base platform via interact_place"),
+        "bind-accounts": ("scripts/ops/bind_instance_accounts.py", "pin each launcher instance to a fixed account"),
+        "tune": ("scripts/ops/tune_bot_instance.py", "trim a bot instance's options/JVM for low resource use"),
+        "objective": ("scripts/objective/engine.py", "objective autopilot: FTB quests / local goals over the bridge (--dry-run first)"),
+    },
+    "demo / capture": {
+        "capture": ("scripts/ops/capture_rig.sh", "boot a client off-screen in a headless sway and record it (nix develop .#capture)"),
+        "capture-profile": ("scripts/ops/capture_profile.py", "swap an instance's options.txt to/from the capture render profile"),
+        "motion-probe": ("scripts/rig/motion_probe.py", "per-frame MAD liveness check of a take: live windows, static runs, --max-static gate"),
+    },
+    "dev / testing": {
+        "gate": ("scripts/dev/gate_live.py", "pre-merge live gate: all arenas + nav benches, one PASS/FAIL"),
+        "arena": ("scripts/dev/arena.py", "build/run a declarative in-game arena; snapshot+build a film set"),
+        "bench": ("scripts/dev/navbench.py", "navigator benches: A* (D* Lite on demand), leg + mission"),
+        "parkour": ("scripts/dev/parkour_exp.py", "parkour-leg experiment/trace driver"),
+        "smoke-clean": ("scripts/dev/smoke_clean.sh", "clean-distro bring-up smoke in a rootless container"),
+    },
+    "research / codegen": {
+        "srg": ("scripts/dev/srg.py", "offline Forge SRG↔Mojang name resolver"),
+        "decompile": ("scripts/dev/decompile.sh", "Vineflower-decompile the MC/mod jar to Mojang-named source"),
+        "extract-ores": ("scripts/dev/extract_gtceu_ores.py", "extract the GTCEu ore list from upstream source"),
+        "extract-ores-live": ("scripts/dev/extract_ores_live.py", "regenerate config/ores_live.json from a live bot"),
+        "craft-chain": ("scripts/dev/resolve_craft_chain.py", "derive a craft chain from EMI's recipe API"),
+    },
+}
+
+FLAT: dict[str, tuple[str, str]] = {n: spec for group in COMMANDS.values() for n, spec in group.items()}
+
+
+def _epilog() -> str:
+    lines = []
+    for group, cmds in COMMANDS.items():
+        lines.append(f"\n{group}:")
+        lines.extend(f"  {name:<18} {desc}" for name, (_, desc) in cmds.items())
+    lines.append("\nmap of the underlying scripts: scripts/README.md")
+    return "\n".join(lines)
+
+
+def _dispatch(argv: list[str]) -> int:
+    """Run the tool: exec on POSIX, a child process on Windows.
+
+    os.exec* on Windows re-joins argv without quoting, so a JSON argument
+    (`ctl send mission_start '{"name": …}'`) reaches the tool split into words;
+    subprocess quotes each one. A piped cp1252 stdout cannot encode the tools'
+    arrows, so the child runs in UTF-8 mode. Ctrl+C reaches every process on the
+    console, the child included, so the dispatcher ignores it and passes on the
+    child's exit code instead of dying with a traceback.
+    """
+    if WINDOWS:
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
+        return subprocess.call(argv, env={**os.environ, "PYTHONUTF8": "1"})
+    os.execvp(argv[0], argv)
+
+
+def _git_bash() -> str:
+    """The bash.exe of Git for Windows, found from git's own install dir.
+
+    A bare `bash` is not it: CreateProcess searches System32 before PATH, and with
+    WSL installed System32 holds WSL's bash.exe. `bin/bash.exe` comes first because
+    it puts Git's `/usr/bin` on PATH, which a bare `usr/bin/bash.exe` started from
+    cmd or PowerShell lacks. Git writes the path as UTF-8 whatever the console code
+    page, so the decode is UTF-8, not the locale's (a non-ASCII user profile).
+    The install root is `<root>` of the exec path `<root>/<mingw64|clangarm64>/libexec/git-core`,
+    three levels up: a bash further up belongs to something else.
+    """
+    try:
+        exec_path = subprocess.check_output(["git", "--exec-path"], encoding="utf-8").strip()
+    except (OSError, subprocess.CalledProcessError) as exc:
+        sys.exit(f"gerda: this tool is a bash script; on Windows it runs under Git Bash, "
+                 f"found through `git --exec-path`, which failed ({exc}). Install Git for Windows.")
+    except UnicodeDecodeError as exc:
+        sys.exit(f"gerda: this tool is a bash script; on Windows it runs under Git Bash, found "
+                 f"through `git --exec-path`, whose answer is not UTF-8 ({exc}).")
+    parents = Path(exec_path).parents
+    # Else the root is the CWD, or parents[2] does not exist.
+    if not Path(exec_path).is_absolute() or len(parents) < 3:
+        sys.exit(f"gerda: this tool is a bash script; on Windows it runs under Git Bash, but "
+                 f"`git --exec-path` answered {exec_path!r}, not an absolute "
+                 f"<install dir>/<arch>/libexec/git-core.")
+    root = parents[2]
+    for rel in ("bin/bash.exe", "usr/bin/bash.exe"):
+        if (root / rel).is_file():
+            return str(root / rel)
+    sys.exit(f"gerda: this tool is a bash script; on Windows it runs under Git Bash, but git's "
+             f"install dir {root} (from {exec_path}) holds no bin/bash.exe or usr/bin/bash.exe. "
+             f"Install Git for Windows (MinGit has no bash).")
+
+
+def main() -> int:
+    if WINDOWS:  # the help screen's arrows, on a piped cp1252 stdout
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    parser = argparse.ArgumentParser(
+        prog="gerda",
+        description=__doc__.split("\n", 1)[0],
+        epilog=_epilog(),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument("command", choices=sorted(FLAT), metavar="command", help="tool to run (see the list below)")
+    # REMAINDER swallows everything after the command verbatim — flags included —
+    # so the underlying script owns its own --help and argument errors.
+    parser.add_argument("args", nargs=argparse.REMAINDER, help="passed through to the tool untouched")
+    if len(sys.argv) == 1:  # bare `./gerda` lists the commands, as the docs promise
+        parser.print_help()
+        return 0
+    ns = parser.parse_args()
+
+    rel, _ = FLAT[ns.command]
+    script = ROOT / rel
+    if not script.exists():  # keep fail-loud: a moved script must move here too
+        parser.error(f"BUG — '{ns.command}' points at a missing script: {script}")
+    if script.suffix != ".sh":
+        interpreter = sys.executable
+    else:
+        interpreter = _git_bash() if WINDOWS else "bash"
+    return _dispatch([interpreter, str(script), *ns.args])
+
+
+if __name__ == "__main__":
+    sys.exit(main())

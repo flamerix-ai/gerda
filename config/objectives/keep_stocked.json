@@ -1,0 +1,12 @@
+{
+  "objectives": [
+    {
+      "id": "keep-iron-stocked",
+      "title": "Keep iron ingots stocked",
+      "recurring": true,
+      "requirements": [
+        { "kind": "have_item", "item": "minecraft:iron_ingot", "count": 32 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "name": "showcase",
+  "fps": 60,
+  "width": 1920,
+  "height": 1080,
+  "takes_dir": "release/takes/showcase",
+  "out": "release/gerda_showcase_draft.mp4",
+  "fade_in": 0.5,
+  "fade_out": 0.8,
+  "_doc": [
+    "Cut list for the showcase - the EDIT half of scenarios/shots/showcase.json (the SHOOT half).",
+    "Assemble with scripts/rig/assemble.py. One segment per row of the shot list (the Row N of",
+    "its notes), in story order; the arena montage (row 5a) is one segment per arena take.",
+    "",
+    "EVERY in/out BELOW IS A PLACEHOLDER: set after per-frame measurement (motion_probe.py) of the",
+    "real take, with the reason in the segment's note. assemble.py needs numbers (in >= 0, out >",
+    "in, out <= the probed take length), so each placeholder is in=0 and out = the planned",
+    "on-screen length x the segment's speed; the cut's total is therefore the planned",
+    "~97 s. A take has ~3.5 s of warm-up before the action - in=0 is never the right number.",
+    "Speeds (vein 3, smelt 4, finale 20) are planning values too; a caption's rate comes from",
+    "{speed}, so re-timing a speed re-labels it.",
+    "",
+    "CONSOLE CARDS (card_prospect, card_gate) are not game takes: scripts/rig/console_card.py",
+    "renders them from scenarios/shots/cards/*.json into this takes_dir at this cut's size and",
+    "fps. The prospect card's numbers are <FILL:...> tokens copied from 01a's during.log - the",
+    "render refuses an unfilled token. The gate card prints the all-PASS summary literally and is",
+    "rendered only from a full `just gate-live --port 55545` run whose summary line reads exactly",
+    "the card's last line.",
+    "",
+    "CAPTIONS: EN, burned in by assemble.py. The top-left `label` carries the act counter",
+    "(N/6) through the act; a cue cannot span segments, so each segment repeats its act's",
+    "label (it re-fades at the cut). The arena labels claim PASS: each names a gated arena",
+    "(scripts/dev/gate_live.py, asserting expect.events) and is true only for a take whose",
+    "during.log shows that arena's PASS. The montage first planned water-dive, parkour-gap2 and",
+    "bridge-engine, but those are build-only fixtures the gate never runs, so they carry no PASS",
+    "to film; drill-gap-vein (it bridges a void), goto-travel, mine-vein, chop-tree and",
+    "restock-craft stand in. The prospect line names no distance: the measured one is on card 1b, copied from",
+    "01a's real response. The finale credit is teaser_cut.json's, verbatim."
+  ],
+  "segments": [
+    {
+      "id": "pickaxe",
+      "src": "00_worn_pickaxe.mp4",
+      "in": 0.0,
+      "out": 6.0,
+      "note": "Row 0. PLACEHOLDER in/out (6 s planned). Want: the worn stone pickaxe's durability bar readable, then the swap to the prospector at the very end."
+    },
+    {
+      "id": "prospect_gui",
+      "src": "01a_prospect_gui.mp4",
+      "in": 0.0,
+      "out": 8.0,
+      "note": "Row 1a. PLACEHOLDER in/out (8 s planned). Want: the GUI opening and the vein map filling in (the scan settles over ~1 s)."
+    },
+    {
+      "id": "card_prospect",
+      "src": "card_1b_prospect.mp4",
+      "in": 0.0,
+      "out": 3.0,
+      "note": "Row 1b. Console card rendered by console_card.py from scenarios/shots/cards/1b_prospect.json (3.0 s long by spec, so 0-3 is its whole length)."
+    },
+    {
+      "id": "gap",
+      "src": "02a_gap.mp4",
+      "in": 0.0,
+      "out": 11.0,
+      "note": "Row 2a. PLACEHOLDER in/out (11 s planned). Want: the raised step, the sprint-boost leap (the teaser's poster frame is mid-air ~5 s into the action), the landing on platform B."
+    },
+    {
+      "id": "clutch",
+      "src": "02b_clutch.mp4",
+      "in": 0.0,
+      "out": 12.0,
+      "note": "Row 2b. PLACEHOLDER in/out (12 s planned). The splash lives ~3 ticks: measure it with motion_probe.py --preset static-hook (docs/RIG.md § Static hook shots). Slow-mo (speed 0.5) is untested in assemble.py - try it on this segment alone first."
+    },
+    {
+      "id": "drill",
+      "src": "03a_drill_fp.mp4",
+      "in": 0.0,
+      "out": 10.0,
+      "note": "Row 3a. PLACEHOLDER in/out (10 s planned). Want: the look snapping to straight down and the shaft walls sliding past."
+    },
+    {
+      "id": "vein",
+      "src": "03b_vein.mp4",
+      "in": 0.0,
+      "out": 30.0,
+      "speed": 3.0,
+      "note": "Row 3b. PLACEHOLDER in/out (10 s planned at 3x = 30 s of take). The teaser's 03_vein measured live from 6.0 s; expect a similar warm-up."
+    },
+    {
+      "id": "home",
+      "src": "04a_home_fp.mp4",
+      "in": 0.0,
+      "out": 4.0,
+      "note": "Row 4a. PLACEHOLDER in/out (4 s planned). Want: chamber -> teleport -> the base, with the cut landing on the base."
+    },
+    {
+      "id": "smelt",
+      "src": "04b_smelt_fp.mp4",
+      "in": 0.0,
+      "out": 32.0,
+      "speed": 4.0,
+      "note": "Row 4b. PLACEHOLDER in/out (8 s planned at 4x = 32 s of take: load, ~10 s per ingot, collect)."
+    },
+    {
+      "id": "craft",
+      "src": "04c_craft_fp.mp4",
+      "in": 0.0,
+      "out": 8.0,
+      "note": "Row 4c. PLACEHOLDER in/out (8 s planned). Want: the grid filling, the iron pickaxe in the output slot, the hotbar switching to it."
+    },
+    {
+      "id": "arena_drill_gap_vein",
+      "src": "05a_drill-gap-vein.mp4",
+      "in": 0.0,
+      "out": 2.0,
+      "note": "Row 5a, montage 1/5. PLACEHOLDER in/out (2.0 s planned - it also carries the act's line). Pick the bridge placed over the void. Only a take whose during.log reads PASS drill-gap-vein."
+    },
+    {
+      "id": "arena_goto_travel",
+      "src": "05a_goto-travel.mp4",
+      "in": 0.0,
+      "out": 1.75,
+      "note": "Row 5a, montage 2/5. PLACEHOLDER in/out (1.75 s planned). Only a take whose during.log reads PASS goto-travel."
+    },
+    {
+      "id": "arena_mine_vein",
+      "src": "05a_mine-vein.mp4",
+      "in": 0.0,
+      "out": 1.75,
+      "note": "Row 5a, montage 3/5. PLACEHOLDER in/out (1.75 s planned). Only a take whose during.log reads PASS mine-vein."
+    },
+    {
+      "id": "arena_chop_tree",
+      "src": "05a_chop-tree.mp4",
+      "in": 0.0,
+      "out": 1.75,
+      "note": "Row 5a, montage 4/5. PLACEHOLDER in/out (1.75 s planned). Only a take whose during.log reads PASS chop-tree."
+    },
+    {
+      "id": "arena_restock_craft",
+      "src": "05a_restock-craft.mp4",
+      "in": 0.0,
+      "out": 1.75,
+      "note": "Row 5a, montage 5/5. PLACEHOLDER in/out (1.75 s planned). Only a take whose during.log reads PASS restock-craft."
+    },
+    {
+      "id": "card_gate",
+      "src": "card_5b_gate.mp4",
+      "in": 0.0,
+      "out": 3.0,
+      "note": "Row 5b. Console card rendered by console_card.py from scenarios/shots/cards/5b_gate.json (3.0 s long by spec). No captions: the card's own text carries the beat."
+    },
+    {
+      "id": "finale",
+      "src": "05c_finale.mp4",
+      "in": 0.0,
+      "out": 100.0,
+      "speed": 20.0,
+      "note": "Row 5c. PLACEHOLDER in/out (5 s planned at 20x = 100 s of take). The teaser's take of this pose needed in >= 1.0 (unrendered chunk void in the corner before that)."
+    }
+  ],
+  "captions": {
+    "font": "Inter",
+    "label_font": "JetBrains Mono",
+    "cues": [
+      { "seg": "pickaxe", "at": 0.2, "dur": 5.6, "layer": "label", "text": "1/6 · Scout" },
+      { "seg": "pickaxe", "at": 0.3, "dur": 5.5, "layer": "line", "text": "Stone pickaxe: almost gone. Need iron." },
+      { "seg": "prospect_gui", "at": 0.1, "dur": 7.7, "layer": "label", "text": "1/6 · Scout" },
+      { "seg": "prospect_gui", "at": 0.3, "dur": 7.5, "layer": "line", "text": "Prospector: iron vein in range" },
+      { "seg": "card_prospect", "at": 0.1, "dur": 2.8, "layer": "label", "text": "1/6 · Scout" },
+      { "seg": "card_prospect", "at": 0.3, "dur": 2.5, "layer": "line", "text": "Heading there." },
+      { "seg": "gap", "at": 0.2, "dur": 10.6, "layer": "label", "text": "2/6 · Travel" },
+      { "seg": "gap", "at": 0.3, "dur": 5.0, "layer": "line", "text": "Its own navigator. No Baritone." },
+      { "seg": "clutch", "at": 0.2, "dur": 11.6, "layer": "label", "text": "2/6 · Travel" },
+      { "seg": "clutch", "at": 0.3, "dur": 6.0, "layer": "line", "text": "20-block drop. Water, placed mid-fall." },
+      { "seg": "drill", "at": 0.2, "dur": 9.6, "layer": "label", "text": "3/6 · Dig" },
+      { "seg": "drill", "at": 0.3, "dur": 5.5, "layer": "line", "text": "Checks the block below before every dig" },
+      { "seg": "vein", "at": 0.2, "dur": 9.6, "layer": "label", "text": "3/6 · Dig" },
+      { "seg": "vein", "at": 0.3, "dur": 5.0, "layer": "line", "text": "Iron ore: mined at {speed}" },
+      { "seg": "home", "at": 0.1, "dur": 3.8, "layer": "label", "text": "4/6 · Home" },
+      { "seg": "home", "at": 0.2, "dur": 3.6, "layer": "line", "text": "Ore in the bag. Home." },
+      { "seg": "smelt", "at": 0.2, "dur": 7.6, "layer": "label", "text": "5/6 · Smelt" },
+      { "seg": "smelt", "at": 0.3, "dur": 4.0, "layer": "line", "text": "Smelting." },
+      { "seg": "craft", "at": 0.2, "dur": 7.6, "layer": "label", "text": "6/6 · Craft ✓" },
+      { "seg": "craft", "at": 2.0, "dur": 4.0, "layer": "line", "text": "Iron pickaxe. Done." },
+      { "seg": "arena_drill_gap_vein", "at": 0.05, "dur": 1.9, "layer": "label", "text": "drill-gap-vein · PASS" },
+      { "seg": "arena_drill_gap_vein", "at": 0.05, "dur": 1.9, "layer": "line", "text": "Core skills run as in-game tests." },
+      { "seg": "arena_goto_travel", "at": 0.05, "dur": 1.6, "layer": "label", "text": "goto-travel · PASS" },
+      { "seg": "arena_mine_vein", "at": 0.05, "dur": 1.6, "layer": "label", "text": "mine-vein · PASS" },
+      { "seg": "arena_chop_tree", "at": 0.05, "dur": 1.6, "layer": "label", "text": "chop-tree · PASS" },
+      { "seg": "arena_restock_craft", "at": 0.05, "dur": 1.6, "layer": "label", "text": "restock-craft · PASS" },
+      { "seg": "finale", "at": 0.2, "dur": 4.6, "layer": "line", "text": "Gerda — open-source bot framework\nby Flamerix AI\ngithub.com/flamerix-ai/gerda" }
+    ]
+  }
+}

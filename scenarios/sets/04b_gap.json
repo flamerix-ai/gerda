@@ -1,0 +1,33 @@
+{
+  "desc": "TEASER 04b_gap — the nav triptych's gap leg: two floating stone platforms over the gorge east of the fin, with the hoodoo clutter between them cleared so the leap reads clean against sky. Platform A tops out at y100 spanning x -331..-327, platform B starts at x -321, both across z -73..-69; the bot is driven A->B with greedy_drive to (-319,101,-71) (standalone goto/goto_waypoint wedges — known gotcha) and either lays a cobble nub and hops (4-wide gap) or builds a raised step and sprint-BOOST-leaps the whole void (5-wide). The snapshot box spans both decks, the void between them and the cleared air above, so a restage reproduces the CLEARING as well as the platforms — the cleared hoodoos are half the shot. Camera sits outside the box at (-324.5, 102.0, -63.5) yaw 180.",
+  "snapshot": {
+    "boxes": [
+      {"from": [-334, 97, -76], "to": [-314, 104, -66]}
+    ],
+    "dimension": "minecraft:overworld"
+  },
+  "ops_generated": [
+    {"op": "clear", "from": [-334, 97, -76], "to": [-314, 104, -66]},
+    {"op": "set", "pos": [-314, 97, -74], "block": "minecraft:terracotta"},
+    {"op": "fill", "from": [-322, 97, -73], "to": [-321, 97, -69], "block": "minecraft:terracotta"},
+    {"op": "set", "pos": [-315, 97, -73], "block": "minecraft:terracotta"},
+    {"op": "fill", "from": [-320, 97, -72], "to": [-319, 97, -71], "block": "minecraft:terracotta"},
+    {"op": "fill", "from": [-317, 97, -72], "to": [-316, 97, -72], "block": "minecraft:terracotta"},
+    {"op": "set", "pos": [-320, 97, -70], "block": "minecraft:terracotta"},
+    {"op": "set", "pos": [-314, 98, -74], "block": "minecraft:brown_terracotta"},
+    {"op": "fill", "from": [-322, 98, -73], "to": [-322, 98, -69], "block": "minecraft:brown_terracotta"},
+    {"op": "fill", "from": [-321, 98, -72], "to": [-320, 98, -70], "block": "minecraft:brown_terracotta"},
+    {"op": "set", "pos": [-316, 98, -72], "block": "minecraft:brown_terracotta"},
+    {"op": "set", "pos": [-319, 98, -71], "block": "minecraft:brown_terracotta"},
+    {"op": "set", "pos": [-321, 98, -69], "block": "minecraft:brown_terracotta"},
+    {"op": "fill", "from": [-322, 99, -73], "to": [-322, 99, -69], "block": "minecraft:white_terracotta"},
+    {"op": "fill", "from": [-321, 99, -72], "to": [-321, 99, -69], "block": "minecraft:white_terracotta"},
+    {"op": "set", "pos": [-320, 99, -72], "block": "minecraft:terracotta"},
+    {"op": "fill", "from": [-320, 99, -71], "to": [-319, 99, -71], "block": "minecraft:white_terracotta"},
+    {"op": "set", "pos": [-320, 99, -70], "block": "minecraft:white_terracotta"},
+    {"op": "fill", "from": [-331, 100, -73], "to": [-327, 100, -69], "block": "minecraft:stone"},
+    {"op": "fill", "from": [-321, 100, -73], "to": [-318, 100, -69], "block": "minecraft:stone"},
+    {"op": "fill", "from": [-326, 100, -71], "to": [-325, 100, -71], "block": "minecraft:cobblestone"}
+  ],
+  "ops": []
+}

@@ -1,0 +1,194 @@
+{
+  "name": "showcase",
+  "fps": 60,
+  "out_dir": "release/takes/showcase",
+  "_doc": [
+    "Showcase shot list (~97 s, one goal-driven chain: a worn stone pickaxe -> scout -> travel ->",
+    "dig -> home -> smelt -> craft an iron pickaxe, then how it is tested). The SHOOT half; the",
+    "edit half is showcase_cut.json. Run it with scripts/demo/shoot.py (list | pose <id>) and",
+    "`SHOTLIST=scenarios/shots/showcase.json just shoot <id>`.",
+    "",
+    "CAMERA RULE. First person = the bot decides or uses a GUI; third person = the bot moves.",
+    "FIRST-PERSON shots (00, 01a, 03a, 04a, 04b, 04c) carry NO camera: they record the BOT's own",
+    "window (docs/RIG.md § GUI inserts). Before rolling one: `scripts/rig/fullscreen.sh",
+    "Monifactory_bot_1` (the bot's instance); after it: `scripts/rig/fullscreen.sh",
+    "Monifactory_bot_2` (the camera back). Instance names come from local.config.json. In FP",
+    "shots the bot's own overlay must be OFF (cfg.hudEnabled false in config/local.overrides.json,",
+    "then `just sync`) and the bot must NOT be F1'd: the hotbar durability bar is the one status",
+    "the story needs. Mask any other burned-in counter with segment filters, as the teaser did.",
+    "THIRD-PERSON shots hide the camera's HUD with cam_hud {hide:true}.",
+    "",
+    "COORDS. Every camera pose and tp below is copied from a measured teaser shot or derived from",
+    "a staged set / arena fixture whose geometry is data in this repo. Where none exists the note",
+    "says `POSE: measure on shoot day` - fly the camera, screenshot, write the pose back here,",
+    "`pose <id>` to confirm. Never invent one.",
+    "",
+    "FAST BOT ACTIONS go through `during` + scripts/demo/trigger_bot.sh, never the shot's `bot`",
+    "key: shoot.py fires `bot` BEFORE the recorder starts, so anything faster than ~5 s happens",
+    "off camera. The `bot` key is used only for staging that must be true before frame 1 (which",
+    "hotbar slot is held). trigger_bot.sh's output (the bridge's response) lands in",
+    "<out_dir>/<id>.during.log - that log is where the console cards' numbers come from.",
+    "",
+    "ITEMS. No /give targets the bot. The console gives an item to the op CAMERA, the camera drops",
+    "it, the bot picks it up (docs/RIG.md § What the filmed scenes stage). The worn stone pickaxe,",
+    "coal, sticks, the crafting table 04c needs IN THE BAG and the charged prospector arrive that",
+    "way; the iron is the bot's own.",
+    "",
+    "ORDER MATTERS. (1) The arenas of 05a build at fixed coords around the world origin - the",
+    "same ground as the sustain stage 04b/04c film on: shoot 04b/04c first, or rebuild the stage",
+    "after (`python3 scripts/demo/sustain_live.py build`). (2) 03a's drill sinks into the ore",
+    "chamber 03b films: shoot 03b first, or restage `sets/03_ore_chamber` after 03a.",
+    "(3) The 05a gate runs need the test bot OPPED for the session (arena build = op chat",
+    "commands); de-op it after (docs/TESTING.md). (4) `sustain_live.py build` empties the bot's",
+    "cached prospect veins - 01a's scan AND 03a's drill marker: build the stage before 01a, or",
+    "restage `sets/03_ore_chamber` (its `marker` op) after the build.",
+    "",
+    "Measure every take per frame with scripts/rig/motion_probe.py before it enters the cut:",
+    "shoot-day 'good segment' notes are systematically optimistic."
+  ],
+
+  "shots": [
+    {
+      "id": "00_worn_pickaxe",
+      "note": "Row 0. FP: the bot holds a nearly broken STONE pickaxe (durability bar near empty), then swaps to the HV prospector. FIRST PERSON: `scripts/rig/fullscreen.sh Monifactory_bot_1` before rolling. Location = the teaser's prospect glade (tp copied from teaser 02a_prospect). STAGING: the worn pickaxe comes by the camera-drop route (console gives the CAMERA a stone_pickaxe with Damage close to its 131 max, the camera drops it); verify it with `python3 scripts/ops/bridge_ctl.py --port 55545 send tool_info '{}'` while it is held. The `bot` jeval selects the stone pickaxe before frame 1 (staging, not action) and throws if none is in the hotbar - read the `[bot] ->` line, an ok:false there means the slot was NOT selected. The swap is a jeval at t=5 s (same hotbar scan as ext.js prospect, by item id); it fails loud into the during.log if the prospector is not in the hotbar.",
+      "seconds": 10,
+      "settle": 1,
+      "console": ["execute in minecraft:overworld run tp bot_1 -168.5 93 -50.5 -154 5"],
+      "bot": { "cmd": "jeval", "params": { "code": "var inv=Player.openInventory();for(var s=36;s<=44;s++){var it=inv.getSlot(s);if(it&&/stone_pickaxe/.test(String(it.getItemId()))){inv.setSelectedHotbarSlotIndex(s-36);break}}if(s>44)throw new Error(/no stone_pickaxe in the hotbar/.source)" } },
+      "during": ["bash scripts/demo/trigger_bot.sh 5 jeval '{\"code\":\"var inv=Player.openInventory();for(var s=36;s<=44;s++){var it=inv.getSlot(s);if(it&&/prospector/.test(String(it.getItemId()))){inv.setSelectedHotbarSlotIndex(s-36);break}}if(s>44)throw new Error(/no prospector in the hotbar/.source)\"}'"]
+    },
+    {
+      "id": "01a_prospect_gui",
+      "note": "Row 1a. FP: the HV prospector GUI open, vein map settling. FIRST PERSON (bot window fullscreen). Same glade as 00 (tp copied from teaser 02a_prospect). prospect is fired with keep_open:true via during so the GUI opens on camera and STAYS open. Its reply comes after up to 88 ticks (~4.4 s) of open-and-settle, at the edge of bridge_ctl's 5 s default socket timeout, so trigger_bot.sh passes a 30 s timeout (its 5th arg) - a timed-out reply would leave card 1b with no source. AFTER THE TAKE send `python3 scripts/ops/bridge_ctl.py --port 55545 send close_screen '{}'`: keep_open blocks ALL movement (goto timeouts, false vein-unreachable) until the screen is closed. Charge first: `send prospector_status '{}'` - a discharged prospector silently fails to open (recharge in a Turbo Charger, docs/FLEET_PLAYBOOK.md). The prospect response in this take's during.log is the SOURCE of console card 1b (veins.iron x/z/dist/cells); the caption names no distance. POSE: measure on shoot day IF this glade's scan shows no iron vein in range - the teaser filmed the GUI here, not an iron hit. NOTE: the scan appends its veins to the bot's world store; 03a's drill walks to the NEAREST cached iron vein, so check which one it picks.",
+      "seconds": 12,
+      "settle": 1,
+      "console": ["execute in minecraft:overworld run tp bot_1 -168.5 93 -50.5 -154 5"],
+      "during": ["bash scripts/demo/trigger_bot.sh 2 prospect '{\"want\":\"iron\",\"keep_open\":true}' 55545 30"]
+    },
+    {
+      "id": "02a_gap",
+      "note": "Row 2a. 3rd person: the sprint-BOOST leap across the gap. Set `sets/04b_gap` (restage: `python3 scripts/dev/arena.py build sets/04b_gap --port 55546`). Camera pose copied from teaser 04b_gap; the plan is a shot-level track - the teaser take was STATIC and caught the leap (poster frame mid-air at t~5 s of 04_nav_bridge2), so if tracking lags the leap, drop `track` and keep the static framing. Driven by greedy_drive via during (standalone goto/goto_waypoint wedges - known gotcha). START: the bot stands on platform A (set data: x -331..-327, top y100, z -73..-69); POSE: measure on shoot day for the exact tp spot, as the teaser staged it by hand.",
+      "seconds": 50,
+      "settle": 1,
+      "camera": { "pos": [-324.5, 102.0, -63.5], "yaw": 180, "pitch": 5, "spectator": true },
+      "console": ["execute in minecraft:overworld run tp bot_1 -330.5 101 -70.5 -90 0"],
+      "track": { "target": "bot", "offset": [0, 1, 0], "hz": 4, "smooth": 0.2 },
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "during": ["bash scripts/demo/trigger_bot.sh 2 greedy_drive '{\"x\":-319,\"y\":101,\"z\":-71}'"]
+    },
+    {
+      "id": "02b_clutch",
+      "note": "Row 2b. 3rd person: walk off the mesa ledge, ~20-block fall (the verified MLG envelope - 50-block falls kill, stepped floors kill), water placed mid-fall, scooped back, full HP. Set `sets/02_mesa_clutch`. Copied VERBATIM from teaser 01_clutch, which is already the measured fix for a camera that must sit lower and closer: a STATIC camera low inside the pit on its west column - the water lives ~3 ticks and a tracked camera (hz 8, smooth 0.35) was still looking up the shaft when the bot landed, so NO track. This framing shows the last ~2 blocks of the fall and the splash, not the walk-off. Needs a water_bucket in the bag (camera-drop route). walk_off.sh presses W for 500 ms in game. A slow-mo cut (speed 0.5) is untested in assemble.py - verify on this segment first.",
+      "seconds": 12,
+      "settle": 1,
+      "camera": { "pos": [-341.5, 73.8, -67.5], "yaw": -90, "pitch": 34, "spectator": true },
+      "console": ["execute in minecraft:overworld run tp bot_1 -341.5 92 -67.5 -90 15"],
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "during": ["bash scripts/demo/walk_off.sh"]
+    },
+    {
+      "id": "03a_drill_fp",
+      "note": "Row 3a. FP: pitch -90, drilling a shaft straight down (the bot sets the vertical look itself). FIRST PERSON (bot window fullscreen). drill is started via during AFTER recording begins (descent is ~2 blocks/s; a pre-record `bot` start lost teaser take 1 of 02b_shaft). Target = the iron marker set `sets/03_ore_chamber` writes on column (-343,-70) - restage with MC_INST pointing at the bot's instance (docs/RIG.md § Sets). drill takes params, NOT args (args is silently dropped) and has no target arg: it walks to the NEAREST cached iron vein, so the bot must start near that column - POSE: measure on shoot day. COLUMN: the teaser's 02b_shaft already sank a shaft there and the descent column above y110 is outside the set's box, so it is NOT restored; probe the WHOLE column for solidity first (a tail-truncated probe cost a bot death) - if it is open, move the marker to a fresh solid column. drill never self-completes: send `mission_abort` after the take.",
+      "seconds": 25,
+      "settle": 1,
+      "console": ["execute in minecraft:overworld run spreadplayers -142 -76 0 1 false bot_1"],
+      "during": ["bash scripts/demo/trigger_bot.sh 2.5 mission_start '{\"name\":\"drill\",\"params\":{\"ore\":\"iron\"}}'"]
+    },
+    {
+      "id": "03b_vein",
+      "note": "Row 3b. 3rd person: the bot eats the iron ore chamber block by block (cut at speed 3). Copied from teaser 03_vein: set `sets/03_ore_chamber`, camera in the alcove window, MINE mission (not drill: drill EXCAVATE plans a +/-8 anchor box and wanders off across barren rock). Honest mining in a staged location: every pack vein sits below the y62 water table, so the ore exists only in the built chamber. CONTINUITY: the story mines with a STONE pickaxe; the tool reflex picks the best pickaxe in the bag, so carry no iron/diamond one - and a stone pickaxe near zero durability (00) breaks mid-take, so this take uses a sound stone pickaxe. The raw iron it mines is the input of 04b.",
+      "seconds": 90,
+      "settle": 1,
+      "camera": { "pos": [-338.5, 106.5, -71.0], "yaw": 93, "pitch": 10, "spectator": true },
+      "console": ["execute in minecraft:overworld run tp bot_1 -344.5 104 -71.5 90 0"],
+      "track": { "target": "bot", "offset": [0, 0.8, 0], "hz": 4, "smooth": 0.15 },
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "during": ["bash scripts/demo/trigger_bot.sh 2 mission_start '{\"name\":\"mine\"}'"]
+    },
+    {
+      "id": "04a_home_fp",
+      "note": "Row 4a. FP: /home base, teleport, the base appears. FIRST PERSON (bot window fullscreen). Sent through the bridge's `chat` passthrough (the same call scripts/dev/gate_live.py parks the bot with). Start from the ore chamber (right after 03b). For continuity the bot's FTB home `base` should be the sustain stage 04b/04c film on: once, with the bot standing at (4,101,1), send `chat {\"message\":\"/sethome base\"}`; restore its usual home after the shoot. A command sent through `chat` is not echoed in the chat HUD - expect the teleport, not a visible '/home base' line (verify on the day; the caption carries it).",
+      "seconds": 8,
+      "settle": 1,
+      "during": ["bash scripts/demo/trigger_bot.sh 2 chat '{\"message\":\"/home base\"}'"]
+    },
+    {
+      "id": "04b_smelt_fp",
+      "note": "Row 4b. FP: the furnace GUI - ore in, ingots out (the wait is sped up in the cut). FIRST PERSON (bot window fullscreen). Sustain stage (`python3 scripts/demo/sustain_live.py build`): the bot stands at (4,101,1) next to the centre furnace (5,101,1) - coords from scenarios/arenas/sustain-base.json and sustain_live.py, which mirror each other. smelt mode full = load, wait, collect; the screen stays open through WAIT. Input = the raw iron mined in 03b (3 for a pickaxe; a vanilla furnace takes ~10 s per item), fuel = coal from the stage kit. Roll covers 3 items + load/collect margin.",
+      "seconds": 45,
+      "settle": 1,
+      "console": ["tp bot_1 4.5 101 1.5 -90 0"],
+      "during": ["bash scripts/demo/trigger_bot.sh 2 mission_start '{\"name\":\"smelt\",\"params\":{\"mode\":\"full\",\"input\":\"minecraft:raw_iron\",\"output\":\"minecraft:iron_ingot\",\"fuel\":\"minecraft:coal\",\"count\":3,\"x\":5,\"y\":101,\"z\":1}}'"]
+    },
+    {
+      "id": "04c_craft_fp",
+      "note": "Row 4c. FP: the crafting grid, the iron pickaxe appears in the output, the bot equips it. FIRST PERSON (bot window fullscreen). Same stage spot as 04b. craft has no `item` param: it takes a manual-grid `chain`, sent here PLAIN, without want/min - want/min is the skip-safe conditional restock (docs/MISSIONS.md § craft) that no-ops to DONE when the materials or the table are short, which would film an idle bot; a plain chain fails loud instead. The grid below is the VANILLA iron pickaxe - RECIPE: check it against the pack with `emi_recipe {item:\"minecraft:iron_pickaxe\"}` before the shoot and replace the grid if the pack changes the recipe. STAGING: 3 iron ingots (from 04b) + 2 sticks in the bag, AND a crafting table IN THE BAG (camera-drop route, see ITEMS): the 3x3 step reuses a table standing next to the bot, else places one from the bag, and with neither it ERRORs `no crafting table to place` (in want-mode the same shortage is the CRAFT_NO_TABLE skip in the init of src/bot/missions/craft/index.ts). craft does not equip: the second during is a jeval that selects the iron pickaxe slot - its 12 s delay is a guess, set it from the craft's real duration on the day.",
+      "seconds": 20,
+      "settle": 1,
+      "console": ["tp bot_1 4.5 101 1.5 -90 0"],
+      "during": [
+        "bash scripts/demo/trigger_bot.sh 2 mission_start '{\"name\":\"craft\",\"params\":{\"chain\":[{\"grid\":[\"minecraft:iron_ingot\",\"minecraft:iron_ingot\",\"minecraft:iron_ingot\",null,\"minecraft:stick\",null,null,\"minecraft:stick\",null],\"times\":1}]}}'",
+        "bash scripts/demo/trigger_bot.sh 12 jeval '{\"code\":\"var inv=Player.openInventory();for(var s=36;s<=44;s++){var it=inv.getSlot(s);if(it&&/iron_pickaxe/.test(String(it.getItemId()))){inv.setSelectedHotbarSlotIndex(s-36);break}}if(s>44)throw new Error(/no iron_pickaxe in the hotbar/.source)\"}'"
+      ]
+    },
+    {
+      "id": "05a_drill-gap-vein",
+      "note": "Row 5a (arena montage). The gate's own run of ONE arena, filmed: `./gerda gate <arena> --port 55545` builds it, runs it, cleans it and prints its PASS/FAIL - the during.log IS the verdict the cut's 'PASS' label claims; a FAIL take does not enter the cut. drill EXCAVATE strip-mines across a 5-wide void and bridges it (EXCAVATE_VOID_BRIDGE + PLACE_CELL) - the gated arena that shows bridging. Arena fixture at the world origin (bot spawns at 0,107,0). POSE: measure on shoot day. Bot opped for the session. Roll = expect.timeout (120 s) + 90 s for the rest of the gate run (scripts/dev/gate_live.py, scripts/dev/arena.py): build ~4 s (forceload settle 3 s), worker reset up to 33 s, start tp ~2 s, clean ~4 s, then the park - a second worker reset up to 33 s plus 3-6 s of /home. shoot.py kills the driver when the roll ends, and a gate killed before its clean leaves the arena standing. Check during.log for `=== gate summary ===` before using the take: a gate cut short never prints it.",
+      "seconds": 210,
+      "settle": 1,
+      "camera": { "pos": [10.5, 112, 10.5], "yaw": 135, "pitch": 30, "spectator": true },
+      "track": { "target": "bot", "offset": [0, 1, 0], "hz": 4, "smooth": 0.15 },
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "during": ["./gerda gate drill-gap-vein --port 55545"]
+    },
+    {
+      "id": "05a_goto-travel",
+      "note": "Row 5a (arena montage). goto over a flat stone platform, (0,101,0) -> (8,101,0); PASS = GOTO_ARRIVED. Gate run as in 05a_drill-gap-vein (the during.log carries the verdict). POSE: measure on shoot day. Roll = expect.timeout (60 s) + 90 s, sized as in 05a_drill-gap-vein. Check during.log for `=== gate summary ===` before using the take.",
+      "seconds": 150,
+      "settle": 1,
+      "camera": { "pos": [10.5, 112, 10.5], "yaw": 135, "pitch": 30, "spectator": true },
+      "track": { "target": "bot", "offset": [0, 1, 0], "hz": 4, "smooth": 0.15 },
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "during": ["./gerda gate goto-travel --port 55545"]
+    },
+    {
+      "id": "05a_mine-vein",
+      "note": "Row 5a (arena montage). mine happy path: the SCAN-driven mine finds and drains a small surface iron cluster; PASS = ORE_FOUND. Gate run as in 05a_drill-gap-vein. POSE: measure on shoot day. Roll = expect.timeout (40 s) + 90 s, sized as in 05a_drill-gap-vein. Check during.log for `=== gate summary ===` before using the take.",
+      "seconds": 130,
+      "settle": 1,
+      "camera": { "pos": [10.5, 112, 10.5], "yaw": 135, "pitch": 30, "spectator": true },
+      "track": { "target": "bot", "offset": [0, 1, 0], "hz": 4, "smooth": 0.15 },
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "during": ["./gerda gate mine-vein --port 55545"]
+    },
+    {
+      "id": "05a_chop-tree",
+      "note": "Row 5a (arena montage). chop: scan finds the oak trunk ~12 blocks out, the own navigator walks there, the bot fells it; PASS = LOG_FOUND. Gate run as in 05a_drill-gap-vein. POSE: measure on shoot day. Roll = expect.timeout (40 s) + 90 s, sized as in 05a_drill-gap-vein. Check during.log for `=== gate summary ===` before using the take.",
+      "seconds": 130,
+      "settle": 1,
+      "camera": { "pos": [10.5, 112, 10.5], "yaw": 135, "pitch": 30, "spectator": true },
+      "track": { "target": "bot", "offset": [0, 1, 0], "hz": 4, "smooth": 0.15 },
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "during": ["./gerda gate chop-tree --port 55545"]
+    },
+    {
+      "id": "05a_restock-craft",
+      "note": "Row 5a (arena montage). The conditional craft (want/min) on the 2x2 player grid: one ingot -> nuggets; PASS = CRAFT. Gate run as in 05a_drill-gap-vein. POSE: measure on shoot day. Roll = expect.timeout (40 s) + 90 s, sized as in 05a_drill-gap-vein. Check during.log for `=== gate summary ===` before using the take.",
+      "seconds": 130,
+      "settle": 1,
+      "camera": { "pos": [10.5, 112, 10.5], "yaw": 135, "pitch": 30, "spectator": true },
+      "track": { "target": "bot", "offset": [0, 1, 0], "hz": 4, "smooth": 0.15 },
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "during": ["./gerda gate restock-craft --port 55545"]
+    },
+    {
+      "id": "05c_finale",
+      "note": "Row 5c. Static wide on the sustain stage while the loop grinds, timelapsed in the cut under the teaser's credit. Pose copied from teaser 08_finale. No track (a timelapse must not drift). ONE plan owner: the during loop's lap() starts the plan itself, so there is no `bot` plan_start here (the teaser 05_economy lesson). The teaser's take of the same shot can stand in: copy release/takes/teaser/08_finale_enc.mp4 to <out_dir>/05c_finale.mp4.",
+      "seconds": 120,
+      "settle": 2,
+      "camera": { "pos": [11.5, 106, 4.5], "yaw": 144.5, "pitch": 22, "spectator": true },
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "during": ["python3 scripts/demo/sustain_live.py loop 8"]
+    }
+  ]
+}

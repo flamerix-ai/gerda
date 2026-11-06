@@ -1,0 +1,19 @@
+Gerda
+Copyright 2026 Flamerix AI
+
+This product includes software developed by Flamerix AI
+(https://github.com/flamerix-ai/gerda).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+If a copy of the MPL was not distributed with this file, You can obtain one at
+https://mozilla.org/MPL/2.0/.
+
+Exception: harness/bot_template.js is licensed under the Apache License, Version 2.0
+(LICENSES/Apache-2.0.txt), so a bot built from it can use any license.
+
+The movement cost model is informed by Baritone (https://github.com/cabaletta/baritone,
+LGPL-3.0). No Baritone source files are included; some formulas (the octile heuristic, the jump
+and parkour cost values, the block-placement and block-break cost values, the parkour gap limit)
+have the same form as Baritone's, the list of special-case blocks is informed by Baritone's
+MovementHelper, and several move types and the GoalBlock and GoalXZ goal types are modelled on
+Baritone's Movement* and Goal* classes.

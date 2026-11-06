@@ -1,0 +1,103 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": {
+    "ignore": ["dist", "node_modules", "macros", "build", "_reverse", "scripts"]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "all": true,
+      "style": {
+        "useNodejsImportProtocol": "off",
+        "useBlockStatements": "off",
+        "useNamingConvention": "off",
+        "noParameterProperties": "off",
+        "useSingleCaseStatement": "off",
+        "useDefaultSwitchClause": "off",
+        "noDoneCallback": "off"
+      },
+      "complexity": {
+        "useLiteralKeys": "off",
+        "noVoid": "off",
+        "useSimplifiedLogicExpression": "off",
+        "noExcessiveCognitiveComplexity": {
+          "level": "warn",
+          "options": { "maxAllowedComplexity": 30 }
+        }
+      },
+      "correctness": {
+        "useImportExtensions": "off",
+        "useHookAtTopLevel": "off"
+      },
+      "suspicious": {
+        "noEmptyBlockStatements": "error"
+      },
+      "performance": {
+        "useTopLevelRegex": "off"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": { "quoteStyle": "double", "semicolons": "always" },
+    "globals": [
+      "java",
+      "Java",
+      "JsMacros",
+      "JavaWrapper",
+      "World",
+      "Player",
+      "Client",
+      "Chat",
+      "Hud",
+      "KeyBind",
+      "GlobalVars",
+      "InventoryHelper",
+      "ItemStackHelper",
+      "Draw2DHelper"
+    ]
+  },
+  "overrides": [
+    {
+      "include": ["examples/**/*.js"],
+      "javascript": {
+        "globals": [
+          "java",
+          "Java",
+          "JsMacros",
+          "JavaWrapper",
+          "World",
+          "Player",
+          "Client",
+          "Chat",
+          "Hud",
+          "KeyBind",
+          "GlobalVars",
+          "register",
+          "writeResp",
+          "srg"
+        ]
+      }
+    },
+    {
+      "include": ["test-ts/**"],
+      "linter": {
+        "rules": {
+          "correctness": { "noNodejsModules": "off" },
+          "style": { "noNamespaceImport": "off" },
+          "suspicious": { "noEmptyBlockStatements": "off", "noMisplacedAssertion": "off" }
+        }
+      }
+    },
+    {
+      "include": ["src/shared/nav/index.ts"],
+      "linter": { "rules": { "performance": { "noBarrelFile": "off" } } }
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+# Containerfile — the "plain Ubuntu 24.04 student PC" image for the Gerda newcomer sandbox.
+# Built by `provision.sh build`; the steps that install the game, the server and the repo run
+# later, inside the running container (sbx.sh), so their downloads land in the cache volume.
+# Every input is pinned in pins.env and passed in by `provision.sh build`: the base image by
+# digest, bun and uv by the sha256 of their release archives. No defaults here, so a build
+# without the pins fails instead of floating.
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
+
+ARG BUN_VERSION
+ARG BUN_SHA256
+ARG UV_VERSION
+ARG UV_SHA256
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    TZ=UTC
+
+# What a student installs by hand per docs/SETUP.md + docs/SERVER_SETUP.md, plus what a
+# headless box needs to run the game client: an X server (Xvfb), Mesa software GL (llvmpipe),
+# the X/xcb libraries the Qt6 launcher and LWJGL load, xdotool/ImageMagick for the occasional
+# click and screenshot, and ffmpeg to record the virtual display (`provision.sh record`).
+# not-a-gate: distro packages, unpinned (residual in pins.env)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      ca-certificates curl git unzip zip xz-utils python3 python3-venv just sudo \
+      procps iproute2 less psmisc \
+      openjdk-21-jre-headless \
+      xvfb xauth x11-utils xdotool imagemagick ffmpeg \
+      libgl1 libegl1 libopengl0 libglx-mesa0 libgl1-mesa-dri libglu1-mesa \
+      libx11-6 libxext6 libxrender1 libxrandr2 libxinerama1 libxcursor1 libxi6 libxxf86vm1 libxtst6 \
+      libxkbcommon0 libxkbcommon-x11-0 libxcb-cursor0 libxcb-icccm4 libxcb-image0 \
+      libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-shape0 libxcb-xinerama0 \
+      libxcb-xkb1 libxcb-xfixes0 libxcb-sync1 libxcb-shm0 libxcb-util1 \
+      libfontconfig1 libfreetype6 fonts-dejavu-core libdbus-1-3 libglib2.0-0 libpulse0 \
+    && rm -rf /var/lib/apt/lists/*
+
+# bun + uv, system-wide (not under $HOME: the home is a volume). Their release archives are
+# checked against the sha256 pins before anything is unpacked. x86_64 only.
+# gate:image-archive-sha256
+RUN test -n "$BUN_SHA256" && test -n "$UV_SHA256" && test "$(uname -m)" = x86_64 \
+    && cd /tmp \
+    && curl -fsSL -o bun.zip "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/bun-linux-x64.zip" \
+    && curl -fsSL -o uv.tar.gz "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz" \
+    && printf '%s  bun.zip\n%s  uv.tar.gz\n' "$BUN_SHA256" "$UV_SHA256" | sha256sum -c - \
+    && unzip -q bun.zip && install -m 0755 bun-linux-x64/bun /usr/local/bin/bun \
+    && tar xzf uv.tar.gz \
+    && install -m 0755 uv-x86_64-unknown-linux-gnu/uv uv-x86_64-unknown-linux-gnu/uvx /usr/local/bin/ \
+    && rm -rf /tmp/bun* /tmp/uv* \
+    && bun --version && uv --version
+
+# The student: uid 1001 (ubuntu:24.04 already has `ubuntu` at 1000), passwordless sudo.
+# not-a-gate: creates the student user, nothing checked
+RUN useradd -m -u 1001 -s /bin/bash student \
+    && echo 'student ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/student \
+    && chmod 0440 /etc/sudoers.d/student \
+    && mkdir -p /cache && chown student:student /cache
+
+USER student
+WORKDIR /home/student
+CMD ["sleep", "infinity"]

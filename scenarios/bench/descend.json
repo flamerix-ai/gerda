@@ -1,0 +1,24 @@
+{
+  "desc": "Descend — a 6-step staircase down (-1 block per +1 x). Exercises greedy's dropDownSafe (1-block safe drops). Top landing x41..44 (y95), stairs down x45..50, bottom x51..54 (y89).",
+  "ops": [
+    { "op": "clear", "from": [40, 88, -1], "to": [56, 105, 3] },
+    { "op": "fill", "from": [41, 94, 0], "to": [44, 94, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [45, 88, 0], "to": [45, 93, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [46, 88, 0], "to": [46, 92, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [47, 88, 0], "to": [47, 91, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [48, 88, 0], "to": [48, 90, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [49, 88, 0], "to": [49, 89, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [50, 88, 0], "to": [50, 88, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [51, 88, 0], "to": [54, 88, 2], "block": "minecraft:stone" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 64 },
+    { "op": "select", "slot": 0 }
+  ],
+  "start": [42, 95, 1],
+  "legs": [
+    { "name": "descend6", "to": [53, 89, 1] }
+  ],
+  "repeats": 3,
+  "timeout": 30
+}

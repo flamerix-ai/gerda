@@ -1,0 +1,21 @@
+{
+  "desc": "fetch mission end-to-end AFTER the open-step fix — the withdraw counterpart of stash. A chest at (5,101,0) is seeded via /setblock NBT with 16 coal + 8 iron ingots. The bot starts at (0,101,0), greedy-walks to the chest, OPENS it (useOnBlock — the bug fix), and shift-clicks its contents into the bag. PASS = FETCH_RESTOCK (withdrew 2 stacks), no ERROR. Proves fetch actually opens+withdraws now; previously it never useOnBlock'd the chest and withdrew nothing (silent no-op).",
+  "ops": [
+    { "op": "clear", "from": [-2, 101, -2], "to": [7, 104, 2] },
+    { "op": "fill", "from": [-2, 100, -2], "to": [7, 100, 2], "block": "minecraft:stone" },
+    {
+      "op": "set",
+      "pos": [5, 101, 0],
+      "block": "minecraft:chest{Items:[{Slot:0b,id:\"minecraft:coal\",Count:16b},{Slot:1b,id:\"minecraft:iron_ingot\",Count:8b}]}"
+    },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 101, 0] }
+  ],
+  "mission": {
+    "name": "fetch",
+    "params": { "x": 5, "y": 101, "z": 0 }
+  },
+  "expect": { "events": ["FETCH_RESTOCK"], "timeout": 90 }
+}

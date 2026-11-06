@@ -1,0 +1,119 @@
+{
+  "name": "teaser",
+  "fps": 60,
+  "out_dir": "release/takes/teaser",
+  "_doc": [
+    "Teaser shot list — the edit order of release/demo_scenario.md §4, as data.",
+    "Run it with scripts/demo/shoot.py (list | pose <id> | shoot [ids]).",
+    "",
+    "COORDS. Shots on the sealed sustain stage (location C, built by",
+    "scripts/demo/sustain_live.py build) carry REAL coords and are shootable as-is.",
+    "Shots in the open world (location B: real veins, cliffs, ravines) deliberately",
+    "carry NO camera pos — where a cliff-dive or a vein lands is picked on the day.",
+    "Workflow for those: fly the camera by hand or `cam_pose` it, screenshot, write the",
+    "pos back into this file, then `pose <id>` to confirm the framing before rolling.",
+    "Inventing coords here would ship confidently-wrong takes, so we do not.",
+    "",
+    "Shots 06_fleet and 07_operator need a second source (a 3-4 bot scene / a terminal",
+    "split-screen) and are listed for completeness — shoot.py rolls the game side only."
+  ],
+
+  "shots": [
+    {
+      "id": "01_clutch",
+      "note": "HOOK: bot steps off a ledge, MLG-waters itself, keeps 20 hp. SHOT LIVE on the mesa set: cleared corridor + red_sand pad y71 + wall ledge y91 at x=-342 (fall ~20 — the verified MLG envelope; 50-block falls KILL, stepped floors KILL). Stage: tp (console below); needs a water_bucket in the bag (honest console drop → auto-pickup). during pushes W over the edge. RE-FRAMED for splash legibility: the earlier take was narratively complete but the splash was sub-perceptual — the water lives ~3 ticks (the reflex scoops right after landing) and the old wide pose ([-330.5,84] + smooth 0.18) reached the floor ~0.3 s late. Camera now sits LOW and CLOSE INSIDE the pit on its WEST column (-341.5, 73.8), facing EAST (yaw -90) at the landing column: with walk_off.sh's 500 ms in-game W tap the bot drops into the 4-wide pit and lands at x≈-338.8 / y72 (measured 21:58, WATER_CLUTCH_PLACE in the journal), i.e. 2.7 blocks in front of this camera, 1.8 over the pad. NO track: a tracked camera (hz 8, smooth 0.35) was still looking up the shaft when the bot landed and tilted down only ~0.2 s later (take 22:07, 30 fps frame strip), while the water lives ~3 ticks — so the splash happened below the frame edge. Static pitch 34 puts the pad at frame centre; the bot enters from the top edge ~2 blocks above the pad and the whole place+scoop plays at centre. GEOMETRY (measured with a World.getBlock air-map from the camera client): the pit is only 4 wide (x -342..-339) and air from y72 to y77; east of x=-338 the ground is solid terracotta up to y77-78, so the first re-frame at (-334.5, 74.5) sat INSIDE the cliff (screenshot = block interiors) — any pose at pad height must be within x -342..-339.",
+      "seconds": 12,
+      "settle": 1,
+      "camera": { "pos": [-341.5, 73.8, -67.5], "yaw": -90, "pitch": 34, "spectator": true },
+      "console": ["execute in minecraft:overworld run tp bot_1 -341.5 92 -67.5 -90 15"],
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "during": ["bash scripts/demo/walk_off.sh"]
+    },
+    {
+      "id": "02a_prospect",
+      "note": "Over-the-shoulder as the HV prospector GUI flashes open. SHOT LIVE at the cleared glade. The GUI itself is NOT visible to the camera — record the BOT's own display in parallel for the insert (both clients usually share ONE sway output; swap which window is fullscreen via swaymsg). AFTER the take send close_screen: keep_open blocks ALL movement (goto timeouts, false vein-unreachable) until closed.",
+      "seconds": 8,
+      "settle": 2,
+      "camera": { "pos": [-169.4, 95.5, -46.5], "yaw": -154, "pitch": 12, "spectator": true },
+      "track": { "target": "bot", "offset": [0, 1.6, 0], "hz": 4, "smooth": 0.2 },
+      "console": ["execute in minecraft:overworld run tp bot_1 -168.5 93 -50.5 -154 5"],
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "bot": { "cmd": "prospect", "params": { "keep_open": true } }
+    },
+    {
+      "id": "02b_shaft",
+      "note": "High wide over the ridge butte: bot digs in and SINKS, leaving an open shaft mouth. SHOT LIVE on the mesa ridge film set: dig column (-343,-70), surface y123 — FULL-column-probe solidity first (a tail-truncated probe read cost one bot death at (-344,-71), open air past the crest edge). The iron marker was pre-moved onto the column in bot_1's mc_world.json: drill has NO target arg, it walks to the nearest cached vein x/z (mission payload inner key is params, NOT args — args is silently dropped). Mission MUST start via during AFTER recording begins: shoot.py fires bot cmds pre-record, descent is ~2 blocks/s and the bot vanishes before frame 1 (cost take 1).",
+      "seconds": 40,
+      "settle": 2,
+      "camera": { "pos": [-337.5, 133, -62.5], "yaw": 144, "pitch": 47, "spectator": true },
+      "track": { "target": "bot", "offset": [0, 0.5, 0], "hz": 4, "smooth": 0.1 },
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "during": ["bash scripts/demo/trigger_bot.sh 2.5 mission_start '{\"name\":\"drill\",\"params\":{\"ore\":\"iron\"}}'"]
+    },
+    {
+      "id": "03_vein",
+      "note": "In the cut: bot eats an ore chamber block by block, camera tracking from the alcove window. SHOT LIVE on the ore-CHAMBER film set inside the mesa fin: room (-347..-343, 104..107, -74..-68) joined to a window punched through the thin east cliff wall (solid at x=-341, open air from x=-339), walls/floor lined with iron_ore, invisible minecraft:light[level=15] fill lights. Behavior = MINE mission, NOT drill: drill EXCAVATE plans a ±8 anchor box and wanders off across barren rock — a static wall camera got exactly 1 broken block in 100 s (dead take). NO dry open-world site exists: every target vein sits below the y62 water table (GTCEu compiled defaults via javap, pack does not override; 999 console ore probes above y62 → 0 hits).",
+      "seconds": 90,
+      "settle": 1,
+      "camera": { "pos": [-338.5, 106.5, -71.0], "yaw": 93, "pitch": 10, "spectator": true },
+      "track": { "target": "bot", "offset": [0, 0.8, 0], "hz": 4, "smooth": 0.15 },
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "during": ["bash scripts/demo/trigger_bot.sh 2 mission_start '{\"name\":\"mine\"}'"]
+    },
+    {
+      "id": "04_nav",
+      "note": "Navigator triptych (bridge / ladder / rim-veto refusal) — strict profile, low angle. SHOT LIVE (climb variant): bot on the mesa-gorge floor (~-336 79 -68), goto the ridge top → it stair-climbs the terracotta wall; first ~8 s usable before it exits frame. Bridge + rim-veto takes still TODO. Gap leg SHOT day 3 → 04b_gap.",
+      "seconds": 25,
+      "settle": 1,
+      "camera": { "pos": [-328.5, 90, -67.5], "yaw": 90, "pitch": 12, "spectator": true },
+      "track": { "target": "bot", "offset": [0, 1, 0], "hz": 4, "smooth": 0.12 },
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "bot": { "cmd": "goto", "params": { "x": -344, "y": 123, "z": -67 } }
+    },
+    {
+      "id": "04b_gap",
+      "note": "Nav triptych, gap leg. SHOT LIVE: two floating stone platforms over the gorge east of the fin (A top y100 x -331..-327, B x from -321, z -73..-69; hoodoo clutter cleared with console fills). 4-gap take (04_nav_bridge.mp4): bot lays a cobble nub and hops. 5-gap take (04_nav_bridge2.mp4): bot builds a raised cobble step and sprint-BOOST-leaps the whole void — poster frame mid-air at t≈5 s. Drive with greedy_drive via during (standalone goto/goto_waypoint wedges — known gotcha). Rim-veto leg still TODO.",
+      "seconds": 50,
+      "settle": 1,
+      "camera": { "pos": [-324.5, 102.0, -63.5], "yaw": 180, "pitch": 5, "spectator": true },
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "during": ["bash scripts/demo/trigger_bot.sh 2 greedy_drive '{\"x\":-319,\"y\":101,\"z\":-71}'"]
+    },
+    {
+      "id": "05_economy",
+      "note": "The sustain loop on the sealed stage: bot mines the patch, furnaces glow, ingots go to the bank. Low 3/4 from the SE — close enough that ore, furnaces and chest all READ (the first take was shot from [13,109,9] and the base was a grey speck in a forest). ONE plan owner: the during-loop's lap() does its own plan_start per lap; nothing else may (the old pre-record `bot` plan_start was removed). ROOT CAUSE of the ~90% frozen earlier takes (journal-proven): the stage held only 9 ore, the self-looping plan ate them in ~15 s, then the mine mission sat in SCAN ~114 s until SCAN_EXHAUSTED (r=32 spiral x 3 cycles). Fix = 25-block patch + 30 s laps in sustain_live.py (LAP_DWELL_S), so the host re-arms before the patch runs dry. loop 3 covers the 80 s roll rather than filling it exactly: 2 full 30 s laps + ~2/3 of the third, with ~3 s of lap staging each. Cut to the live windows motion_probe finds.",
+      "seconds": 80,
+      "settle": 2,
+      "camera": { "pos": [9.5, 104.5, 2.5], "yaw": 144.5, "pitch": 18.7, "spectator": true },
+      "track": { "target": "bot", "offset": [0, 1.2, 0], "hz": 4, "smooth": 0.08 },
+      "console": ["tp bot_1 0 101 0 180 0"],
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "during": ["python3 scripts/demo/sustain_live.py loop 3"]
+    },
+    {
+      "id": "06_fleet",
+      "note": "3-4 bots working different parts of one wide frame (hub region leases keep them apart). Needs the fleet staged first — see FLEET_PLAYBOOK.",
+      "seconds": 15,
+      "settle": 3,
+      "camera": { "spectator": true }
+    },
+    {
+      "id": "07_operator",
+      "note": "Split-screen: the game half. A queued want lands and the bot leaves to dig it. Film the terminal half separately and sync on the Enter keypress.",
+      "seconds": 12,
+      "settle": 2,
+      "camera": { "spectator": true },
+      "track": { "target": "bot", "offset": [0, 1, 0], "hz": 4, "smooth": 0.15 }
+    },
+    {
+      "id": "08_finale",
+      "note": "Static wide on the base while the loop grinds — roll long and speed it up ~20x in the edit. No tracking: the frame must not drift under a timelapse, so the bot walks through a fixed frame instead of the camera chasing it.",
+      "seconds": 120,
+      "settle": 2,
+      "camera": { "pos": [11.5, 106, 4.5], "yaw": 144.5, "pitch": 22, "spectator": true },
+      "cam": [{ "cmd": "cam_hud", "params": { "hide": true } }],
+      "bot": { "cmd": "plan_start", "params": { "name": "sustain-cycle" } },
+      "during": ["python3 scripts/demo/sustain_live.py loop 8"]
+    }
+  ]
+}

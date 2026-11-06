@@ -1,0 +1,14 @@
+{
+  "desc": "Parkour dist-4 with NO run-up behind the take-off (x=0 is a lone block, air at x<0) → the executor must REFUSE parkour (a dist-4 can't reach the commitment floor without a full run-up) and BRIDGE instead, never charging to the lip and falling. void x=1,2,3, landing x=4..10, CATCH-FLOOR y=93. greedy_drive to x=9: expect the bot to lay filler across the gap (bridge), NOT a fall to y=94. This is the regression guard for the abort-at-lip → fall bug.",
+  "ops": [
+    { "op": "clear", "from": [-3, 90, -2], "to": [12, 112, 2] },
+    { "op": "fill", "from": [-3, 93, -2], "to": [12, 93, 2], "block": "minecraft:stone" },
+    { "op": "set", "pos": [0, 100, 0], "block": "minecraft:stone" },
+    { "op": "fill", "from": [4, 100, 0], "to": [10, 100, 0], "block": "minecraft:stone" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 64 },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 101, 0] }
+  ]
+}

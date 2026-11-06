@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+# Pre-push gate: run the full check — `just check`: the TS half pre-commit runs (again, which
+# guards against --no-verify commits sneaking into the push) plus the python suites pre-commit
+# leaves out — prove the eval-loadable bundle still
+# builds (tsup IIFE), and run the DEPLOY-time bundle validator on it. A bundle that trips
+# validate_bundle() in scripts/ops/sync.py (the list of rejects lives there) used to land green
+# and only blow up at the next `just sync`. Not in pre-commit: that gate builds nothing.
+# In the private repo it also leak-scans the public snapshot of HEAD (`just pubsim`): a leak that
+# `just check` cannot see used to stay green until the publish refused it.
+# Never skip it with --no-verify: if it fails, fix the cause (the FAILED line names the stage;
+# rerun that stage by hand).
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+# git exports GIT_DIR / GIT_INDEX_FILE / GIT_WORK_TREE into hooks; a test that runs git in a
+# scratch repo would inherit them and write the REAL index/config. Drop git's repo-local set.
+# shellcheck disable=SC2046
+unset $(git rev-parse --local-env-vars)
+# Deleting a remote branch pushes no tree — git feeds this hook one
+# "<local_ref> <local_sha> <remote_ref> <remote_sha>" line per ref, with an all-zero
+# local_sha for a delete. There is nothing to typecheck, so skip the gate rather than
+# spend a full check+build on `git push origin --delete <branch>`. Everything else,
+# INCLUDING an unreadable or empty stdin, still runs it: the default must be to check.
+# Every stage reads the checkout, not the pushed commit, so a green gate says nothing about a
+# commit other than HEAD (`git push origin <sha>:dev`): such an update is refused before the gate.
+# A commit sharing NO history with HEAD goes through — the public snapshot and the docs-site
+# commit, which their publishers cut from HEAD and push through this hook. HEAD unresolvable, a
+# non-commit object, a history that cannot be walked, or a merge-base error refuses too.
+# The lines are buffered: the devShell re-entry below reads them again from ITS stdin.
+refs=""
+if [ ! -t 0 ]; then
+  refs=$(cat 2>/dev/null) || refs=""
+  saw_ref=0
+  only_deletes=1
+  head=$(git rev-parse -q --verify 'HEAD^{commit}') || head=""
+  while read -r _local_ref local_sha remote_ref _remote_sha; do
+    [ -n "${local_sha:-}" ] || continue
+    saw_ref=1
+    case "$local_sha" in
+      *[!0]*) only_deletes=0 ;;
+      *) continue ;;
+    esac
+    commit=$(git rev-parse -q --verify "$local_sha^{commit}" 2>/dev/null) || commit=""
+    if [ -n "$commit" ] && [ -n "$head" ]; then
+      [ "$commit" != "$head" ] || continue
+      # merge-base's exit code alone cannot tell "no common ancestor" (1) from an unreadable
+      # parent: git 2.43 exits 1 there too, git 2.53 exits 255. So prove first that both
+      # histories can be walked; only then does exit 1 mean unrelated.
+      if git rev-list "$commit" "$head" >/dev/null 2>&1; then
+        mb_rc=0
+        git merge-base "$commit" "$head" >/dev/null 2>&1 || mb_rc=$?
+        [ "$mb_rc" != 1 ] || continue  # exit 1 = no common ancestor
+      fi
+    fi
+    echo "pre-push: refusing — $remote_ref would get $local_sha, but the gate checks the" \
+      "checked-out commit (HEAD ${head:-unresolved}); check out the commit you push and push again." >&2
+    exit 1
+  done <<< "$refs"
+  if [ "$saw_ref" = 1 ] && [ "$only_deletes" = 1 ]; then
+    echo "pre-push: branch deletion only, nothing to check — skipping gate."
+    exit 0
+  fi
+fi
+
+# git started outside the flake devShell (a plain shell, an IDE, an agent) runs this hook without
+# the gate's tools on PATH. Re-enter through the devShell once — after the fast path, so a branch
+# delete never pays for nix — and ONLY where the gate cannot pass as is: no `just`, or the private
+# repo (scripts/private/ — its snapshot guard and `just pubsim` die without gitleaks) without
+# gitleaks. A fork needs no gitleaks and never pays for nix. Hence no probe of nix itself: flakes
+# disabled or a broken devShell can only swap one failure for another, never fail a push that
+# passed before. No flake.nix or no nix: run as is. The exported marker stops a devShell that
+# still lacks the tool from re-entering forever; the buffered ref lines go to the re-entry.
+if [ -z "${GERDA_HOOK_DEVSHELL:-}" ] && [ -f flake.nix ] \
+  && { ! command -v just || { [ -d scripts/private ] && ! command -v gitleaks; }; } > /dev/null 2>&1 \
+  && command -v nix > /dev/null 2>&1; then
+  echo "pre-push: just/gitleaks not on PATH — re-entering the flake devShell (nix develop)" >&2
+  export GERDA_HOOK_DEVSHELL=1
+  exec nix develop "$PWD" -c bash "$0" "$@" <<< "$refs"
+fi
+
+# The gate prints thousands of lines; send them to a per-worktree log under the git dir, and
+# give the terminal one summary line — or, on failure, the failing command and the log's tail.
+log="$(git rev-parse --path-format=absolute --git-path pre-push.log)"
+exec 3>&1 4>&2 >"$log" 2>&1
+failed=""
+gate_done=""
+stages="check, build and bundle validation"
+trap 'failed=$BASH_COMMAND' ERR
+# Ctrl-C / kill: exit with the conventional code and name the signal in the FAILED line.
+trap 'failed="interrupted (SIGINT)"; exit 130' INT
+trap 'failed="terminated (SIGTERM)"; exit 143' TERM
+# Any other fatal signal that bash catches (HUP, PIPE, ALRM, USR1/2, XCPU, VTALRM, …) runs the
+# EXIT trap with $? = 0, then bash re-raises it and the hook dies by it. A signal bash does not
+# catch (KILL, PROF, PWR, STKFLT, the real-time ones) runs no trap: no summary line, but the
+# push still fails. gate_done — set only after the last stage — only keeps
+# "OK" off the terminal for that case; it does not decide the exit status.
+trap 'rc=$?
+if [ "$rc" = 0 ] && [ "$gate_done" = 1 ]; then
+  echo "pre-push: OK — $stages passed (log: $log)" >&3
+else
+  status="rc=$rc"
+  [ "$rc" != 0 ] || { status="killed by a signal"; failed="before the gate finished"; }
+  { echo "pre-push: FAILED ($status) at: ${failed:-?} — last 40 lines of $log:"
+    tail -n 40 "$log"; } >&4
+fi' EXIT
+
+just check
+bun run build
+python3 scripts/ops/sync.py --validate-only
+# The snapshot tooling lives under scripts/private/, which the snapshot strips: a fork has no
+# scripts/private/ and skips the stage (the marker `just test-py` keys on). It scans HEAD; a
+# pushed commit that shares history with HEAD but is not HEAD was refused above.
+if [ -d scripts/private ]; then
+  just pubsim
+  stages="check, build, bundle validation and the snapshot leak scan"
+fi
+gate_done=1

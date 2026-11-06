@@ -1,0 +1,21 @@
+{
+  "desc": "sustain-loop Stage 1 (the productive pipeline) — runs the sustain-mine-smelt PLAN end to end: the orchestrator mines a 3-ore batch (mine count:3 self-completes), then chains into a full furnace cycle that smelts the dug raw iron into ingots. A small iron cluster sits beside the furnace bank so the bot is in reach of the furnace after mining (the base-return walk is the later autonomous phase). PASS = ORE_FOUND (mined) + SMELT_LOADED + SMELT_DONE (smelted), no ERROR. Furnace bank x=5 z=0..2 (plan targets the middle, 5,101,1); ore at x=3..4; bot at (4,101,1).",
+  "ops": [
+    { "op": "clear", "from": [-3, 101, -3], "to": [8, 104, 5] },
+    { "op": "fill", "from": [-3, 100, -3], "to": [8, 100, 5], "block": "minecraft:stone" },
+    { "op": "set", "pos": [5, 101, 0], "block": "minecraft:furnace" },
+    { "op": "set", "pos": [5, 101, 1], "block": "minecraft:furnace" },
+    { "op": "set", "pos": [5, 101, 2], "block": "minecraft:furnace" },
+    { "op": "set", "pos": [7, 101, 1], "block": "minecraft:chest" },
+    { "op": "set", "pos": [3, 101, 1], "block": "minecraft:iron_ore" },
+    { "op": "set", "pos": [3, 101, 0], "block": "minecraft:iron_ore" },
+    { "op": "set", "pos": [4, 101, 0], "block": "minecraft:iron_ore" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:coal", "count": 2 },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [4, 101, 1] }
+  ],
+  "plan": "sustain-mine-smelt",
+  "expect": { "events": ["ORE_FOUND", "SMELT_LOADED", "SMELT_DONE"], "timeout": 120 }
+}

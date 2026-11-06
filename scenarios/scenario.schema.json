@@ -1,0 +1,259 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "scenarios/scenario.schema.json",
+  "title": "Gerda scenario files",
+  "description": "Shape of scenarios/arenas/*.json (#/$defs/arena), scenarios/bench/*.json (#/$defs/bench) and scenarios/sets/*.json (#/$defs/set). Meaning per field: docs/SCENARIOS.md. Cross-field rules (wrong-check twins, known_bad marks) stay in scripts/dev/arena.py#validate_arena_spec and #validate_set_spec. Held to the files and to the parsers by scripts/tests/test_scenario_schema.py.",
+  "$defs": {
+    "arena": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ops"],
+      "properties": {
+        "desc": { "type": "string" },
+        "ops": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/op" } },
+        "mission": { "$ref": "#/$defs/mission" },
+        "plan": { "type": "string", "minLength": 1 },
+        "marker": { "$ref": "#/$defs/marker" },
+        "expect": { "$ref": "#/$defs/expect" },
+        "checks": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/check" } },
+        "known_bad": { "type": "string", "pattern": "\\S" }
+      },
+      "allOf": [
+        { "not": { "required": ["mission", "plan"] } },
+        {
+          "if": { "required": ["expect"] },
+          "then": { "anyOf": [{ "required": ["mission"] }, { "required": ["plan"] }] }
+        },
+        {
+          "if": { "required": ["marker"] },
+          "then": { "anyOf": [{ "required": ["mission"] }, { "required": ["plan"] }] }
+        }
+      ]
+    },
+    "bench": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "desc": { "type": "string" },
+        "ops": { "type": "array", "items": { "$ref": "#/$defs/bench_op" } },
+        "start": { "$ref": "#/$defs/vec3" },
+        "legs": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/leg" } },
+        "mission": { "$ref": "#/$defs/mission" },
+        "marker": { "$ref": "#/$defs/marker" },
+        "collect": { "type": "string", "minLength": 1 },
+        "done_event": { "type": "string", "minLength": 1 },
+        "impls": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "enum": ["astar", "dstar", "greedy"] }
+        },
+        "repeats": { "type": "integer", "minimum": 1 },
+        "timeout": { "type": "number", "exclusiveMinimum": 0 },
+        "arrival": { "type": ["number", "null"] }
+      },
+      "allOf": [
+        { "anyOf": [{ "required": ["legs"] }, { "required": ["mission"] }] },
+        { "not": { "required": ["legs", "mission"] } },
+        {
+          "if": {
+            "anyOf": [{ "required": ["marker"] }, { "required": ["collect"] }, { "required": ["done_event"] }]
+          },
+          "then": { "required": ["mission"] }
+        }
+      ]
+    },
+    "set": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["snapshot"],
+      "properties": {
+        "desc": { "type": "string" },
+        "snapshot": { "$ref": "#/$defs/snapshot" },
+        "ops_generated": { "type": "array", "items": { "$ref": "#/$defs/block_op" } },
+        "ops": { "type": "array", "items": { "$ref": "#/$defs/op" } }
+      }
+    },
+    "vec3": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "type": "integer" }
+    },
+    "box": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to"],
+      "properties": { "from": { "$ref": "#/$defs/vec3" }, "to": { "$ref": "#/$defs/vec3" } }
+    },
+    "snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["boxes"],
+      "properties": {
+        "boxes": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/box" } },
+        "dimension": { "type": "string", "pattern": "^[^:\\s]+:[^:\\s]+$" }
+      }
+    },
+    "mission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "params": { "type": "object" }
+      }
+    },
+    "marker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ore", "x", "z"],
+      "properties": {
+        "ore": { "type": "string", "minLength": 1 },
+        "x": { "type": "integer" },
+        "z": { "type": "integer" }
+      }
+    },
+    "expect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["events"],
+      "properties": {
+        "events": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "timeout": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["jeval", "expect"],
+      "properties": {
+        "desc": { "type": "string" },
+        "jeval": { "type": "string", "pattern": "\\S" },
+        "expect": {},
+        "wrong": { "const": true }
+      }
+    },
+    "leg": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "to"],
+      "properties": { "name": { "type": "string", "minLength": 1 }, "to": { "$ref": "#/$defs/vec3" } }
+    },
+    "op": {
+      "oneOf": [
+        { "$ref": "#/$defs/op_clear" },
+        { "$ref": "#/$defs/op_fill" },
+        { "$ref": "#/$defs/op_set" },
+        { "$ref": "#/$defs/op_clearinv" },
+        { "$ref": "#/$defs/op_give" },
+        { "$ref": "#/$defs/op_select" },
+        { "$ref": "#/$defs/op_player" },
+        { "$ref": "#/$defs/op_marker" },
+        { "$ref": "#/$defs/op_wait" }
+      ]
+    },
+    "bench_op": {
+      "oneOf": [
+        { "$ref": "#/$defs/op_clear" },
+        { "$ref": "#/$defs/op_fill" },
+        { "$ref": "#/$defs/op_set" },
+        { "$ref": "#/$defs/op_clearinv" },
+        { "$ref": "#/$defs/op_give" },
+        { "$ref": "#/$defs/op_select" },
+        { "$ref": "#/$defs/op_marker" },
+        { "$ref": "#/$defs/op_wait" }
+      ]
+    },
+    "block_op": {
+      "oneOf": [
+        { "$ref": "#/$defs/op_clear" },
+        { "$ref": "#/$defs/op_fill" },
+        { "$ref": "#/$defs/op_set" }
+      ]
+    },
+    "op_clear": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "from", "to"],
+      "properties": {
+        "op": { "const": "clear" },
+        "from": { "$ref": "#/$defs/vec3" },
+        "to": { "$ref": "#/$defs/vec3" }
+      }
+    },
+    "op_fill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "from", "to", "block"],
+      "properties": {
+        "op": { "const": "fill" },
+        "from": { "$ref": "#/$defs/vec3" },
+        "to": { "$ref": "#/$defs/vec3" },
+        "block": { "type": "string", "minLength": 1 }
+      }
+    },
+    "op_set": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "pos", "block"],
+      "properties": {
+        "op": { "const": "set" },
+        "pos": { "$ref": "#/$defs/vec3" },
+        "block": { "type": "string", "minLength": 1 }
+      }
+    },
+    "op_clearinv": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op"],
+      "properties": { "op": { "const": "clearinv" } }
+    },
+    "op_give": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "item"],
+      "properties": {
+        "op": { "const": "give" },
+        "item": { "type": "string", "minLength": 1 },
+        "count": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "op_select": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "slot"],
+      "properties": {
+        "op": { "const": "select" },
+        "slot": { "type": "integer", "minimum": 0, "maximum": 8 }
+      }
+    },
+    "op_player": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "pos"],
+      "properties": { "op": { "const": "player" }, "pos": { "$ref": "#/$defs/vec3" } }
+    },
+    "op_marker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "ore", "x", "z"],
+      "properties": {
+        "op": { "const": "marker" },
+        "ore": { "type": "string", "minLength": 1 },
+        "x": { "type": "integer" },
+        "z": { "type": "integer" }
+      }
+    },
+    "op_wait": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "ticks"],
+      "properties": {
+        "op": { "const": "wait" },
+        "ticks": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "desc": "PROACTIVE water-clutch descent (waterDrop move) driven by a REAL mine mission (so reflexes tick). Ground-level sealed bedrock box with a run-up ledge and a 1-wide vertical shaft; an iron_ore at the shaft FLOOR (y45). Test build: cfg.scan.radius=10 (excludes real GTCEu ores in the surrounding world, dist>10) + cfg.scan.yRange=24 (reach the 15-below ore) → mine SCANs ONLY this ore, its only stand-pos is directly ABOVE the floor ore (shaft bottom), reachable ONLY by diving the open column. Bedrock elsewhere → no staircase/bridge/pillar. The planner must pick a waterDrop edge during GOTO and the emergency clutch reflex must fire mid-fall, place water, land at health 20, then mine the ore.",
+  "ops": [
+    { "op": "fill", "from": [6, 43, 3], "to": [13, 63, 7], "block": "minecraft:bedrock" },
+    { "op": "fill", "from": [7, 60, 5], "to": [10, 62, 5], "block": "minecraft:air" },
+    { "op": "fill", "from": [11, 45, 5], "to": [11, 62, 5], "block": "minecraft:air" },
+    { "op": "set", "pos": [11, 45, 5], "block": "minecraft:iron_ore" },
+    { "op": "set", "pos": [11, 46, 5], "block": "minecraft:air" },
+    { "op": "set", "pos": [11, 47, 5], "block": "minecraft:air" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:water_bucket" },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [7, 60, 5] }
+  ]
+}

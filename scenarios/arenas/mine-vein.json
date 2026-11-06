@@ -1,0 +1,17 @@
+{
+  "desc": "mine happy path — a small surface iron cluster the SCAN-driven mine mission finds + drains. Success = ORE_FOUND (SCAN located the cluster and the bot mined it), no ERROR. NOT WAYPOINT: the vein-marker record is deduped against existing 'vein' waypoints within cfg.scan.veinRadius (persistence.ts), so on a repeat run the prior run's persisted marker suppresses a fresh WAYPOINT — a state-dependent side-effect, not a reliable per-run behavioral signal (removed; the persistence layer has its own vitest coverage).",
+  "ops": [
+    { "op": "clear", "from": [-3, 100, -3], "to": [5, 106, 3] },
+    { "op": "fill", "from": [-3, 100, -3], "to": [5, 100, 3], "block": "minecraft:stone" },
+    { "op": "set", "pos": [2, 101, 0], "block": "minecraft:iron_ore" },
+    { "op": "set", "pos": [3, 101, 0], "block": "minecraft:iron_ore" },
+    { "op": "set", "pos": [2, 101, 1], "block": "minecraft:iron_ore" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 64 },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 101, 0] }
+  ],
+  "mission": { "name": "mine" },
+  "expect": { "events": ["ORE_FOUND"], "timeout": 40 }
+}

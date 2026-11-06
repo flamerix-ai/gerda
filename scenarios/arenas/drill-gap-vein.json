@@ -1,0 +1,20 @@
+{
+  "desc": "Drill EXCAVATE mines ACROSS a void (ravine-bisected vein). The drill reaches ore #1 (DRILL_VEIN_REACHED), then EXCAVATE strip-mines the vein box — but that box spans a 5-wide gap (x=3..5), so its serpentine plan (pure geometry, terrain-blind) emits stand-cells hanging over open air. The void guard used to prune every such cell (EXCAVATE_VOID_SKIP), losing the far side of the band; now, with filler in the bag + cfg.nav.bridge, it falls through to the dig/step path and greedy BRIDGES into the band across the gap (EXCAVATE_VOID_BRIDGE → PLACE_CELL lays the deck). Skip remains only the no-filler fallback (covered offline in drill-mission.test.ts). Setup: bot descends shaft x=0 → horizon scan sees ore #1 at (2,101) → mines it, lands on stable stone (support (2,100) stays). The vein box spans the gap to ore #2 at (6,100) on the far rim; corridor cells over x=3..5 hang over the pit. The bot carries 64 cobblestone → the void guard keeps those cells, greedy lays filler across from stable footing, and the far-side ore gets mined. CATCH-FLOOR y=95 spans the FULL excavate box footprint (z -5..3 — the serpentine corridor runs rows out to z=-4, wider than the seeded vein line) so a bridge miss anywhere is a survivable fall onto stone, not a drop past the slab onto real terrain. Success = DRILL_VEIN_REACHED + EXCAVATE_VOID_BRIDGE + PLACE_CELL, no ERROR.",
+  "ops": [
+    { "op": "clear", "from": [-2, 93, -5], "to": [9, 110, 3] },
+    { "op": "fill", "from": [-2, 95, -5], "to": [9, 95, 3], "block": "minecraft:stone" },
+    { "op": "fill", "from": [0, 101, 0], "to": [0, 106, 0], "block": "minecraft:stone" },
+    { "op": "fill", "from": [0, 100, 0], "to": [2, 100, 0], "block": "minecraft:stone" },
+    { "op": "set", "pos": [2, 101, 0], "block": "minecraft:iron_ore" },
+    { "op": "set", "pos": [6, 100, 0], "block": "minecraft:iron_ore" },
+    { "op": "set", "pos": [6, 99, 0], "block": "minecraft:stone" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 64 },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 107, 0] }
+  ],
+  "marker": { "ore": "iron", "x": 0, "z": 0 },
+  "mission": { "name": "drill", "params": { "ore": "iron" } },
+  "expect": { "events": ["DRILL_VEIN_REACHED", "EXCAVATE_VOID_BRIDGE", "PLACE_CELL"], "timeout": 120 }
+}

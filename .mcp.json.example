@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "mc": {
+      "type": "stdio",
+      "command": "uv",
+      "args": ["run", "mcp/server.py"],
+      "env": {
+        "MC_BRIDGE_HOST": "auto",
+        "MC_BRIDGE_PORT": "55544",
+        "MC_BRIDGE_TIMEOUT": "5"
+      }
+    }
+  }
+}

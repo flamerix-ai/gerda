@@ -1,0 +1,16 @@
+{
+  "desc": "chop GOTO leg (own navigator; Baritone removed) — chop reuses scan+navigation+mine. A 3-tall oak trunk at x12 on a flat floor; bot at x0. scan finds the log (LOG_FOUND), greedy GOTO walks the ~12 blocks to it, MINE fells it. PASS = LOG_FOUND with no ERROR; the GOTO→MINE walk + brokenCount are confirmed via the journal afterward (mine emits no log event).",
+  "ops": [
+    { "op": "clear", "from": [-2, 100, -2], "to": [14, 106, 2] },
+    { "op": "fill", "from": [-2, 100, -2], "to": [14, 100, 2], "block": "minecraft:stone" },
+    { "op": "set", "pos": [12, 101, 0], "block": "minecraft:oak_log" },
+    { "op": "set", "pos": [12, 102, 0], "block": "minecraft:oak_log" },
+    { "op": "set", "pos": [12, 103, 0], "block": "minecraft:oak_log" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_axe" },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 101, 0] }
+  ],
+  "mission": { "name": "chop", "params": { "count": 1 } },
+  "expect": { "events": ["LOG_FOUND"], "timeout": 40 }
+}

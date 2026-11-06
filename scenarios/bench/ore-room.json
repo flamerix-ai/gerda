@@ -1,0 +1,18 @@
+{
+  "desc": "Room of ore — a 7x5 (35-block) 1-high iron-ore slab the mine mission drains end to end. Mission-mode A/B: run mine under each planner (astar, dstar), measure ticks from mission_start to SCAN_EXHAUSTED (full drain). 1-high so every block is reachable from an adjacent floor cell (a 2-high body's top layer needs a climb/dig-up the plain mine loop blocks on). Measures whole-mission throughput — nav-between-ore + break — per planner.",
+  "mission": { "name": "mine", "params": {} },
+  "collect": "minecraft:raw_iron",
+  "ops": [
+    { "op": "clear", "from": [44, 100, -3], "to": [62, 108, 3] },
+    { "op": "fill", "from": [44, 100, -3], "to": [62, 100, 3], "block": "minecraft:stone" },
+    { "op": "fill", "from": [52, 101, -2], "to": [58, 101, 2], "block": "minecraft:iron_ore" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 64 },
+    { "op": "select", "slot": 0 }
+  ],
+  "start": [49, 101, 0],
+  "impls": ["astar", "dstar"],
+  "repeats": 2,
+  "timeout": 220
+}
