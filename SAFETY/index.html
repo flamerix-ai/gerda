@@ -1,0 +1,1465 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-source bot framework for Minecraft on jsMacros, with Gerda Bot — an autonomous GregTech mining fleet — as the reference implementation.">
+      
+      
+      
+        <link rel="canonical" href="https://flamerix-ai.github.io/gerda/SAFETY/">
+      
+      
+        <link rel="prev" href="../SCENARIOS/">
+      
+      
+        <link rel="next" href="../IPC/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Safety tiers - Gerda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#safety-architecture-prevention-reaction-recovery" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gerda" class="md-header__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gerda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Safety tiers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gerda" class="md-nav__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gerda
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup from zero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PORTABILITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Works on your MC version
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SERVER_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dedicated server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOT_INSTANCE_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bot instances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Gerda works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MOD_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test your mod in a real game
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_YOUR_OWN_BOT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build your own bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MISSIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FLEET_PLAYBOOK/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fleet playbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RIG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filming & headless rig
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXTENDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending Gerda Bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing (3 layers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SCENARIOS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenario files reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety tiers
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety tiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-rule-that-prevents-duplicated-dead-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The rule that prevents duplicated dead code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reaction-tier-survival-vs-mission-progress-reflexes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reaction tier: survival vs mission-progress reflexes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reaction tier: survival vs mission-progress reflexes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anti-false-positive-confirm-before-teleporting-an-idle-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti-false-positive: confirm before teleporting an idle bot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#below-the-reflexes-held-keys-while-the-worker-tick-blocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Below the reflexes: held keys while the worker tick blocks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prevention-tier-one-clutch-aware-fall-predicate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prevention tier: one clutch-aware fall predicate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prevention-tier-known-before-break-digging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prevention tier: known-before-break digging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drowning-one-hazard-three-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drowning: one hazard, three layers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#client-wedges-are-not-a-safety-tier-concern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Client wedges are not a safety-tier concern
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IPC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge & IPC contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMMANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge command reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EYES_HANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eyes & hands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navbench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigator benches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_STORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build story
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-rule-that-prevents-duplicated-dead-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The rule that prevents duplicated dead code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reaction-tier-survival-vs-mission-progress-reflexes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reaction tier: survival vs mission-progress reflexes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reaction tier: survival vs mission-progress reflexes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anti-false-positive-confirm-before-teleporting-an-idle-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti-false-positive: confirm before teleporting an idle bot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#below-the-reflexes-held-keys-while-the-worker-tick-blocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Below the reflexes: held keys while the worker tick blocks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prevention-tier-one-clutch-aware-fall-predicate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prevention tier: one clutch-aware fall predicate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prevention-tier-known-before-break-digging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prevention tier: known-before-break digging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drowning-one-hazard-three-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drowning: one hazard, three layers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#client-wedges-are-not-a-safety-tier-concern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Client wedges are not a safety-tier concern
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="safety-architecture-prevention-reaction-recovery">Safety architecture — prevention / reaction / recovery<a class="headerlink" href="#safety-architecture-prevention-reaction-recovery" title="Permanent link">&para;</a></h1>
+<p>The bot's self-preservation is <strong>three concerns that cannot overlap by construction</strong>. When you
+add a mission or a guard, decide which tier it belongs to — putting one concern in the wrong tier
+is what creates conflicts and dead code.</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Owns the question</th>
+<th>Scope</th>
+<th>When it runs</th>
+<th>Where it lives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prevention</strong></td>
+<td>"Will I <em>choose</em> to commit to something fatal?"</td>
+<td>self-movement / self-actions only</td>
+<td>plan-time</td>
+<td>planner (<code>shared/domain/planner.ts</code>, <code>movement-types.ts</code>), mission-specific guards (e.g. drill <code>floorVerdict</code>)</td>
+</tr>
+<tr>
+<td><strong>Reaction</strong></td>
+<td>"Is something hurting me <em>right now</em>?"</td>
+<td>any cause, incl. external (OP <code>/tp</code>, mob, lava)</td>
+<td>every tick</td>
+<td>the <strong>reflex layer</strong> (<code>shared/reflexes/</code>)</td>
+</tr>
+<tr>
+<td><strong>Recovery</strong></td>
+<td>"Get to safety + respawn"</td>
+<td>terminal landing</td>
+<td>on a reflex divert / death</td>
+<td><code>bot/capabilities/recover.ts</code> (the <code>RECOVER</code> phase)</td>
+</tr>
+</tbody>
+</table>
+<p>Prevention is plan-time &amp; self-only; reaction is runtime &amp; cause-agnostic; recovery is the landing
+every reaction diverts to. A given piece of logic belongs to exactly one.</p>
+<h2 id="the-rule-that-prevents-duplicated-dead-code">The rule that prevents duplicated dead code<a class="headerlink" href="#the-rule-that-prevents-duplicated-dead-code" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>Missions may PREVENT (proactive, task-specific), but must NOT re-implement REACTION.</strong></p>
+</blockquote>
+<ul>
+<li>✅ The drill refusing to open a shaft floor over water or a fatal drop (<code>floorVerdict</code> in
+  <code>bot/missions/drill/floor-safety.ts</code>)
+  is <strong>Prevention</strong> — task-specific, stays in the mission. It is a <em>different</em> concern from the
+  global <code>swimOut</code> / <code>waterClutch</code> reflexes (the <em>reaction</em> if prevention fails). That is
+  defense-in-depth, <strong>not</strong> duplication.</li>
+<li>❌ A mission with its own <code>if (health &lt; X) teleport()</code> would duplicate the <code>vitals</code> reflex — that
+  is dead <strong>Reaction</strong>. Delete it and let <code>vitals</code> own it (the <code>tool</code> reflex owns worn tools).</li>
+</ul>
+<p>If you catch yourself writing a health/air/fall <em>reaction</em> inside a mission, stop — it belongs in a
+reflex, where it runs for <strong>every</strong> mission and for the idle bot too.</p>
+<h2 id="reaction-tier-survival-vs-mission-progress-reflexes">Reaction tier: survival vs mission-progress reflexes<a class="headerlink" href="#reaction-tier-survival-vs-mission-progress-reflexes" title="Permanent link">&para;</a></h2>
+<p>Reflexes run before mission logic each tick, first-to-fire preempts. They split by an explicit
+<code>survival</code> flag on the capability (<code>shared/kernel/capability.ts</code>):</p>
+<ul>
+<li><strong><code>survival: true</code></strong> — life-preservation. Runs <strong>even when no mission is active</strong> (a parked/IDLE
+  bot must not bleed out), via the kernel's idle survival pass. Members: <code>death</code> (respawn), <code>air</code> +
+  <code>swimOut</code> (don't drown), <code>waterClutch</code> (survive falls), <code>vitals</code> (HP floor + distress). If one
+  diverts, <code>RECOVER</code> runs in the idle path too, so an idle bot fully recovers (incl. teleport).</li>
+<li><strong>mission-progress</strong> (no flag) — only meaningful with a task, so gated on <code>st.running</code>: <code>tool</code>
+  (hot-swap), <code>stuck</code> (stuck <em>relative to a nav goal</em>), <code>hazard</code> (feet in the void, lava or fire →
+  <code>RECOVER</code>), <code>hunger</code>, <code>human</code> (yield the mission).</li>
+</ul>
+<p>This is the complete reflex list (<code>src/shared/reflexes/index.ts</code>). Evaluation order is
+<code>death → vitals → air → waterClutch → swimOut → tool → stuck → hazard → hunger → human</code>.</p>
+<p>This is deliberately <strong>not</strong> "run everything when idle" — only the five survival reflexes do. A
+broken tool on an idle bot does nothing; a drowning idle bot saves itself.</p>
+<h3 id="anti-false-positive-confirm-before-teleporting-an-idle-bot">Anti-false-positive: confirm before teleporting an idle bot<a class="headerlink" href="#anti-false-positive-confirm-before-teleporting-an-idle-bot" title="Permanent link">&para;</a></h3>
+<p>A survival divert to teleport-<code>RECOVER</code> must be <strong>confirmed</strong>, never a one-tick spike:</p>
+<ul>
+<li><code>vitals</code> <strong>distress</strong> requires <strong>repeated damage</strong> — <code>≥ cfg.safety.distressMinEvents</code> distinct damage ticks
+  within <code>cfg.safety.distressWindow</code>, not just "lost N HP". A single survived fall is <em>one</em> event → never trips
+  (so an idle bot that took a fall but is now fine doesn't teleport for nothing); sustained drown /
+  lava / suffocation racks up events → escapes.</li>
+<li>The <code>cfg.safety.minHealth</code> floor fires immediately (you don't reach it from a glitch).</li>
+<li><code>RECOVER</code> mitigates <strong>in place first</strong> (surface via jump) and only teleports once on stable
+  footing — a transient threat stabilises and never escalates.</li>
+</ul>
+<h3 id="below-the-reflexes-held-keys-while-the-worker-tick-blocks">Below the reflexes: held keys while the worker tick blocks<a class="headerlink" href="#below-the-reflexes-held-keys-while-the-worker-tick-blocks" title="Permanent link">&para;</a></h3>
+<p>Every reflex and every navigator veto runs inside a worker tick. A key that the bot holds stays
+held while a worker tick runs, so a tick that blocks lets the body walk with no check at all. In
+RCA I-4 a <code>goto</code> across a hollow-tower roof ran one synchronous extend-replan for about 25 s.
+Forward and sprint were still held from the previous step, and the bot walked off a 39-block
+rim. Two layers stop this:</p>
+<ol>
+<li><strong>Release before a blocking replan.</strong> The executor releases the movement keys before each
+   A* replan (<code>releaseForBlockingWork</code> in <code>shared/nav/core.ts</code>). The drive after the plan
+   presses again what the new route wants. The airborne hold puts the released keys back,
+   because it keeps the heading through a fall.</li>
+<li><strong>Movement-key dead-man in main.js.</strong> main.js ticks on its own thread. When the worker
+   heartbeat (<code>mc_worker_alive</code>) does not change for <code>DEADMAN_STALE_TICKS</code> (10) main ticks,
+   main.js releases the movement, jump, sprint and sneak keys once for that stall. It also
+   stops the forced sprint and writes a <code>DEADMAN</code> record to the journal, which <code>get_logs</code>
+   shows. <code>diag.main.deadman.stalls</code> counts the stalls and <code>lastStallTick</code> gives the main tick
+   of the last one. main.js cannot see which keys the worker held, so the count includes
+   stalls with no key down; it is not a count of prevented falls. A
+   worker that ticks normally changes the heartbeat every tick, so the dead-man does not act
+   on it. When no worker runs (heartbeat 0), the dead-man does nothing, because a person can
+   hold the keys. A stall also releases a key that a person holds at that time; the person
+   must press it again.</li>
+</ol>
+<p>The decision for layer 2 is <code>deadmanStep</code> (<code>shared/harness/deadman.ts</code>, with its plain-JS twin
+in <code>harness/safe-io.js</code>). <code>test-ts/harness-contract.test.ts</code> keeps the two equal.</p>
+<p>The two layers stop the walk, not the stall. A long synchronous replan still blocks the worker
+for its whole length: on the I-4 roof one replan reads about a million cells, about 25 s live.
+During that time the keys are up and the bot stands still, and no reflex runs. A plan is not cut
+short by its read count. A cut turned a reachable leg behind a concave pocket (a lava lake, a
+wide ravine) into a false <code>blocked_no_path</code>; <code>test-ts/nav-replan-safety.test.ts</code> pins that such
+a leg arrives. The D* Lite engine (<code>cfg.nav.dStar</code>, off by default) searches across worker
+ticks, at most <code>cfg.nav.dStarStepPops</code> expansions per tick. The executor does not use it for a
+column leg (<code>src/shared/nav/executor.ts</code>), and the I-4 leg is a column leg, so its replan is one
+synchronous A* search.</p>
+<h2 id="prevention-tier-one-clutch-aware-fall-predicate">Prevention tier: one clutch-aware fall predicate<a class="headerlink" href="#prevention-tier-one-clutch-aware-fall-predicate" title="Permanent link">&para;</a></h2>
+<p>All "will this fall survive?" checks route through <strong>one</strong> SSOT predicate,
+<code>canSurviveFall(drop, cap)</code> (<code>core/prim/movement-physics.ts</code>):</p>
+<div class="highlight"><pre><span></span><code>canSurviveFall(drop, cap) = clutch  ∨  fallDamage(drop, waterBelow) ≤ maxFallDamage
+</code></pre></div>
+<ul>
+<li>The <strong>planner's cheap drop</strong> (<code>dropDownSafe</code>) passes <code>clutch: false</code> — a clutch dive is a
+  <em>separate, costed</em> move (<code>waterDrop</code>), so the cheap drop must not silently offer fatal falls.</li>
+<li>The <strong>executor's fall veto</strong> (<code>src/shared/nav/executor.ts</code> <code>stepIsHazardous</code>) passes <code>clutch: true</code> <strong>when a
+  bucket is carried</strong> (the same gate the planner uses to offer a <code>waterDrop</code>). So the geofence can
+  <strong>never veto a fall the water-clutch would save</strong> — planner and executor stay in lockstep, and the
+  "with a bucket you can fall from any height" capability is honoured, not contradicted.</li>
+</ul>
+<p>Note the <strong>recoverability</strong> guard (descent rim-veto, "can I climb back out?") is a <em>different</em>
+concern and is <strong>not</strong> clutch-aware — the clutch saves the fall, not the climb-back.</p>
+<h2 id="prevention-tier-known-before-break-digging">Prevention tier: known-before-break digging<a class="headerlink" href="#prevention-tier-known-before-break-digging" title="Permanent link">&para;</a></h2>
+<p>The drill's DESCEND shaft never breaks the floor under the bot unless it knows what is below. An
+unloaded or unsensed cell can hide a cave, lava or water, and breaking the floor over it drops the
+bot in. The rule does not cover EXCAVATE: its void guard (<code>guardVoidCell</code>,
+<code>src/bot/missions/drill/excavate.ts</code>) reads an unreadable cell as <code>minecraft:stone</code>.</p>
+<ul>
+<li><strong>The null convention.</strong> A senses <code>BlockReader</code> (<code>src/shared/domain/senses.ts</code>) returns <code>null</code>
+  for an UNKNOWN cell. The drill reads its floor through <code>knownReader</code>
+  (<code>src/bot/missions/drill/descend.ts</code>), which keeps an unreadable cell as <code>null</code> instead of
+  masking it as stone.</li>
+<li><strong>The verdict.</strong> <code>floorVerdict</code> (<code>src/bot/missions/drill/floor-safety.ts</code>) returns <code>unknown</code>
+  when the block to break, or any cell of the fall column down to the landing, reads <code>null</code>.
+  <code>floorUnsafe</code> checks every support cell of the body's footprint (<code>footprintAt</code>).</li>
+<li><strong>The outcome.</strong> With no band mined yet, <code>floorUnsafe</code> logs <code>DRILL_UNKNOWN_BELOW</code> and calls
+  <code>skipUnreachableVein</code> (<code>src/bot/missions/drill/select-vein.ts</code>): the bot goes to the next cached
+  vein, or to <code>PAUSED</code> when none remains. It does not go to <code>ERROR</code>. With a band already mined,
+  the unknown floor is the bottom of the shaft: <code>DRILL_DEPTH_DONE</code>, then <code>PAUSED</code>.</li>
+</ul>
+<h2 id="drowning-one-hazard-three-layers">Drowning: one hazard, three layers<a class="headerlink" href="#drowning-one-hazard-three-layers" title="Permanent link">&para;</a></h2>
+<p>Water is not a <code>classifyBlock</code> hazard, so drowning has its own predicate, <code>submergesAt</code>
+(<code>src/shared/domain/senses.ts</code>): feet cell AND head cell are water. Wading in 1-deep water stays
+allowed. Each layer sits in its own tier:</p>
+<ol>
+<li><strong>Prevention — the navigator veto.</strong> <code>stepIsHazardous</code> (<code>src/shared/nav/executor.ts</code>) refuses
+   a step when the step cell, or the landing below it, is submerging. The drill's own
+   <code>floorVerdict</code> <code>water</code> verdict covers the shaft (see the rule above).</li>
+<li><strong>Reaction — the <code>swimOut</code> reflex</strong> (<code>src/shared/reflexes/swim-out.ts</code>, <code>survival: true</code>).
+   While the bot is submerged and breath is fine, <code>swimOut</code> holds jump and releases forward and
+   sprint until the head clears water. It gives up after <code>cfg.safety.swimOutMaxTicks</code> ticks
+   without a height gain. <code>swimOut</code> does not act in the settled phases <code>RECOVER</code>, <code>PAUSED</code> and
+   <code>ERROR</code> (<code>REFLEX_SETTLED</code>, <code>src/shared/kernel/phase.ts</code>), so a bot that a drill skip left
+   <code>PAUSED</code> in water has only the <code>air</code> reflex. The <code>air</code> reflex (<code>src/shared/reflexes/air.ts</code>) runs first and owns the
+   terminal escape: when the breath fraction drops to <code>cfg.safety.airRecoverPct</code>, <code>air</code> diverts to
+   <code>RECOVER</code>, which holds jump to surface before it teleports (<code>src/bot/capabilities/recover.ts</code>).</li>
+<li><strong>Mark and skip — the drill's memory.</strong> <code>recordDrowned</code>
+   (<code>src/bot/missions/drill/floor-safety.ts</code>) writes a <code>drowned</code> <code>HazardMarker</code> to
+   <code>mc_world.json</code> through <code>writeHazardMarker</code> (<code>src/shared/domain/world-model.ts</code>). Two
+   events write it: <code>floorUnsafe</code> on a <code>water</code> or <code>void</code> verdict with no band mined
+   (<code>DRILL_WATER</code>, <code>DRILL_VOID</code>), and the DESCEND flooded-column watchdog after
+   <code>cfg.drill.waterContactTicks</code> ticks of water contact with no band mined
+   (<code>DRILL_FLOODED_COLUMN</code>). On the next run, <code>selectDrillVein</code>
+   (<code>src/bot/missions/drill/select-vein.ts</code>) aims the vein at a column of its bounding box outside
+   <code>cfg.drill.hazardRadius</code> of every marker, a peer's included. It drops the vein only when every
+   candidate column is marked. The marker turns one abort into prevention for every later run.</li>
+</ol>
+<h2 id="client-wedges-are-not-a-safety-tier-concern">Client wedges are not a safety-tier concern<a class="headerlink" href="#client-wedges-are-not-a-safety-tier-concern" title="Permanent link">&para;</a></h2>
+<p>After a headless death the <em>client process</em> can stay without a loaded world while the bridge
+still answers. That is a process fault, not game state, so it is handled host-side by
+<code>scripts/ops/wedge_watchdog.py</code> (<code>./gerda watchdog</code>): detect, disconnect and reconnect, and
+optionally relaunch. It never touches the kernel or bundle. Needs a running bot:</p>
+<div class="highlight"><pre><span></span><code>./gerda<span class="w"> </span>watchdog<span class="w"> </span>--port<span class="w"> </span><span class="m">55545</span><span class="w"> </span>--once<span class="w">                      </span><span class="c1"># one check: exit 0 healthy, 3 wedged</span>
+./gerda<span class="w"> </span>watchdog<span class="w"> </span>--port<span class="w"> </span><span class="m">55545</span><span class="w"> </span>--server<span class="w"> </span>localhost:25565<span class="w">    </span><span class="c1"># watch; reconnect on a confirmed wedge</span>
+</code></pre></div>
+<p>A relaunch of the instance happens only with <code>--auto-relaunch &lt;instance&gt;</code>; without it the
+watchdog prints the relaunch command and keeps watching.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

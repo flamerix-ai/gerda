@@ -1,0 +1,1625 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-source bot framework for Minecraft on jsMacros, with Gerda Bot — an autonomous GregTech mining fleet — as the reference implementation.">
+      
+      
+      
+        <link rel="canonical" href="https://flamerix-ai.github.io/gerda/MOD_TESTING/">
+      
+      
+        <link rel="prev" href="../ARCHITECTURE/">
+      
+      
+        <link rel="next" href="../BUILD_YOUR_OWN_BOT/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Test your mod in a real game - Gerda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#test-your-mod-in-a-real-game" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gerda" class="md-header__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gerda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Test your mod in a real game
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gerda" class="md-nav__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gerda
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup from zero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PORTABILITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Works on your MC version
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SERVER_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dedicated server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOT_INSTANCE_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bot instances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Gerda works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test your mod in a real game
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test your mod in a real game
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-get-the-repo-and-the-sandbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Get the repo and the sandbox
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-put-your-mod-into-a-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Put your mod into a game
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Put your mod into a game">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#path-a-your-mod-in-a-vanilla-loader-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path A: your mod in a vanilla + loader instance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-b-your-modpack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path B: your modpack
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-write-a-test-an-arena" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Write a test: an arena
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Write a test: an arena">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#make-the-test-able-to-fail-a-known-bad-twin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Make the test able to fail: a known-bad twin
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-worked-example-gregtech-ceu-ore-needs-the-right-pickaxe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Worked example: GregTech CEu ore needs the right pickaxe
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-screenshots-and-video" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Screenshots and video
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-drive-it-from-an-llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Drive it from an LLM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Limits
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_YOUR_OWN_BOT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build your own bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MISSIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FLEET_PLAYBOOK/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fleet playbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RIG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filming & headless rig
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXTENDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending Gerda Bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing (3 layers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SCENARIOS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenario files reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAFETY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety tiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IPC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge & IPC contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMMANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge command reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EYES_HANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eyes & hands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navbench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigator benches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_STORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build story
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-get-the-repo-and-the-sandbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Get the repo and the sandbox
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-put-your-mod-into-a-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Put your mod into a game
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Put your mod into a game">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#path-a-your-mod-in-a-vanilla-loader-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path A: your mod in a vanilla + loader instance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-b-your-modpack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path B: your modpack
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-write-a-test-an-arena" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Write a test: an arena
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Write a test: an arena">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#make-the-test-able-to-fail-a-known-bad-twin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Make the test able to fail: a known-bad twin
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-worked-example-gregtech-ceu-ore-needs-the-right-pickaxe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Worked example: GregTech CEu ore needs the right pickaxe
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-screenshots-and-video" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Screenshots and video
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-drive-it-from-an-llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Drive it from an LLM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Limits
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="test-your-mod-in-a-real-game">Test your mod in a real game<a class="headerlink" href="#test-your-mod-in-a-real-game" title="Permanent link">&para;</a></h1>
+<p>You write a Minecraft mod or maintain a modpack, and you want to check its behaviour in a
+running game: a block drops only for the right tool, a recipe exists, a machine reacts. Unit
+tests do not start Minecraft, and checking by hand does not repeat. This page shows how to run
+such checks with the Gerda harness, headless, in a container, from a few commands.</p>
+<p>What you get:</p>
+<ul>
+<li>A <strong>real Minecraft client</strong> with your mod, in a rootless podman container. It needs no GPU and
+  no screen: the game renders in software on a virtual display.</li>
+<li>A <strong>bridge</strong> into the running client. Through it you read the world, the player and the
+  screens, send chat and commands, take screenshots, and run JavaScript with full Java access
+  (<code>jeval</code>), so you can call your mod's own classes.</li>
+<li><strong>Arenas</strong>: test files that build a small scene and then assert game state. An assertion
+  that does not hold fails the run with the value it got.</li>
+<li>A <strong>video</strong> of the run, recorded off the virtual display and checked to be not black.</li>
+</ul>
+<p>The worked example below tests a feature of GregTech CEu, the mod at the center of the
+Monifactory pack: tungstate ore drops only for an iron pickaxe or better.</p>
+<h2 id="1-get-the-repo-and-the-sandbox">1. Get the repo and the sandbox<a class="headerlink" href="#1-get-the-repo-and-the-sandbox" title="Permanent link">&para;</a></h2>
+<p>You need Linux with rootless podman and internet access. Clone the repo:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/flamerix-ai/gerda
+<span class="nb">cd</span><span class="w"> </span>gerda
+</code></pre></div>
+<p>The sandbox lives in <code>scripts/sandbox/</code>. Its README has the requirements (RAM, disk, CPU), every
+step, the measured times and why each part is built the way it is:
+<a href="https://github.com/flamerix-ai/gerda/blob/main/scripts/sandbox/README.md">scripts/sandbox/README.md</a>.
+Build the image and start the container:</p>
+<div class="highlight"><pre><span></span><code>scripts/sandbox/provision.sh<span class="w"> </span>build<span class="w">      </span><span class="c1"># the image (Ubuntu 24.04, Java 21, Xvfb, Mesa, ffmpeg)</span>
+scripts/sandbox/provision.sh<span class="w"> </span>up<span class="w">         </span><span class="c1"># the container</span>
+</code></pre></div>
+<p>The <code>repo</code> step clones the harness into the container. Its place in the order matters: <code>matrix</code>
+and <code>pack</code> need it to run first, and the Monifactory client gets the harness only from a <code>repo</code>
+that runs after <code>client</code>. Sections 2 and 4 show the order.</p>
+<p><code>provision.sh shell</code> opens a shell in the container. After <code>repo</code>, the clone is <code>~/gerda</code>
+there. In this page, <code>provision.sh …</code> lines run on your machine, and every other command runs
+in that shell, in <code>~/gerda</code>.</p>
+<h2 id="2-put-your-mod-into-a-game">2. Put your mod into a game<a class="headerlink" href="#2-put-your-mod-into-a-game" title="Permanent link">&para;</a></h2>
+<p>Pick one of two paths.</p>
+<h3 id="path-a-your-mod-in-a-vanilla-loader-instance">Path A: your mod in a vanilla + loader instance<a class="headerlink" href="#path-a-your-mod-in-a-vanilla-loader-instance" title="Permanent link">&para;</a></h3>
+<p><code>matrix</code> builds four instances (vanilla + loader + jsMacros), each with a single-player world
+called <code>New World</code>, generated in peaceful mode with cheats allowed (the arena commands need them):</p>
+<div class="highlight"><pre><span></span><code>scripts/sandbox/provision.sh<span class="w"> </span>repo<span class="w"> </span>https://github.com/flamerix-ai/gerda<span class="w">   </span><span class="c1"># the harness, inside</span>
+scripts/sandbox/provision.sh<span class="w"> </span>matrix
+scripts/sandbox/provision.sh<span class="w"> </span>add-mods<span class="w"> </span>Fabric-1.20.1<span class="w"> </span>path/to/yourmod.jar
+scripts/sandbox/provision.sh<span class="w"> </span>start-matrix<span class="w"> </span>Fabric-1.20.1<span class="w">           </span><span class="c1"># opens New World, waits for the bridge</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Instance</th>
+<th>Loader</th>
+<th>Bridge port</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Fabric-1.20.1</code></td>
+<td>Fabric loader + Fabric API</td>
+<td>55560</td>
+</tr>
+<tr>
+<td><code>Fabric-1.21</code></td>
+<td>Fabric loader + Fabric API</td>
+<td>55561</td>
+</tr>
+<tr>
+<td><code>Forge-1.18.2</code></td>
+<td>Forge 40.3.0</td>
+<td>55562</td>
+</tr>
+<tr>
+<td><code>Vanilla-Forge-1.20.1</code></td>
+<td>Forge 47.4.13</td>
+<td>55563</td>
+</tr>
+</tbody>
+</table>
+<p><code>matrix</code> prints the ports, and <code>~/matrix/mc-bots.json</code> keeps them. Check that the game loaded your
+mod:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">P</span><span class="o">=</span><span class="m">55560</span>
+./gerda<span class="w"> </span>ctl<span class="w"> </span>--port<span class="w"> </span><span class="nv">$P</span><span class="w"> </span>ping
+./gerda<span class="w"> </span>ctl<span class="w"> </span>--port<span class="w"> </span><span class="nv">$P</span><span class="w"> </span>send<span class="w"> </span>jeval<span class="w"> </span><span class="s1">'{"code":"Java.type(\"net.fabricmc.loader.api.FabricLoader\").getInstance().isModLoaded(\"yourmodid\")"}'</span>
+</code></pre></div>
+<p>On Forge, ask <code>Java.type("net.minecraftforge.fml.ModList").get().isLoaded("yourmodid")</code> instead.</p>
+<h3 id="path-b-your-modpack">Path B: your modpack<a class="headerlink" href="#path-b-your-modpack" title="Permanent link">&para;</a></h3>
+<p><code>pack</code> builds a test instance from a CurseForge-format modpack zip (<code>manifest.json</code> +
+<code>overrides/</code>). It gives the zip to the launcher's own import, as a player does: the launcher
+downloads the mods with its own CurseForge access. Then <code>pack</code> adds jsMacros when a pinned
+build matches and generates a world:</p>
+<div class="highlight"><pre><span></span><code>scripts/sandbox/provision.sh<span class="w"> </span>repo<span class="w"> </span>https://github.com/flamerix-ai/gerda<span class="w">   </span><span class="c1"># skip if done for path A</span>
+scripts/sandbox/provision.sh<span class="w"> </span>pack<span class="w"> </span>MyPack<span class="w"> </span>path/to/MyPack.zip
+scripts/sandbox/provision.sh<span class="w"> </span>start-matrix<span class="w"> </span>MyPack
+</code></pre></div>
+<p>A zip given by URL needs its sha256 as the third argument, or <code>--unpinned</code> to take it
+unchecked (then it is downloaded again on every run). The step writes the folder, name and sha256
+of each installed mod file to <code>~/.sbx/pack-MyPack-files.tsv</code>. Nothing pins these files.</p>
+<p>If the import cannot finish by itself, install the pack once in your own launcher. Then give
+the step that instance's folder with <code>--from</code>. The step takes the mod files from that folder:</p>
+<div class="highlight"><pre><span></span><code>scripts/sandbox/provision.sh<span class="w"> </span>pack<span class="w"> </span>MyPack<span class="w"> </span>path/to/MyPack.zip<span class="w"> </span>--from<span class="w"> </span>~/.local/share/PrismLauncher/instances/MyPack
+</code></pre></div>
+<p>The import cannot finish by itself when a mod author keeps a file out of third-party
+launchers and no copy of the file is on Modrinth. The step then fails and names each blocked
+file with its CurseForge page. Section 7 tells more.</p>
+<p>The reference pack is set up by its own steps, with a dedicated server: <code>server</code>, <code>client</code>,
+<code>repo</code> and <code>start</code> install and run Monifactory 0.13.4 with the bot account joined on bridge
+port 55544. The worked example in section 4 runs there.</p>
+<h2 id="3-write-a-test-an-arena">3. Write a test: an arena<a class="headerlink" href="#3-write-a-test-an-arena" title="Permanent link">&para;</a></h2>
+<p>An arena is a JSON file in <code>scenarios/arenas/</code>. Its file name is its name. <code>ops</code> build the scene
+with operator commands, then each entry of <code>checks</code> runs one <code>jeval</code> and compares the JSON value
+it returns with <code>expect</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"desc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my block needs a diamond pickaxe"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"ops"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"clear"</span><span class="p">,</span><span class="w"> </span><span class="nt">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">-2</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">-2</span><span class="p">],</span><span class="w"> </span><span class="nt">"to"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">104</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fill"</span><span class="p">,</span><span class="w">  </span><span class="nt">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">-2</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">-2</span><span class="p">],</span><span class="w"> </span><span class="nt">"to"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">],</span><span class="w"> </span><span class="nt">"block"</span><span class="p">:</span><span class="w"> </span><span class="s2">"minecraft:stone"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"set"</span><span class="p">,</span><span class="w">   </span><span class="nt">"pos"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="nt">"block"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mymod:my_block"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"clearinv"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"give"</span><span class="p">,</span><span class="w">  </span><span class="nt">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"minecraft:diamond_pickaxe"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"player"</span><span class="p">,</span><span class="w"> </span><span class="nt">"pos"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wait"</span><span class="p">,</span><span class="w">  </span><span class="nt">"ticks"</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"checks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"desc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"the block is there"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"jeval"</span><span class="p">:</span><span class="w"> </span><span class="s2">"World.getBlock(0, 101, 2).getId()"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"expect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mymod:my_block"</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"desc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"it drops only for the correct tool"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"jeval"</span><span class="p">:</span><span class="w"> </span><span class="s2">"World.getBlock(0, 101, 2).getBlockStateHelper().isToolRequired()"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"expect"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>ops</code> (all of them: <code>scripts/dev/arena.py</code>, top of the file): <code>clear</code> and <code>fill</code> a box, <code>set</code>
+  one block, <code>clearinv</code>, <code>give</code> an item, <code>select</code> a hotbar slot, <code>player</code> teleports the client,
+  <code>wait</code> sleeps a number of ticks. The <code>wait</code> at the end gives the server time to sync the
+  blocks and items back to the client before the checks read them.</li>
+<li><code>jeval</code> code is JavaScript with the full jsMacros and Java scope: <code>World</code>, <code>Player</code>,
+  <code>Client</code>, <code>Java.type(...)</code> for any class, your mod's included. The value of the last
+  expression is the result. <code>expect</code> is compared as canonical JSON, so <code>true</code> is not <code>1</code>.</li>
+<li>Every check runs, also after one fails. The arena passes only when all of them pass.</li>
+<li>An arena can also run a bot mission and assert its log events (<code>mission</code> + <code>expect.events</code>);
+  that is how the Gerda bot's own behaviour is tested (<a href="../TESTING/">TESTING.md</a>).</li>
+</ul>
+<h3 id="make-the-test-able-to-fail-a-known-bad-twin">Make the test able to fail: a known-bad twin<a class="headerlink" href="#make-the-test-able-to-fail-a-known-bad-twin" title="Permanent link">&para;</a></h3>
+<p>A check that cannot fail proves nothing. Pair each arena with a <strong>known-bad</strong> twin: the same
+file with a <code>known_bad</code> key that says what it wrongly claims, and <code>"wrong": true</code> on each check
+whose <code>expect</code> is wrong on purpose. Each marked check needs exactly one unmarked check in the
+same file with the same <code>jeval</code> and the right value as its <code>expect</code>; the arena does not load
+without it. A marked check passes only when its own answer is exactly that right value and the
+unmarked check passed too: the game refused the wrong claim by giving the right answer. The
+other checks keep their correct values and must pass as usual.</p>
+<p>So the known-bad fails when the game accepts the wrong value, because then the check cannot
+tell right from wrong. It also fails on any other answer: a jeval error, a null, a third value
+(for example, the pickaxe was never given), or when a scene check fails (the block was not
+placed). A broken setup never counts as a pass.</p>
+<h2 id="4-worked-example-gregtech-ceu-ore-needs-the-right-pickaxe">4. Worked example: GregTech CEu ore needs the right pickaxe<a class="headerlink" href="#4-worked-example-gregtech-ceu-ore-needs-the-right-pickaxe" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/flamerix-ai/gerda/blob/main/scenarios/arenas/gtceu-ore-harvest-tier.json"><code>gtceu-ore-harvest-tier.json</code></a>
+places <code>gtceu:tungstate_ore</code>, gives the player a stone pickaxe (hotbar slot 0) and an iron
+pickaxe (slot 1), and asks the game's own harvest predicate with each one in hand.
+<code>Player.hasCorrectToolForDrops</code> is the method Forge calls when a block breaks, to decide if
+it drops anything. The check selects the slot and returns both the held item and the answer:</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">Player</span><span class="p">.</span><span class="nx">openInventory</span><span class="p">().</span><span class="nx">setSelectedHotbarSlotIndex</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span><span class="w">   </span><span class="c1">// the stone pickaxe</span>
+<span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="nx">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Player</span><span class="p">.</span><span class="nx">getPlayer</span><span class="p">();</span>
+<span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="nx">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">World</span><span class="p">.</span><span class="nx">getBlock</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">101</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">).</span><span class="nx">getBlockStateHelper</span><span class="p">().</span><span class="nx">getRaw</span><span class="p">();</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">held</span><span class="o">:</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">getMainHand</span><span class="p">().</span><span class="nx">getItemId</span><span class="p">(),</span>
+<span class="w">           </span><span class="nx">drops</span><span class="o">:</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">getRaw</span><span class="p">()[</span><span class="nx">srg</span><span class="p">(</span><span class="s1">'Player'</span><span class="p">,</span><span class="w"> </span><span class="s1">'hasCorrectToolForDrops'</span><span class="p">)](</span><span class="nx">state</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<span class="p">})()</span>
+</code></pre></div>
+<p><code>getRaw()</code> gives the Minecraft object. On Forge its methods have SRG names (<code>m_36298_</code>);
+<code>srg(class, member)</code> looks the name up for you (<a href="../EXTENDING/">EXTENDING.md</a> § SRG-mapping
+workflow). Its twin,
+<a href="https://github.com/flamerix-ai/gerda/blob/main/scenarios/arenas/gtceu-ore-harvest-tier-knownbad.json"><code>gtceu-ore-harvest-tier-knownbad.json</code></a>,
+keeps the ore check and the stone-pickaxe check as they are, and adds the same stone-pickaxe
+question once more, marked <code>"wrong": true</code>, claiming that the stone pickaxe gets the drop.</p>
+<p>Run it in the Monifactory sandbox. The arena ops are operator commands, and the bot plays as a
+normal non-op player, so give it operator rights from the server console for the test, and take
+them back after:</p>
+<div class="highlight"><pre><span></span><code>scripts/sandbox/provision.sh<span class="w"> </span>server<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>scripts/sandbox/provision.sh<span class="w"> </span>client
+scripts/sandbox/provision.sh<span class="w"> </span>repo<span class="w"> </span>https://github.com/flamerix-ai/gerda<span class="w">   </span><span class="c1"># again if it ran before client</span>
+scripts/sandbox/provision.sh<span class="w"> </span>start<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>scripts/sandbox/provision.sh<span class="w"> </span>verify
+scripts/sandbox/provision.sh<span class="w"> </span>console<span class="w"> </span>op<span class="w"> </span>student_bot
+</code></pre></div>
+<p>In the container shell:</p>
+<div class="highlight"><pre><span></span><code>just<span class="w"> </span>gate-live<span class="w"> </span>gtceu-ore-harvest-tier<span class="w"> </span>gtceu-ore-harvest-tier-knownbad
+</code></pre></div>
+<p>The output. The values are the ones a run in a fresh sandbox returned:</p>
+<div class="highlight"><pre><span></span><code>── gtceu-ore-harvest-tier ──
+  8 ops applied
+  [PASS] the placed block is GTCEu tungstate ore: "gtceu:tungstate_ore"
+  [PASS] it drops only for the correct tool: true
+  [PASS] a stone pickaxe in hand gets no drop: {"held": "minecraft:stone_pickaxe", "drops": false}
+  [PASS] an iron pickaxe in hand gets the drop: {"held": "minecraft:iron_pickaxe", "drops": true}
+  [PASS] checks
+── gtceu-ore-harvest-tier-knownbad ──
+  8 ops applied
+  [PASS] the placed block is GTCEu tungstate ore: "gtceu:tungstate_ore"
+  [PASS] a stone pickaxe in hand gets no drop: {"held": "minecraft:stone_pickaxe", "drops": false}
+  [PASS] WRONG ON PURPOSE: a stone pickaxe in hand gets the drop: refused the wrong {"held": "minecraft:stone_pickaxe", "drops": true} — got the right {"held": "minecraft:stone_pickaxe", "drops": false}
+  [PASS] checks
+=== gate summary ===
+  PASS  gtceu-ore-harvest-tier
+  PASS  gtceu-ore-harvest-tier-knownbad
+[gate] 2/2 passed
+</code></pre></div>
+<p>A failing check prints <code>got …, expected …</code>, and the command exits <code>1</code>. Exit <code>2</code> means there was
+no verdict: no client answered on the bridge. After the test:</p>
+<div class="highlight"><pre><span></span><code>scripts/sandbox/provision.sh<span class="w"> </span>console<span class="w"> </span>deop<span class="w"> </span>student_bot
+</code></pre></div>
+<p><code>just gate-live</code> with no names runs every arena in <code>scenarios/arenas/</code>, including the bot's
+own. Name yours to run only them.</p>
+<p><strong>On a test-root instance (path A or B)</strong> the player is the world's owner, so it needs no <code>op</code>.
+Run an arena against its port with the arena tool:</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>scripts/dev/arena.py<span class="w"> </span>run<span class="w"> </span>my-block-check<span class="w"> </span>--port<span class="w"> </span><span class="m">55560</span>
+python3<span class="w"> </span>scripts/dev/arena.py<span class="w"> </span>clean<span class="w"> </span>my-block-check<span class="w"> </span>--port<span class="w"> </span><span class="m">55560</span><span class="w">   </span><span class="c1"># the scene back to air</span>
+</code></pre></div>
+<p><code>arena.py run</code> exits <code>0</code> on a pass and <code>1</code> on a fail, like the gate; it does not clean up.</p>
+<h2 id="5-screenshots-and-video">5. Screenshots and video<a class="headerlink" href="#5-screenshots-and-video" title="Permanent link">&para;</a></h2>
+<p>Screenshots come from the game itself:</p>
+<div class="highlight"><pre><span></span><code>./gerda<span class="w"> </span>ctl<span class="w"> </span>send<span class="w"> </span>screenshot<span class="w">     </span><span class="c1"># writes &lt;instance&gt;/minecraft/screenshots/ai_shot.png</span>
+</code></pre></div>
+<p><code>provision.sh fetch &lt;path&gt;</code> copies a file out of the container. A path without a leading <code>/</code> is
+relative to the container user's home.</p>
+<p>To record a video, run <code>record</code> while the test runs, for example from a second terminal:</p>
+<div class="highlight"><pre><span></span><code>scripts/sandbox/provision.sh<span class="w"> </span>record<span class="w"> </span><span class="m">60</span><span class="w"> </span>gtceu-run.mp4
+</code></pre></div>
+<p><code>record</code> films the window of the running client with ffmpeg (<code>x11grab</code> on the virtual display,
+h264, 30 fps) and measures the file with <code>scripts/rig/motion_probe.py</code>: the mean brightness
+(luma) of the sampled frames, and how much the picture moves. A recording whose mean luma is
+under 30 of 255 fails as black. A good one is copied to your machine. Add <code>--detach</code> to
+record in the background; <code>provision.sh wait record</code> then waits for it, and <code>provision.sh fetch
+recordings/&lt;name&gt;.mp4</code> copies it out.</p>
+<p>The video runs at the speed of the game. Software rendering gives about 20-30 fps.</p>
+<h2 id="6-drive-it-from-an-llm">6. Drive it from an LLM<a class="headerlink" href="#6-drive-it-from-an-llm" title="Permanent link">&para;</a></h2>
+<p>The MCP server (<code>mcp/server.py</code>) gives an LLM client the same bridge as tools: <code>mc_ping</code>,
+<code>mc_get_state</code>, <code>mc_send</code> (any bridge command, <code>jeval</code> too) and the fleet tools. <code>mc://api</code>
+lists every command. The server runs inside the container and talks MCP over stdio, so a client
+on your machine can start it through <code>podman exec</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"mcpServers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"mc"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"podman"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"exec"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-i"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-u"</span><span class="p">,</span><span class="w"> </span><span class="s2">"student"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-w"</span><span class="p">,</span><span class="w"> </span><span class="s2">"/home/student/gerda"</span><span class="p">,</span><span class="w"> </span><span class="s2">"gerda-sandbox"</span><span class="p">,</span>
+<span class="w">               </span><span class="s2">"uv"</span><span class="p">,</span><span class="w"> </span><span class="s2">"run"</span><span class="p">,</span><span class="w"> </span><span class="s2">"mcp/server.py"</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Set <code>MC_BRIDGE_PORT</code> (for example with <code>"env"</code> in that entry, or <code>podman exec -e</code>) to talk to a
+test-root instance instead of 55544. From Python scripts, <code>mcp/bridge_client.py</code> is the client:
+<code>BridgeClient(host="127.0.0.1", port=P).send("jeval", {"code": "..."})</code>.</p>
+<h2 id="7-limits">7. Limits<a class="headerlink" href="#7-limits" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Speed.</strong> Software rendering is slow: the modded client takes several minutes to load, and
+  right after a join the bridge answers late for a minute. Retry the first command. A check
+  that depends on timing can fail on a busy machine.</li>
+<li><strong>Offline accounts.</strong> The sandbox plays with offline accounts (<code>online-mode=false</code>). There is
+  no Microsoft login, so no Realms and no online-mode servers.</li>
+<li><strong>Forge vs Fabric.</strong> The harness (bridge, screenshots, <code>jeval</code>, arenas, MCP) works on every
+  Minecraft version that has a jsMacros build. <code>srg()</code> and the SRG names are Forge-only: on
+  Fabric, raw Minecraft methods have intermediary names (<code>method_…</code>), so prefer the jsMacros
+  helpers there. The Gerda <strong>bot</strong> moves only on Forge. See <a href="../PORTABILITY/">PORTABILITY.md</a>.</li>
+<li><strong>jsMacros sets the version range.</strong> No jsMacros build for your Minecraft version means no
+  harness. Which versions have one: <a href="../PORTABILITY/">PORTABILITY.md</a>.</li>
+<li><strong>CurseForge downloads.</strong> The sandbox does not download from CurseForge itself. <code>pack</code> and
+  the Monifactory <code>client</code> step give the modpack zip to the launcher's own import
+  (FreesmLauncher, a Prism Launcher fork). The launcher gets the files through its own access
+  to the official CurseForge API, so it keeps the choice of each mod author:</li>
+<li>A file that its author keeps out of third-party launchers comes from the author's own
+    Modrinth upload, when there is one. In Monifactory 0.13.4, one file comes this way
+    (<code>entityculling</code>), and it is the same file, byte for byte.</li>
+<li>Otherwise the launcher asks for a manual download. The sandbox does not wait for a click.
+    The step fails and prints each blocked file with its CurseForge page.</li>
+</ul>
+<p>The fallback for either step is <code>--from &lt;folder&gt;</code>: install the pack once in your own
+  launcher (blocked files downloaded by hand), then point the step at that instance's folder.
+  The step copies the mod files from there. For Monifactory, the step checks every file
+  against the sha256 pins (<code>monifactory-0.13.4-client-files.tsv</code>), the same check as after
+  the import. A missing or changed file fails. For a pack of your own, the step records the
+  files and their sha256, and nothing pins them.
+- <strong>Client-side view.</strong> <code>jeval</code> runs in the client. It reads the client's copy of the world,
+  which the server keeps in sync, and calls game logic on the client side. Logic that only the
+  server runs (a machine's recipe processing, world generation) is not directly reachable from
+  a multiplayer client; in a single-player world the integrated server is in the same process.
+- <strong>Not tested here:</strong> NeoForge and Quilt instances, more than one test-root client at a time,
+  and hosts other than Linux with rootless podman.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

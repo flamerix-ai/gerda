@@ -1,0 +1,1890 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-source bot framework for Minecraft on jsMacros, with Gerda Bot — an autonomous GregTech mining fleet — as the reference implementation.">
+      
+      
+      
+        <link rel="canonical" href="https://flamerix-ai.github.io/gerda/SCENARIOS/">
+      
+      
+        <link rel="prev" href="../TESTING/">
+      
+      
+        <link rel="next" href="../SAFETY/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Scenario files reference - Gerda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#scenario-files-arenas-benches-and-sets" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gerda" class="md-header__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gerda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Scenario files reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gerda" class="md-nav__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gerda
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup from zero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PORTABILITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Works on your MC version
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SERVER_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dedicated server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOT_INSTANCE_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bot instances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Gerda works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MOD_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test your mod in a real game
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_YOUR_OWN_BOT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build your own bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MISSIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FLEET_PLAYBOOK/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fleet playbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RIG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filming & headless rig
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXTENDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending Gerda Bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing (3 layers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenario files reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenario files reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-schema-and-what-checks-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The schema and what checks it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arenas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arenas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Arenas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-minimal-arena" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A minimal arena
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arena-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arena keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-expect-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The expect block
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#known-bad-arenas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known-bad arenas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ops
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benches
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#film-sets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Film sets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-a-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running a scenario
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAFETY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety tiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IPC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge & IPC contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMMANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge command reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EYES_HANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eyes & hands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navbench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigator benches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_STORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build story
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-schema-and-what-checks-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The schema and what checks it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arenas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arenas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Arenas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-minimal-arena" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A minimal arena
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arena-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arena keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-expect-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The expect block
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#known-bad-arenas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known-bad arenas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ops
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benches
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#film-sets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Film sets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-a-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running a scenario
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="scenario-files-arenas-benches-and-sets">Scenario files: arenas, benches and sets<a class="headerlink" href="#scenario-files-arenas-benches-and-sets" title="Permanent link">&para;</a></h1>
+<p>A scenario file is a JSON spec that builds a small scene in the live game and then tests
+or measures something in it. This page is the field reference for the three families the
+host tools read. How to run the gate and why it is shaped this way: <a href="../TESTING/">TESTING.md</a>.
+A tutorial for mod checks: <a href="../MOD_TESTING/">MOD_TESTING.md</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Directory</th>
+<th>What it is</th>
+<th>Read by</th>
+<th>Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scenarios/arenas/&lt;name&gt;.json</code></td>
+<td><strong>Arena</strong>: build, then run a mission or a plan and assert its log events, or assert game state with <code>checks</code></td>
+<td><code>scripts/dev/arena.py</code>, <code>scripts/dev/gate_live.py</code></td>
+<td><code>#/$defs/arena</code></td>
+</tr>
+<tr>
+<td><code>scenarios/bench/&lt;name&gt;.json</code></td>
+<td><strong>Bench</strong>: build a course, then time navigator legs or one mission per planner</td>
+<td><code>scripts/dev/navbench.py</code>, <code>scripts/dev/gate_live.py</code></td>
+<td><code>#/$defs/bench</code></td>
+</tr>
+<tr>
+<td><code>scenarios/sets/&lt;name&gt;.json</code></td>
+<td><strong>Film set</strong>: staging captured from the live world, no assertions</td>
+<td><code>scripts/dev/arena.py</code></td>
+<td><code>#/$defs/set</code></td>
+</tr>
+</tbody>
+</table>
+<p>The shot lists in <code>scenarios/shots/</code> are a different format, read by the shot runner:
+<a href="../RIG/#shot-runner">RIG.md § Shot runner</a>.</p>
+<p><strong>The name of a spec is its file name</strong> without <code>.json</code>. An arena or set file that declares a
+<code>name</code> key does not load (<code>scripts/dev/arena.py#_load</code>).</p>
+<h2 id="the-schema-and-what-checks-it">The schema and what checks it<a class="headerlink" href="#the-schema-and-what-checks-it" title="Permanent link">&para;</a></h2>
+<p><code>scenarios/scenario.schema.json</code> (JSON Schema 2020-12) states the shape of every family: the
+keys, their types, which are required, and which combinations are refused. The parsers read
+keys with plain dict access and ignore a key they do not know. Without the schema, a typo
+such as <code>expcet</code> would silently drop an arena out of the full gate.</p>
+<p><code>scripts/tests/test_scenario_schema.py</code> (part of <code>just test-py</code>, so of the pre-push <code>just
+check</code>) holds the schema in place:</p>
+<ul>
+<li>every tracked file matches its <code>$defs</code> entry, and every arena and set also loads through
+  <code>scripts/dev/arena.py#_load</code>, which adds the cross-field rules of
+  <code>scripts/dev/arena.py#validate_arena_spec</code> and <code>scripts/dev/arena.py#validate_set_spec</code>;</li>
+<li>every key the three parsers read is in the schema, and every schema key is read by a
+  parser;</li>
+<li>every key and op kind in the schema is named on this page, and the examples on this page
+  validate;</li>
+<li>every event in <code>expect.events</code> and every <code>done_event</code> is a string literal in <code>src/</code>, every
+  mission name has a <code>###</code> heading in <a href="../MISSIONS/">MISSIONS.md</a>, and every plan name is a plan
+  in <code>src/bot/plans/</code>.</li>
+</ul>
+<p>To check a new file before you run it in the game:</p>
+<div class="highlight"><pre><span></span><code>python3 -m unittest discover -s scripts/tests -t scripts/tests -p test_scenario_schema.py
+</code></pre></div>
+<h2 id="arenas">Arenas<a class="headerlink" href="#arenas" title="Permanent link">&para;</a></h2>
+<h3 id="a-minimal-arena">A minimal arena<a class="headerlink" href="#a-minimal-arena" title="Permanent link">&para;</a></h3>
+<!-- scenario-example: arena -->
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"desc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"goto walks 8 blocks over flat stone; PASS = GOTO_ARRIVED, no ERROR"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"ops"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"clear"</span><span class="p">,</span><span class="w"> </span><span class="nt">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">-2</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">-2</span><span class="p">],</span><span class="w"> </span><span class="nt">"to"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">104</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fill"</span><span class="p">,</span><span class="w"> </span><span class="nt">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">-2</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">-2</span><span class="p">],</span><span class="w"> </span><span class="nt">"to"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="nt">"block"</span><span class="p">:</span><span class="w"> </span><span class="s2">"minecraft:stone"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"clearinv"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"give"</span><span class="p">,</span><span class="w"> </span><span class="nt">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"minecraft:diamond_pickaxe"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"select"</span><span class="p">,</span><span class="w"> </span><span class="nt">"slot"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"player"</span><span class="p">,</span><span class="w"> </span><span class="nt">"pos"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"mission"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"goto"</span><span class="p">,</span><span class="w"> </span><span class="nt">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"x"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="nt">"y"</span><span class="p">:</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="nt">"z"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"expect"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"GOTO_ARRIVED"</span><span class="p">],</span><span class="w"> </span><span class="nt">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>scenarios/arenas/goto-travel.json</code> is this arena.</p>
+<h3 id="arena-keys">Arena keys<a class="headerlink" href="#arena-keys" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Required / default</th>
+<th>Meaning</th>
+<th>Parser</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>desc</code></td>
+<td>string</td>
+<td>optional</td>
+<td>One line printed by <code>build</code> and <code>list</code>. Say what PASS proves.</td>
+<td><code>scripts/dev/arena.py#build</code></td>
+</tr>
+<tr>
+<td><code>ops</code></td>
+<td>list of <a href="#ops">ops</a></td>
+<td>required, at least one</td>
+<td>Build the scene and kit the bot, in order.</td>
+<td><code>scripts/dev/arena.py#_build_ops</code></td>
+</tr>
+<tr>
+<td><code>mission</code></td>
+<td>object</td>
+<td>optional</td>
+<td>The mission to start after the build: <code>name</code> (a mission in <a href="../MISSIONS/">MISSIONS.md</a>) and <code>params</code> (an object, default <code>{}</code>, the mission's parameters as documented there). Sent as <code>mission_start</code>.</td>
+<td><code>scripts/dev/arena.py#run</code></td>
+</tr>
+<tr>
+<td><code>plan</code></td>
+<td>string</td>
+<td>optional; not with <code>mission</code></td>
+<td>A plan name from <code>src/bot/plans/</code> (for example <code>sustain-cycle</code>), sent as <code>plan_start</code>. The orchestrator chains its steps.</td>
+<td><code>scripts/dev/arena.py#run</code></td>
+</tr>
+<tr>
+<td><code>marker</code></td>
+<td>object</td>
+<td>optional; needs <code>mission</code> or <code>plan</code></td>
+<td>A prospector vein for the <code>drill</code> mission: <code>ore</code> (an ore intent, such as <code>iron</code>), <code>x</code>, <code>z</code> (integers). Written into the world store after the worker restart and before the mission starts.</td>
+<td><code>scripts/dev/arena.py#_seed_marker</code></td>
+</tr>
+<tr>
+<td><code>expect</code></td>
+<td>object</td>
+<td>optional; needs <code>mission</code> or <code>plan</code></td>
+<td>The log events that prove the mission worked: <a href="#the-expect-block">the <code>expect</code> block</a>.</td>
+<td><code>scripts/dev/arena.py#run</code></td>
+</tr>
+<tr>
+<td><code>checks</code></td>
+<td>list of <a href="#checks">checks</a></td>
+<td>optional, at least one</td>
+<td><code>jeval</code> assertions on game state.</td>
+<td><code>scripts/dev/arena.py#run_checks</code></td>
+</tr>
+<tr>
+<td><code>known_bad</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Marks the arena as a negative control and says which wrong behaviour it asserts: <a href="#known-bad-arenas">known-bad arenas</a>.</td>
+<td><code>scripts/dev/arena.py#validate_arena_spec</code></td>
+</tr>
+</tbody>
+</table>
+<p>What <code>run</code> does, in order (<code>scripts/dev/arena.py#run</code>): build the ops; with neither <code>mission</code> nor
+<code>plan</code>, run the <code>checks</code> and stop (no checks: build only, a PASS). Otherwise restart the worker,
+respawn the bot if it is dead and teleport it back to the first <code>player</code> op
+(<code>scripts/dev/arena.py#_ensure_bot_ready</code>), seed <code>marker</code>, start the mission or plan, wait for
+<code>expect</code>, then run the <code>checks</code>.</p>
+<p><strong>Gate membership.</strong> <code>just gate-live</code> with no names runs every arena that asserts something:
+a non-empty <code>expect.events</code>, or <code>checks</code> (<code>scripts/dev/arena.py#asserts</code>). An arena with
+neither, such as <code>parkour-gap2</code>, is a build-only fixture you run by name. The <code>--quick</code> core is
+the list <code>CORE</code> in <code>scripts/dev/gate_live.py</code>.</p>
+<h3 id="the-expect-block">The <code>expect</code> block<a class="headerlink" href="#the-expect-block" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Required / default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>events</code></td>
+<td>list of strings</td>
+<td>required, at least one</td>
+<td>Event names from the bot's log, such as <code>ORE_FOUND</code>, <code>GOTO_ARRIVED</code>, <code>DRILL_VEIN_REACHED</code>. Every one must appear. Order and count do not matter.</td>
+</tr>
+<tr>
+<td><code>timeout</code></td>
+<td>number (seconds)</td>
+<td>default <code>60</code></td>
+<td>Wall-clock time to wait for all of them.</td>
+</tr>
+</tbody>
+</table>
+<p>The runner polls the log once a second and reads only the entries after the last <code>BOOT</code>, so an
+earlier worker boot cannot pass or fail this run (<code>scripts/dev/arena.py#_recent_events</code>). The
+arena FAILS when an event is still missing at the timeout, or when any <code>TRANSITION</code> to <code>ERROR</code>
+was logged, even if every event arrived. Name events the mission emits on every run, not ones
+that depend on remembered world state: <a href="../TESTING/#adding-an-arena">TESTING.md § Adding an arena</a>.</p>
+<p>With a <code>mission</code> but no <code>expect</code>, <code>run</code> runs the <code>checks</code> right after the mission starts, without
+waiting for the mission.</p>
+<h3 id="checks">Checks<a class="headerlink" href="#checks" title="Permanent link">&para;</a></h3>
+<p>A check runs one <code>jeval</code> (the privileged bridge command: full jsMacros and Java scope, including
+<code>srg(class, member)</code> from <code>harness/ext.js</code>) and compares the value of its last expression with
+<code>expect</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Required / default</th>
+<th>Meaning</th>
+<th>Parser</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>desc</code></td>
+<td>string</td>
+<td>optional; default: the first 60 characters of <code>jeval</code></td>
+<td>Printed on the PASS/FAIL line.</td>
+<td><code>scripts/dev/arena.py#check_outcome</code></td>
+</tr>
+<tr>
+<td><code>jeval</code></td>
+<td>string, not blank</td>
+<td>required</td>
+<td>JavaScript. Wrap several statements in an IIFE, <code>(function () { …; return v; })()</code>.</td>
+<td><code>scripts/dev/arena.py#validate_arena_spec</code></td>
+</tr>
+<tr>
+<td><code>expect</code></td>
+<td>any JSON value</td>
+<td>required</td>
+<td>The exact value <code>jeval</code> must return.</td>
+<td><code>scripts/dev/arena.py#check_outcome</code></td>
+</tr>
+<tr>
+<td><code>wrong</code></td>
+<td><code>true</code></td>
+<td>optional; only in a <code>known_bad</code> arena</td>
+<td>This check's <code>expect</code> is wrong on purpose.</td>
+<td><code>scripts/dev/arena.py#wrong_outcome</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>expect</code> is compared as canonical JSON (<code>json.dumps(…, sort_keys=True)</code>,
+<code>scripts/dev/arena.py#_canon</code>): <code>true</code> is not <code>1</code>, <code>1</code> is not <code>1.0</code>, and the key order of an object
+does not matter. An object must match whole. With <code>"expect": { "held":
+"minecraft:iron_pickaxe", "drops": true }</code>, the <code>jeval</code> has to return an object with exactly
+those two keys and values; a missing key, an extra key or <code>"drops": 1</code> is a FAIL. A <code>jeval</code> error
+is a FAIL that prints the error. Every check runs, also after one fails, and the list passes only
+when all of them pass.</p>
+<!-- scenario-example: checks -->
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"desc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"an iron pickaxe harvests tungstate ore"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"ops"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"clear"</span><span class="p">,</span><span class="w"> </span><span class="nt">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">-2</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">-2</span><span class="p">],</span><span class="w"> </span><span class="nt">"to"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">104</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fill"</span><span class="p">,</span><span class="w"> </span><span class="nt">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">-2</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">-2</span><span class="p">],</span><span class="w"> </span><span class="nt">"to"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">],</span><span class="w"> </span><span class="nt">"block"</span><span class="p">:</span><span class="w"> </span><span class="s2">"minecraft:stone"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"set"</span><span class="p">,</span><span class="w"> </span><span class="nt">"pos"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="nt">"block"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtceu:tungstate_ore"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"clearinv"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"give"</span><span class="p">,</span><span class="w"> </span><span class="nt">"item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"minecraft:iron_pickaxe"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"player"</span><span class="p">,</span><span class="w"> </span><span class="nt">"pos"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wait"</span><span class="p">,</span><span class="w"> </span><span class="nt">"ticks"</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"checks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"desc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"the placed block is GTCEu tungstate ore"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"jeval"</span><span class="p">:</span><span class="w"> </span><span class="s2">"World.getBlock(0, 101, 2).getId()"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"expect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtceu:tungstate_ore"</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"desc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"an iron pickaxe in hand gets the drop"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"jeval"</span><span class="p">:</span><span class="w"> </span><span class="s2">"(function () { Player.openInventory().setSelectedHotbarSlotIndex(0); var p = Player.getPlayer(); var state = World.getBlock(0, 101, 2).getBlockStateHelper().getRaw(); return { held: p.getMainHand().getItemId(), drops: p.getRaw()[srg('Player', 'hasCorrectToolForDrops')](state) }; })()"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"expect"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"held"</span><span class="p">:</span><span class="w"> </span><span class="s2">"minecraft:iron_pickaxe"</span><span class="p">,</span><span class="w"> </span><span class="nt">"drops"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The full pair is <code>scenarios/arenas/gtceu-ore-harvest-tier.json</code> and its known-bad twin.</p>
+<h3 id="known-bad-arenas">Known-bad arenas<a class="headerlink" href="#known-bad-arenas" title="Permanent link">&para;</a></h3>
+<p>A known-bad arena proves that a check can fail. The rules, all enforced at load
+(<code>scripts/dev/arena.py#validate_arena_spec</code>):</p>
+<ul>
+<li><code>known_bad</code> is a non-blank string, and the arena marks at least one check <code>"wrong": true</code>.
+  A <code>wrong</code> check outside a <code>known_bad</code> arena is refused, and so is any <code>wrong</code> value but <code>true</code>.</li>
+<li>Each <code>wrong</code> check has exactly one unmarked <strong>twin</strong> in the same arena: the same <code>jeval</code>
+  text and a different <code>expect</code>, the right value (<code>scripts/dev/arena.py#twin_index</code>).</li>
+</ul>
+<p>A <code>wrong</code> check PASSES only when its <code>jeval</code> succeeded, returned exactly its twin's <code>expect</code>, and
+the twin passed (<code>scripts/dev/arena.py#wrong_outcome</code>). The wrong value itself, a <code>null</code>, a third
+value or an error is a FAIL. No verdict is inverted. Why and how to write one:
+<a href="../MOD_TESTING/">MOD_TESTING.md</a>.</p>
+<h2 id="ops">Ops<a class="headerlink" href="#ops" title="Permanent link">&para;</a></h2>
+<p>Every op is an object with an <code>op</code> key. Coordinates are lists of three integers <code>[x, y, z]</code>;
+boxes are inclusive and their corners can come in any order. Build ops go to the game as chat
+commands, so the driven client must be opped. Each op is one bridge round-trip
+(<code>scripts/dev/arena.py#_apply_op</code>).</p>
+<table>
+<thead>
+<tr>
+<th><code>op</code></th>
+<th>Other keys</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>clear</code></td>
+<td><code>from</code>, <code>to</code></td>
+<td><code>/fill … minecraft:air</code> over the box.</td>
+</tr>
+<tr>
+<td><code>fill</code></td>
+<td><code>from</code>, <code>to</code>, <code>block</code></td>
+<td><code>/fill</code> the box with <code>block</code>. <code>block</code> goes into the command as written, so it can carry a block state or NBT (<code>minecraft:chest{Items:[…]}</code>). Vanilla <code>/fill</code> refuses a box of more than 32768 blocks.</td>
+</tr>
+<tr>
+<td><code>set</code></td>
+<td><code>pos</code>, <code>block</code></td>
+<td><code>/setblock</code> one block.</td>
+</tr>
+<tr>
+<td><code>clearinv</code></td>
+<td>—</td>
+<td><code>/clear @s</code>: empty the bot's inventory.</td>
+</tr>
+<tr>
+<td><code>give</code></td>
+<td><code>item</code>, <code>count</code> (integer ≥ 1, default <code>1</code>)</td>
+<td><code>/give @s</code>.</td>
+</tr>
+<tr>
+<td><code>select</code></td>
+<td><code>slot</code> (integer 0–8)</td>
+<td>Select a hotbar slot (taps <code>key.hotbar.&lt;slot + 1&gt;</code>).</td>
+</tr>
+<tr>
+<td><code>player</code></td>
+<td><code>pos</code></td>
+<td><code>/tp @s</code> to the centre of the block: <code>x + 0.5</code>, <code>y</code>, <code>z + 0.5</code>. An arena's first <code>player</code> op is also its start, where the bot is put back before the mission.</td>
+</tr>
+<tr>
+<td><code>marker</code></td>
+<td><code>ore</code>, <code>x</code>, <code>z</code></td>
+<td>Write a prospector vein into the world store at once, host-side.</td>
+</tr>
+<tr>
+<td><code>wait</code></td>
+<td><code>ticks</code> (integer ≥ 0)</td>
+<td>Sleep <code>ticks / 20</code> seconds on the host, for example to let the server sync blocks and items to the client before the checks read them.</td>
+</tr>
+</tbody>
+</table>
+<p><code>clean</code> sets every <code>clear</code>, <code>fill</code> and <code>set</code> region back to air (<code>scripts/dev/arena.py#clean</code>).
+Build and clean hold a <code>/forceload</code> ticket on the touched chunks while they write
+(<code>scripts/dev/arena.py#forceload_box</code>). Arenas build at fixed coordinates, and each <code>clean</code> clears
+only its own regions, so two arenas must not overlap.</p>
+<p>A <code>marker</code> op and a top-level <code>marker</code> write the world store of the instance in <code>MC_INST</code>
+(default: the human instance; <code>gate_live.py --port</code> points it at that bot's instance).</p>
+<h2 id="benches">Benches<a class="headerlink" href="#benches" title="Permanent link">&para;</a></h2>
+<p>A bench races navigator legs, or one whole mission, per planner. Running and reading the
+results: <a href="../navbench/">navbench.md</a>.</p>
+<!-- scenario-example: bench -->
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"desc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"flat sprint, 12 blocks"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"ops"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"clear"</span><span class="p">,</span><span class="w"> </span><span class="nt">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">39</span><span class="p">,</span><span class="w"> </span><span class="mi">88</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">],</span><span class="w"> </span><span class="nt">"to"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">70</span><span class="p">,</span><span class="w"> </span><span class="mi">94</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fill"</span><span class="p">,</span><span class="w"> </span><span class="nt">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">39</span><span class="p">,</span><span class="w"> </span><span class="mi">88</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">],</span><span class="w"> </span><span class="nt">"to"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">70</span><span class="p">,</span><span class="w"> </span><span class="mi">88</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">],</span><span class="w"> </span><span class="nt">"block"</span><span class="p">:</span><span class="w"> </span><span class="s2">"minecraft:stone"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"clearinv"</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"start"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">41</span><span class="p">,</span><span class="w"> </span><span class="mi">89</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"legs"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"flat12"</span><span class="p">,</span><span class="w"> </span><span class="nt">"to"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">53</span><span class="p">,</span><span class="w"> </span><span class="mi">89</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">}],</span>
+<span class="w">  </span><span class="nt">"repeats"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Required / default</th>
+<th>Meaning</th>
+<th>Parser</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>default: the file name</td>
+<td>The label of the report.</td>
+<td><code>scripts/dev/navbench.py#_load</code></td>
+</tr>
+<tr>
+<td><code>desc</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Printed by <code>build</code>.</td>
+<td><code>scripts/dev/navbench.py#build</code></td>
+</tr>
+<tr>
+<td><code>ops</code></td>
+<td>list of ops</td>
+<td>optional</td>
+<td>The same op vocabulary, without <code>player</code>: the runner teleports the bot to <code>start</code> itself before every run.</td>
+<td><code>scripts/dev/navbench.py#build</code></td>
+</tr>
+<tr>
+<td><code>start</code></td>
+<td><code>[x, y, z]</code></td>
+<td>required</td>
+<td>Where every run starts.</td>
+<td><code>scripts/dev/navbench.py#_anchor</code></td>
+</tr>
+<tr>
+<td><code>legs</code></td>
+<td>list of <code>{ "name", "to" }</code></td>
+<td>a leg bench: required; not with <code>mission</code></td>
+<td>Each leg drives from <code>start</code> to <code>to</code> through the nav probe.</td>
+<td><code>scripts/dev/navbench.py#run</code></td>
+</tr>
+<tr>
+<td><code>mission</code></td>
+<td><code>{ "name", "params" }</code></td>
+<td>a mission bench: required; not with <code>legs</code></td>
+<td>One whole mission per run, timed from <code>mission_start</code> to <code>done_event</code>.</td>
+<td><code>scripts/dev/navbench.py#race_mission</code></td>
+</tr>
+<tr>
+<td><code>marker</code></td>
+<td><code>{ "ore", "x", "z" }</code></td>
+<td>optional; needs <code>mission</code></td>
+<td>A vein seeded after each worker restart, for <code>drill</code>.</td>
+<td><code>scripts/dev/navbench.py#race_mission</code></td>
+</tr>
+<tr>
+<td><code>collect</code></td>
+<td>item id</td>
+<td>optional; needs <code>mission</code></td>
+<td>The item whose bag count before and after the run is the yield.</td>
+<td><code>scripts/dev/navbench.py#race_mission</code></td>
+</tr>
+<tr>
+<td><code>done_event</code></td>
+<td>string</td>
+<td>default <code>SCAN_EXHAUSTED</code>; needs <code>mission</code></td>
+<td>The event that ends a mission run (<code>drill</code> ends at <code>VEINS_DEPLETED</code>).</td>
+<td><code>scripts/dev/navbench.py#race_mission</code></td>
+</tr>
+<tr>
+<td><code>impls</code></td>
+<td>list of <code>astar</code>, <code>dstar</code></td>
+<td>default <code>["astar"]</code></td>
+<td>The planners to race. <code>greedy</code> is an alias of <code>astar</code>; any other name stops the run.</td>
+<td><code>scripts/dev/navbench.py#_engine</code></td>
+</tr>
+<tr>
+<td><code>repeats</code></td>
+<td>integer ≥ 1</td>
+<td>default <code>3</code> (legs), <code>2</code> (mission)</td>
+<td>Runs per leg and planner.</td>
+<td><code>scripts/dev/navbench.py#run</code>, <code>scripts/dev/navbench.py#run_mission</code></td>
+</tr>
+<tr>
+<td><code>timeout</code></td>
+<td>number (seconds)</td>
+<td>default <code>30</code> (legs), <code>220</code> (mission)</td>
+<td>Per run.</td>
+<td><code>scripts/dev/navbench.py#run</code>, <code>scripts/dev/navbench.py#run_mission</code></td>
+</tr>
+<tr>
+<td><code>arrival</code></td>
+<td>number or <code>null</code></td>
+<td>default (<code>null</code>, <code>0</code>): <code>cfg.nav.gotoArrivalDist</code></td>
+<td>How close to <code>to</code> counts as arrived, in blocks.</td>
+<td><code>scripts/dev/navbench.py#race_leg</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>just gate-live</code> runs every bench with <code>legs</code> and no <code>mission</code>, A* only, each leg once with one
+retry; PASS = arrived on every leg (<code>scripts/dev/gate_live.py#_gate_bench</code>).</p>
+<h2 id="film-sets">Film sets<a class="headerlink" href="#film-sets" title="Permanent link">&para;</a></h2>
+<p>A set is staging for a filmed scene: the arena format without assertions, plus a <code>snapshot</code>
+declaration. <code>run --all</code> and <code>just gate-live</code> never read <code>scenarios/sets/</code>; a set is addressed
+as <code>sets/&lt;name&gt;</code>. Workflow: <a href="../RIG/#sets-restage-the-world-from-data">RIG.md § Sets</a>.</p>
+<!-- scenario-example: set -->
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"desc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a 3x3 pad"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"snapshot"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"boxes"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="nt">"to"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="p">}],</span>
+<span class="w">    </span><span class="nt">"dimension"</span><span class="p">:</span><span class="w"> </span><span class="s2">"minecraft:overworld"</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"ops_generated"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"clear"</span><span class="p">,</span><span class="w"> </span><span class="nt">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="nt">"to"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fill"</span><span class="p">,</span><span class="w"> </span><span class="nt">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="nt">"to"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="nt">"block"</span><span class="p">:</span><span class="w"> </span><span class="s2">"minecraft:stone"</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"ops"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">"op"</span><span class="p">:</span><span class="w"> </span><span class="s2">"marker"</span><span class="p">,</span><span class="w"> </span><span class="nt">"ore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"iron"</span><span class="p">,</span><span class="w"> </span><span class="nt">"x"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">"z"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}]</span>
+<span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Required / default</th>
+<th>Meaning</th>
+<th>Parser</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>desc</code></td>
+<td>string</td>
+<td>optional</td>
+<td>As for an arena.</td>
+<td><code>scripts/dev/arena.py#build</code></td>
+</tr>
+<tr>
+<td><code>snapshot</code></td>
+<td>object</td>
+<td>required</td>
+<td><code>boxes</code>: a non-empty list of <code>{ "from", "to" }</code> boxes to capture, each at most 32768 cells (<code>SNAPSHOT_MAX_CELLS</code>). <code>dimension</code>: a namespaced dimension id, stamped by <code>snapshot</code>; <code>build</code> and <code>clean</code> refuse a client in another dimension.</td>
+<td><code>scripts/dev/arena.py#validate_set_spec</code>, <code>scripts/dev/arena.py#_assert_dimension</code></td>
+</tr>
+<tr>
+<td><code>ops_generated</code></td>
+<td>list of <code>clear</code>/<code>fill</code>/<code>set</code> ops</td>
+<td>written by <code>snapshot</code></td>
+<td>A generated file section: re-run <code>snapshot</code>, never edit it by hand.</td>
+<td><code>scripts/dev/arena.py#compress_box</code></td>
+</tr>
+<tr>
+<td><code>ops</code></td>
+<td>list of ops</td>
+<td>optional</td>
+<td>Hand-written setup applied after <code>ops_generated</code>: <code>marker</code>, <code>give</code>, <code>player</code>, <code>select</code>, <code>wait</code>, and any block a snapshot cannot express (stairs and slabs restage in their default orientation).</td>
+<td><code>scripts/dev/arena.py#_build_ops</code></td>
+</tr>
+</tbody>
+</table>
+<p>A set that declares <code>mission</code>, <code>plan</code>, <code>expect</code>, <code>checks</code> or <code>known_bad</code> does not load. A build
+over 2000 ops is refused (<code>BUILD_MAX_OPS</code>, <code>scripts/dev/arena.py#_check_op_budget</code>).</p>
+<h2 id="running-a-scenario">Running a scenario<a class="headerlink" href="#running-a-scenario" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>just gate-live mine-vein drill-vein                    # named arenas through the gate (no benches)
+just gate-live                                         # every asserting arena + every leg bench
+python3 scripts/dev/arena.py list                      # arenas and sets, with their desc
+python3 scripts/dev/arena.py run mine-vein --port &lt;p&gt;  # one arena: build, run, verify; exit 0/1
+python3 scripts/dev/arena.py build mine-vein           # only build the scene
+python3 scripts/dev/arena.py clean mine-vein           # its regions back to air
+./gerda bench run flat                                 # one bench
+</code></pre></div>
+<p><code>arena.py run</code> does not clean up after itself; <code>gate_live.py</code> cleans each arena, pass or fail.
+Run every live scenario against an opped test bot in a flat test area, and confirm the
+connected player is the bot: <a href="../TESTING/#layer-3-the-arena-gate-just-gate-live">TESTING.md § Layer 3</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

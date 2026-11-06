@@ -1,0 +1,1496 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-source bot framework for Minecraft on jsMacros, with Gerda Bot — an autonomous GregTech mining fleet — as the reference implementation.">
+      
+      
+      
+        <link rel="canonical" href="https://flamerix-ai.github.io/gerda/PORTABILITY/">
+      
+      
+        <link rel="prev" href="../SETUP/">
+      
+      
+        <link rel="next" href="../SERVER_SETUP/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Works on your MC version - Gerda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#works-on-your-minecraft-version" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gerda" class="md-header__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gerda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Works on your MC version
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gerda" class="md-nav__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gerda
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup from zero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Works on your MC version
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Works on your MC version
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#support-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Support matrix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Support matrix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-not-supported-looks-like-so-you-recognise-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What "not supported" looks like, so you recognise it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#easy-recipe-a-vanilla-instance-on-any-version-in-the-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Easy recipe — a vanilla instance on any version in the matrix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#your-own-bot-on-any-version-the-portable-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Your own bot on any version — the portable path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#another-modpack-on-forge-1201" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Another modpack on Forge 1.20.1
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#porting-the-bot-to-fabric-or-neoforge-contributors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Porting the bot to Fabric or NeoForge (contributors)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SERVER_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dedicated server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOT_INSTANCE_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bot instances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Gerda works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MOD_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test your mod in a real game
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_YOUR_OWN_BOT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build your own bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MISSIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FLEET_PLAYBOOK/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fleet playbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RIG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filming & headless rig
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXTENDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending Gerda Bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing (3 layers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SCENARIOS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenario files reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAFETY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety tiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IPC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge & IPC contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMMANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge command reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EYES_HANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eyes & hands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navbench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigator benches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_STORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build story
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#support-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Support matrix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Support matrix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-not-supported-looks-like-so-you-recognise-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What "not supported" looks like, so you recognise it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#easy-recipe-a-vanilla-instance-on-any-version-in-the-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Easy recipe — a vanilla instance on any version in the matrix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#your-own-bot-on-any-version-the-portable-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Your own bot on any version — the portable path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#another-modpack-on-forge-1201" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Another modpack on Forge 1.20.1
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#porting-the-bot-to-fabric-or-neoforge-contributors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Porting the bot to Fabric or NeoForge (contributors)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="works-on-your-minecraft-version">Works on your Minecraft version<a class="headerlink" href="#works-on-your-minecraft-version" title="Permanent link">&para;</a></h1>
+<p>You play a different Minecraft version, or no modpack at all? This page says, honestly, what
+runs where today, and gives a short recipe to try it on a plain vanilla instance. The rest of
+the docs assume our reference setup: <strong>Monifactory 0.13.x on Forge 1.20.1</strong> with jsMacros 1.9.2.</p>
+<p>Gerda is two things, and they port differently:</p>
+<ul>
+<li><strong>The harness</strong> (<code>harness/</code> — bridge, main, ext, eyes &amp; hands, <code>./gerda ctl</code>, the MCP
+  server) talks to the game through jsMacros' own API and plain Java. It runs on <strong>every
+  Minecraft version that has a jsMacros build</strong>, Forge or Fabric. Your own plain-JS bot
+  (<a href="../BUILD_YOUR_OWN_BOT/">BUILD_YOUR_OWN_BOT.md</a>) uses the same API, so it runs there too.</li>
+<li><strong>Gerda Bot</strong> (the <code>src/</code> bundle — missions, navigator, reflexes) also calls raw Minecraft
+  methods by their <strong>Forge SRG names</strong> (<code>m_146922_</code> and friends). It moves on <strong>Forge</strong>. On
+  Fabric those names do not exist: the bot loads, but refuses to move (see below).</li>
+</ul>
+<h2 id="support-matrix">Support matrix<a class="headerlink" href="#support-matrix" title="Permanent link">&para;</a></h2>
+<p>Tested with the versions in each row, in a clean Ubuntu 24.04 container, single-player world, no modpack unless
+the row says so. "Measured" cells were run live, the Fabric and 1.18.2 bot cells in a re-test
+of the portability fixes.</p>
+<table>
+<thead>
+<tr>
+<th>Minecraft</th>
+<th>Loader</th>
+<th>jsMacros</th>
+<th>Harness (ctl, MCP, scan, screenshot, GUI read)</th>
+<th>Your plain-JS bot</th>
+<th>Gerda Bot</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.20.1 + Monifactory</td>
+<td>Forge 47.4</td>
+<td>1.9.2</td>
+<td>✅ reference setup</td>
+<td>✅</td>
+<td>✅ reference setup</td>
+</tr>
+<tr>
+<td>1.20.1, no modpack</td>
+<td>Forge 47.4</td>
+<td>1.9.2</td>
+<td>✅ measured</td>
+<td>✅ measured</td>
+<td>✅ measured: scan finds the vanilla ores without regenerating anything; <code>goto</code> arrives</td>
+</tr>
+<tr>
+<td>1.18.2, no modpack</td>
+<td>Forge 40.3</td>
+<td>1.9.2</td>
+<td>✅ measured</td>
+<td>✅ measured</td>
+<td>✅ measured: smoke 21/21, <code>goto</code> arrives</td>
+</tr>
+<tr>
+<td>1.20.1, no modpack</td>
+<td>Fabric</td>
+<td>1.9.2</td>
+<td>✅ measured, except the SRG hands (below)</td>
+<td>✅ measured</td>
+<td>❌ measured: loads, but every movement mission stops at once with <code>RUNTIME_UNSUPPORTED</code> and the bot does not move; smoke 19/21</td>
+</tr>
+<tr>
+<td>1.21 / 1.21.1</td>
+<td>Fabric</td>
+<td>1.9.3-<strong>beta</strong></td>
+<td>✅ measured, except the SRG hands</td>
+<td>✅ measured</td>
+<td>❌ measured: same as Fabric 1.20.1</td>
+</tr>
+<tr>
+<td>1.20.2 – 1.21.1</td>
+<td>NeoForge</td>
+<td>1.9.2 / 1.9.3-beta</td>
+<td>not tested</td>
+<td>not tested</td>
+<td>not tested — expect the Fabric picture (Mojang names at runtime, no SRG)</td>
+</tr>
+<tr>
+<td>1.21.2 and newer</td>
+<td>any</td>
+<td><strong>none published</strong></td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<p>The first gate is jsMacros itself: <strong>no jsMacros build for your version, no harness and no
+bot.</strong> Builds that exist (Modrinth <code>jsmacros</code> project, up to 1.9.3-beta; the newest is a 2024
+beta, nothing for 1.21.2+):</p>
+<ul>
+<li>Forge: 1.17.1, 1.18.2, 1.19.4, 1.20.1</li>
+<li>Fabric: 1.17.1 – 1.20.6, and 1.21 / 1.21.1 (1.9.3-beta)</li>
+<li>NeoForge: 1.20.2 – 1.21.1</li>
+</ul>
+<p>Pick yours on <a href="https://modrinth.com/mod/jsmacros/versions">https://modrinth.com/mod/jsmacros/versions</a> (filter by game version and loader).
+For Forge 1.20.1 the exact file is in <a href="../SETUP/#4-install-jsmacros">SETUP.md, Quickstart step 4</a>.</p>
+<h3 id="what-not-supported-looks-like-so-you-recognise-it">What "not supported" looks like, so you recognise it<a class="headerlink" href="#what-not-supported-looks-like-so-you-recognise-it" title="Permanent link">&para;</a></h3>
+<p>On a Fabric (or any non-SRG) runtime the harness tells you itself:</p>
+<ul>
+<li><code>./gerda ctl diag</code> → <code>main.srgCheck.ok</code> is <code>"0"</code> and <code>srgCheck.runtime.reason</code> says
+  <code>Fabric/intermediary runtime (Minecraft class is net.minecraft.class_310)</code>. The one boot log
+  line for the check starts with <code>!!! SRG boot-check FAIL</code>.</li>
+<li>The SRG-based GUI hands — <code>click {x,y}</code>, <code>scroll</code>, <code>type</code>, <code>keypress</code> — answer an error
+  naming the missing SRG method. <code>key</code>, <code>read_screen</code>, <code>close_screen</code> and the widget clicks
+  <code>click {i}</code> / <code>click {text}</code> use jsMacros' own API and keep working.</li>
+<li>A movement mission (<code>goto</code>, <code>mine</code>, <code>drill</code>, …) releases every key on its first step and goes
+  to <code>ERROR</code>; the journal (<code>./gerda ctl get_logs</code>) has <code>MISSION_FATAL</code> with
+  <code>RUNTIME_UNSUPPORTED: player.onGround failed (…)</code> — or <code>interact.setYaw failed</code>, whichever
+  SRG call the drive makes first (measured: <code>player.onGround</code>). The bot never walks without a
+  heading: before this check, <code>goto</code> on Fabric walked straight along yaw 0 and fell 19 blocks.</li>
+<li><code>./gerda smoke</code> fails two checks, <code>player.onGround</code> and <code>interact.setYaw(current)</code> (the
+  navigator's steer path), even though <code>interact.lookAt</code> passes: 19/21.</li>
+</ul>
+<p>Everywhere, on every version without those mods: <code>emi_*</code>, <code>prospect</code>, <code>drill</code>, and the quest
+tools fail with a "class not found" error naming the class (<code>prospect</code> says
+<code>prospect needs GregTech CEu: …</code>). Nothing else is affected.</p>
+<p>If the bot bundle does not load at all, every bot command answers <code>no module loaded</code>, and
+<code>./gerda ctl get_state</code> shows why under <code>worker.fatal</code> (<code>worker.status</code> is <code>load_failed</code>).</p>
+<h2 id="easy-recipe-a-vanilla-instance-on-any-version-in-the-matrix">Easy recipe — a vanilla instance on any version in the matrix<a class="headerlink" href="#easy-recipe-a-vanilla-instance-on-any-version-in-the-matrix" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Launcher.</strong> Install a MultiMC-family launcher —
+   <a href="https://github.com/FreesmTeam/FreesmLauncher/releases">FreesmLauncher</a> or
+   <a href="https://prismlauncher.org">Prism Launcher</a> — and add an offline account
+   (<a href="../SETUP/#3-get-the-game">SETUP.md step 3</a>, items 1–2). The launcher picks the right Java
+   for the version by itself (1.21 needs Java 21).</li>
+<li><strong>Instance.</strong> <em>Add Instance → Vanilla → your version</em>, and under <em>Mod loader</em> pick <strong>Forge</strong>
+   (or <strong>Fabric</strong> if you only want the harness). Use a name without spaces, for example
+   <code>Forge-1.20.1</code>. Fabric API is not needed by jsMacros.</li>
+<li><strong>jsMacros.</strong> Download the ONE jar for your version and loader from
+   <a href="https://modrinth.com/mod/jsmacros/versions">https://modrinth.com/mod/jsmacros/versions</a> into the instance's <code>minecraft/mods/</code> folder
+   (launcher: right-click the instance → <em>Folder</em>). The JavaScript engine is inside that jar;
+   there is nothing else to install.</li>
+<li><strong>World and first starts.</strong> Start the instance, <em>Singleplayer → Create New World</em> (Peaceful
+   is easiest), then <em>Save and Quit</em> and close the game. Start it <strong>once more</strong> and close it
+   again: the second start upgrades <code>config/jsMacros/options.json</code> to <code>"version": 3</code>, and
+   services registered before that upgrade are lost.</li>
+<li><strong>Deploy.</strong> From the repo: <code>just sync</code> (point it at your launcher first if needed —
+   <a href="../SETUP/#3-get-the-game">SETUP.md step 3, item 4</a>). It writes into <strong>every</strong> instance that has
+   jsMacros and gives each its own bridge port in <code>&lt;instance&gt;/minecraft/config/jsMacros/Macros/bridge_port.txt</code>
+   (the first one gets 55544). If another client is running, add <code>--skip &lt;thatInstance&gt;</code>.</li>
+<li><strong>Register the services</strong> (game closed): add <code>main</code> and <code>bridge</code> to <code>core.services</code> in
+   <code>options.json</code>, or use the in-game jsMacros GUI (default key <code>J</code>) → <em>Services</em> → <code>+</code>. Both
+   ways: <a href="../SETUP/#6-register-the-services-in-game-once">SETUP.md step 6</a>.</li>
+<li><strong>Check.</strong> Start the game and open your world, then
+   <code>./gerda ctl --port &lt;port&gt; --wait-ready 60 ping</code> → <code>pong</code>, and
+   <code>./gerda ctl --port &lt;port&gt; get_state</code> shows your position. The MCP server works the same way
+   with <code>MC_BRIDGE_HOST=127.0.0.1 MC_BRIDGE_PORT=&lt;port&gt;</code>. <code>./gerda ctl --port &lt;port&gt; diag</code>
+   shows <code>srgCheck</code>: <code>"1"</code> on Forge, <code>"0"</code> with a reason on Fabric.</li>
+<li><strong>Walk (Forge only).</strong>
+   <code>./gerda ctl --port &lt;port&gt; send mission_start '{"name": "goto", "params": {"x": 100, "y": 64, "z": 200}}'</code>.
+   (<code>./gerda ctl goto</code> is a Baritone chat command, not our navigator.)</li>
+</ol>
+<p><strong>Version-specific notes.</strong> Before 1.20 there is no quick-play: open the world from
+<em>Singleplayer → Play Selected World</em> yourself. The SRG names the bot uses are the same on Forge
+1.18.2 and 1.20.1, so the 1.20.1 <code>harness/srg_names.json</code> is fine there; <code>./gerda srg</code> itself
+reads 1.20.1 Forge mappings by default and needs <code>--proguard</code> / <code>--merged</code> paths for anything
+else (<code>./gerda srg -h</code>).</p>
+<h2 id="your-own-bot-on-any-version-the-portable-path">Your own bot on any version — the portable path<a class="headerlink" href="#your-own-bot-on-any-version-the-portable-path" title="Permanent link">&para;</a></h2>
+<p>The plain-JS template uses only jsMacros' API, so it runs everywhere the harness runs (measured
+on Forge 1.20.1, Forge 1.18.2, Fabric 1.20.1 and Fabric 1.21):</p>
+<ol>
+<li>Copy <code>harness/bot_template.js</code> to <code>yourbot.js</code>; keep its last line,
+   <code>globalThis.Module = MyModule;</code>.</li>
+<li>Deploy it as the worker bundle into that one instance:
+   <code>./gerda sync -s yourbot.js -n __gerda_bot.bundle.js --only &lt;instance&gt;</code>, then
+   <code>./gerda ctl --port &lt;port&gt; send reload_worker</code>.</li>
+<li>Every command the container does not own reaches your <code>command()</code>:
+   <code>./gerda ctl --port &lt;port&gt; send my_start</code>.</li>
+</ol>
+<p>Details: <a href="../BUILD_YOUR_OWN_BOT/">BUILD_YOUR_OWN_BOT.md</a>.</p>
+<h2 id="another-modpack-on-forge-1201">Another modpack on Forge 1.20.1<a class="headerlink" href="#another-modpack-on-forge-1201" title="Permanent link">&para;</a></h2>
+<p>Everything version-bound stays valid; only the content changes.</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Depends on</th>
+<th>Portability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kernel, FSM, capabilities, reflexes</td>
+<td>the Runtime facade</td>
+<td><strong>Pack-agnostic.</strong> Loads on any jsMacros runtime (no host class is looked up while the bundle loads); the facade calls that need Forge SRG report their failure as a typed error.</td>
+</tr>
+<tr>
+<td>Navigator (<code>src/shared/nav/</code>)</td>
+<td>block ids + the SRG steer/ground calls</td>
+<td><strong>Pack-agnostic, Forge-only</strong> (see the matrix).</td>
+</tr>
+<tr>
+<td>Missions <code>mine</code>, <code>goto</code>, <code>chop</code>, <code>hunt</code>, <code>fetch</code>, <code>stash</code>, <code>search</code>, <code>follow</code>, <code>loot-run</code>, <code>storage</code>, <code>craft</code>, <code>smelt</code>, <code>interact</code></td>
+<td>vanilla mechanics</td>
+<td><strong>Pack-agnostic.</strong> <code>mine</code> targets the ore table below. Without Functional Storage, deposit routing uses chests only.</td>
+</tr>
+<tr>
+<td>Ore set + harvest tiers (<code>config/ores_live.json</code>)</td>
+<td>the pack's Forge registry</td>
+<td><strong>Regenerated from any pack</strong>: <code>just extract-ores-live</code> reads the live registry (<code>forge:ores</code> tag + <code>*_ore</code> ids + <code>needs_*_tool</code> tags) through a running bot.</td>
+</tr>
+<tr>
+<td>Missions <code>drill</code> and <code>prospect</code></td>
+<td>GTCEu HV prospector</td>
+<td><strong>GregTech only.</strong> Elsewhere, use the <code>mine</code> mission on the regenerated ore table.</td>
+</tr>
+<tr>
+<td>ext.js plugins <code>prospect</code>, <code>emi_search</code>/<code>emi_recipe</code>/<code>emi_uses</code>, quest tools</td>
+<td>GTCEu / EMI / FTB Quests</td>
+<td><strong>Optional.</strong> Each handler resolves its mod classes when called; without the mod, that one command fails loudly.</td>
+</tr>
+<tr>
+<td>Quest autopilot (<code>scripts/objective/</code>)</td>
+<td>FTB Quests (adapter)</td>
+<td><strong>Optional.</strong> The engine is mod-agnostic; adapters live in <code>scripts/objective/sources/</code>.</td>
+</tr>
+<tr>
+<td>Raw-Java calls in the harness and the bundle</td>
+<td><strong>Forge SRG names</strong></td>
+<td><strong>The version and loader boundary</strong> — next section.</td>
+</tr>
+</tbody>
+</table>
+<p>Recipe: install jsMacros, <code>just sync</code>, register the services (<a href="../SETUP/">SETUP.md</a>); with a bot
+in the world run <code>just extract-ores-live</code>, then <code>just build &amp;&amp; just sync</code>; verify with
+<code>./gerda smoke</code> and a few arenas (<code>./gerda gate</code>) on an opped test bot. A plain Forge 1.20.1
+instance with no modpack needs no ore regeneration at all: the vanilla ores are already in the
+table.</p>
+<h2 id="porting-the-bot-to-fabric-or-neoforge-contributors">Porting the bot to Fabric or NeoForge (contributors)<a class="headerlink" href="#porting-the-bot-to-fabric-or-neoforge-contributors" title="Permanent link">&para;</a></h2>
+<p>The bundle loads and fails loud on these runtimes, so a port is now a bounded job:</p>
+<ol>
+<li><strong>A runtime name table.</strong> The 17 hardcoded SRG tokens live in two tables, each entry
+   commented with its Mojang signature: 7 in <code>harness/main.js</code> (screen input + the sprint
+   applier), mirrored as <code>HARNESS_SCREEN_SRG</code> in <code>src/core/runtime/jsmacros/srg.ts</code>, and 10 in
+   the <code>SRG</code> table of the same file. Fabric needs the <strong>intermediary</strong> names
+   (<code>method_…</code> / <code>field_…</code>); NeoForge 1.20.5+ runs on the Mojang names. Select the table at boot
+   from the runtime check that <code>diag</code> already reports (<code>srgCheck.runtime</code>,
+   <code>src/shared/harness/srg-runtime.ts</code>).</li>
+<li><strong>A mapping source for <code>scripts/dev/srg.py</code></strong> for that loader (today it reads Forge
+   mappings), so <code>srg()</code>, <code>reflect</code> and the boot self-check work there too.</li>
+<li><strong>Re-check movement constants.</strong> Sprint-jump distances and water-clutch timing
+   (<code>src/shared/config/schema.ts</code>, movement and physics sections) are tuned on 1.20.1; run the
+   nav arenas (<code>scenarios/arenas/</code>) to catch drift.</li>
+<li><strong>Verify</strong> with <code>./gerda smoke</code> (all checks, including <code>interact.setYaw(current)</code>) and a
+   <code>goto</code> mission that arrives.</li>
+</ol>
+<p>Other contributions with the seams already in place:</p>
+<ul>
+<li><strong>A pack profile</strong> = a regenerated <code>config/ores_live.json</code>, plus notes on which optional
+  plugins apply. No code.</li>
+<li><strong>A non-GT vein strategy for <code>drill</code></strong> = another source of vein targets for the same mission.
+  See <a href="../MISSIONS/">MISSIONS.md</a> and <code>src/bot/missions/drill/</code>.</li>
+<li><strong>A quest adapter</strong> = a new <code>ObjectiveSource</code> in <code>scripts/objective/sources/</code>, next to
+  <code>ftb_quests.py</code> and <code>local_goals.py</code>.</li>
+</ul>
+<p>Open an issue or a <a href="https://github.com/flamerix-ai/gerda/discussions">Discussion</a> with your
+pack and version before you start, and read
+<a href="https://github.com/flamerix-ai/gerda/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> for the
+gates.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

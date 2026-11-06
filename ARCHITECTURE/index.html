@@ -1,0 +1,1536 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-source bot framework for Minecraft on jsMacros, with Gerda Bot — an autonomous GregTech mining fleet — as the reference implementation.">
+      
+      
+      
+        <link rel="canonical" href="https://flamerix-ai.github.io/gerda/ARCHITECTURE/">
+      
+      
+        <link rel="prev" href="../BOT_INSTANCE_SETUP/">
+      
+      
+        <link rel="next" href="../MOD_TESTING/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>How Gerda works - Gerda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#how-gerda-works" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gerda" class="md-header__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gerda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              How Gerda works
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gerda" class="md-nav__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gerda
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup from zero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PORTABILITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Works on your MC version
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SERVER_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dedicated server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOT_INSTANCE_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bot instances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Gerda works
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Gerda works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-command-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The command path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-three-tiers-of-src" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The three tiers of src/
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#one-tick-of-the-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One tick of the bot
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-and-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data and config
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repo-layout-and-where-new-code-goes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repo layout and where new code goes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to go next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MOD_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test your mod in a real game
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_YOUR_OWN_BOT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build your own bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MISSIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FLEET_PLAYBOOK/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fleet playbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RIG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filming & headless rig
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXTENDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending Gerda Bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing (3 layers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SCENARIOS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenario files reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAFETY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety tiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IPC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge & IPC contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMMANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge command reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EYES_HANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eyes & hands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navbench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigator benches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_STORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build story
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-command-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The command path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-three-tiers-of-src" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The three tiers of src/
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#one-tick-of-the-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One tick of the bot
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-and-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data and config
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repo-layout-and-where-new-code-goes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repo layout and where new code goes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to go next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="how-gerda-works">How Gerda works<a class="headerlink" href="#how-gerda-works" title="Permanent link">&para;</a></h1>
+<p>This page is a map. It names each part, says what it is for, and points at the code that
+holds it. The code is the reference: when this page and the code disagree, the code wins.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>Gerda has two parts. <strong>The harness</strong> (<code>harness/</code>) is a set of plain-JS jsMacros services
+that run inside the Minecraft client: a TCP bridge, a supervisor that answers commands, and
+a worker that loads a bot and drives it one game tick at a time. <strong>Gerda Bot</strong> (<code>src/</code>) is
+our reference bot: a TypeScript kernel that <code>tsup</code> (<code>tsup.config.ts</code>) compiles to one file,
+<code>dist/__gerda_bot.bundle.js</code>. That bundle assigns <code>globalThis.Module</code>, and the worker
+<code>eval</code>-loads it. The script engine is GraalJS (ECMAScript 2022). The harness
+accepts any object with the <code>Module</code> contract, not only ours: <code>harness/bot_template.js</code> is
+a plain-JS skeleton.</p>
+<h2 id="the-command-path">The command path<a class="headerlink" href="#the-command-path" title="Permanent link">&para;</a></h2>
+<p>A command from the host travels through five boxes. Each box has one job.</p>
+<div class="highlight"><pre><span></span><code> host                 │  inside the Minecraft client (jsMacros services)
+                      │
+ bridge_ctl.py ──┐    │
+                 ├─TCP:55544─► bridge.js ──GlobalVars──► main.js
+ MCP server "mc" ┘    │                                    │ 1. HANDLERS  (built-in, screen.js)
+                      │                                    │ 2. EXT       (ext.js plugins)
+                      │                                    │ 3. passthrough
+                      │                                    ▼  GlobalVars
+                      │                                 worker.js ──tick──► Module
+                      │                                                  (dist/__gerda_bot.bundle.js)
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Box</th>
+<th>Role</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host clients</td>
+<td>Send newline-framed JSON requests and read the correlated reply</td>
+<td><code>scripts/ops/bridge_ctl.py</code>, <code>mcp/server.py</code>, <code>mcp/bridge_client.py</code></td>
+</tr>
+<tr>
+<td>bridge</td>
+<td>Zero-logic TCP gateway: queues each request into <code>GlobalVars</code>, relays the reply</td>
+<td><code>harness/bridge.js</code></td>
+</tr>
+<tr>
+<td>main</td>
+<td>Always-on supervisor: routes a command to a built-in handler, then to an ext plugin, then to the worker</td>
+<td><code>harness/main.js#dispatch</code>, routing rule <code>harness/safe-io.js#route</code> (TS twin <code>src/shared/harness/dispatch.ts#routeDispatch</code>)</td>
+</tr>
+<tr>
+<td>ext</td>
+<td>Hot-reloadable mod-API plugins (EMI, prospector, FTB Quests, camera…)</td>
+<td><code>harness/ext.js</code>, registry <code>harness/main.js#register</code></td>
+</tr>
+<tr>
+<td>eyes and hands</td>
+<td>Screenshots and synthetic GUI input, merged into main's handlers</td>
+<td><code>harness/screen.js</code></td>
+</tr>
+<tr>
+<td>worker</td>
+<td>Loads the bundle, calls <code>Module.command</code> and <code>Module.tick</code>, writes a heartbeat</td>
+<td><code>harness/worker.js#loadBundle</code>, <code>harness/worker.js#processCommand</code></td>
+</tr>
+<tr>
+<td>Module</td>
+<td>The bot. Ours is built in <code>src/bot/entry/worker-bundle.ts#makeModule</code></td>
+<td><code>src/bot/entry/worker-bundle.ts</code></td>
+</tr>
+</tbody>
+</table>
+<p>The services share no module system. They talk only through <code>GlobalVars</code> keys, and every
+key and envelope shape is defined once in <code>harness/ipc.js</code> (TS twin <code>src/core/ipc/ipc.ts</code>).
+The wire protocol, the key tables and the tick pacing are in <a href="../IPC/">IPC.md</a>.</p>
+<h2 id="the-three-tiers-of-src">The three tiers of <code>src/</code><a class="headerlink" href="#the-three-tiers-of-src" title="Permanent link">&para;</a></h2>
+<p><code>src/</code> is layered <strong>core &lt; shared &lt; bot</strong>. An import may only point down a tier, so a fork
+can take <code>core/</code> alone, or <code>core/</code> + <code>shared/</code>, without our bot.</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>What lives there</th>
+<th>Key entry points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/core/</code></td>
+<td>The only boundary over jsMacros and Java, the IPC envelope, dependency-free primitives. Pack-agnostic.</td>
+<td><code>src/core/runtime/Runtime.ts#Runtime</code>, real impl <code>src/core/runtime/jsmacros/index.ts#createJsMacrosRuntime</code>, mock twin <code>src/core/runtime/mock.ts#createMockRuntime</code>, SRG tokens <code>src/core/runtime/jsmacros/srg.ts</code></td>
+</tr>
+<tr>
+<td><code>src/shared/</code></td>
+<td>The reusable engine: kernel, navigator, pure domain logic, config schema, reflexes, the harness twins</td>
+<td><code>src/shared/kernel/</code>, <code>src/shared/nav/</code>, <code>src/shared/domain/</code>, <code>src/shared/reflexes/</code>, <code>src/shared/config/schema.ts</code></td>
+</tr>
+<tr>
+<td><code>src/bot/</code></td>
+<td>Gerda Bot: capabilities, missions, plans, the orchestrator, the pack profile, entry wiring. The only tier that knows GregTech.</td>
+<td><code>src/bot/capabilities/</code>, <code>src/bot/missions/</code>, <code>src/bot/plans/</code>, <code>src/bot/orchestrator/</code>, <code>src/bot/profile/</code>, <code>src/bot/entry/worker-bundle.ts</code></td>
+</tr>
+</tbody>
+</table>
+<p>The defensive checker refuses an outward import: rule <code>no-outward-tier-import</code> in
+<code>scripts/defensive-rules.ts#scanTierImports</code>, run by <code>scripts/check-defensive.ts</code> as part of
+<code>bun run check</code>. The same checker holds the other reliability rules; they are listed in
+<a href="../EXTENDING/#reliability-rules-enforced-by-bun-run-check">EXTENDING.md § Reliability rules</a>.</p>
+<p>Domain code in <code>src/shared/domain/</code> takes plain data and never sees the runtime. Everything
+that touches the game goes through the <code>Runtime</code> facade, so the whole kernel runs against the
+mock in <code>test-ts/</code>.</p>
+<h2 id="one-tick-of-the-bot">One tick of the bot<a class="headerlink" href="#one-tick-of-the-bot" title="Permanent link">&para;</a></h2>
+<p>jsMacros fires a tick listener about 20 times a second. One pass, in order:</p>
+<ol>
+<li><strong>Worker tick body</strong> — <code>harness/worker.js</code>, the body passed to <code>IPC.paceTick</code>
+   (<code>harness/ipc.js#paceTick</code>, which arms the next listener only after this one returns).
+   It bumps the heartbeat, mirrors the render-thread-only reads that main.js publishes
+   (world signature, nearby entities), runs at most one queued command through
+   <code>Module.command</code>, then calls <code>Module.tick</code>, then drains the bundle's events into the
+   shared event ring. A throw out of <code>Module.tick</code> halts the worker and publishes the fault.</li>
+<li><strong>Kernel tick</strong> — <code>Module.tick</code> is <code>src/shared/kernel/capability.ts#Kernel.tick</code>:</li>
+<li>heartbeat guards run first and never preempt (<code>Kernel.runAlwaysGuards</code>; for example
+     <code>src/bot/capabilities/telemetry.ts</code>);</li>
+<li>with no mission running, only the survival reflexes run (<code>Kernel.runSurvivalGuards</code>),
+     plus the handler of a safety landing phase, and the tick ends;</li>
+<li>otherwise the always-on guards run in registration order, then the active mission's
+     guards (<code>Kernel.runGuards</code>). The first guard that returns true ends the pass;</li>
+<li>if no guard ended it, the handler for the current phase runs (<code>Kernel.runHandler</code>):
+     the active mission's handler first, else an always-on one;</li>
+<li>when the mission reports done, the mission sequencer picks what runs next;</li>
+<li>last, the progress watchdog checks that the running phase advanced
+     (<code>Kernel.checkProgress</code>, policies in <code>src/shared/kernel/progress.ts</code>).</li>
+<li><strong>Reflexes</strong> — the safety guards in <code>src/shared/reflexes/index.ts#reflexes</code>. The array
+   order is the evaluation order, and <code>makeModule</code> registers them right after the lifecycle
+   capability, so they run ahead of every other always-on guard and every mission guard.
+   They divert only to the universal landings. Which reflexes run while idle:
+   <a href="../SAFETY/">SAFETY.md</a>.</li>
+<li><strong>Phases and transitions</strong> — the bot's phase vocabulary and edges are data in
+   <code>src/bot/profile/states.ts</code> (<code>STATE</code>, <code>TRANSITIONS</code>, <code>GLOBAL_EDGES</code>,
+   <code>UNIVERSAL_TARGETS</code>, assembled as <code>GERDA_PHASES</code>). The kernel builds one
+   <code>src/shared/kernel/fsm.ts#Fsm</code> from those edges plus each capability's and the active
+   mission's <code>edges</code> (<code>Kernel.buildFsm</code>). An illegal transition throws
+   <code>IllegalTransitionError</code>; a universal target is reachable from any phase.</li>
+<li><strong>Capabilities, missions, plans</strong> — a capability (<code>src/shared/kernel/capability.ts#Capability</code>)
+   bundles a guard, per-phase handlers, commands and edges. A mission
+   (<code>src/shared/kernel/mission.ts#Mission</code>, often built with <code>missionFromCaps</code>) is one goal
+   machine; the kernel runs one at a time. A plan (<code>src/bot/orchestrator/plan.ts#Plan</code>) is
+   data: an ordered list of mission steps. The orchestrator
+   (<code>src/bot/orchestrator/index.ts#makeOrchestrator</code>) is an always-on capability that also
+   installs the kernel's sequencer (<code>src/shared/kernel/sequencer.ts#MissionSequencer</code>).</li>
+<li><strong>Navigator</strong> — the only thing that moves the bot. Phase handlers call
+   <code>src/shared/nav/executor.ts#greedyStep</code> once per tick through the <code>@/shared/nav</code> barrel
+   (<code>src/shared/nav/index.ts</code>). Route planning and its caches are in
+   <code>src/shared/nav/route.ts</code>, the pure planners in <code>src/shared/domain/planner.ts</code> and
+   <code>src/shared/domain/dstar.ts</code>; the engine choice is the slice in
+   <code>src/shared/nav/engine.ts</code>.</li>
+</ol>
+<p>A capability or mission throw is caught once, at the kernel's dispatch boundary
+(<code>Kernel.dispatch</code>). A throw from an always-on owner is a core bug and halts the worker; a
+throw from a mission owner drops only that mission to ERROR.</p>
+<h2 id="data-and-config">Data and config<a class="headerlink" href="#data-and-config" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Where it lives</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tunables</td>
+<td>One typed schema with defaults; every tunable is there</td>
+<td><code>src/shared/config/schema.ts#DEFAULT_CONFIG</code>, merge <code>src/shared/config/schema.ts#makeConfig</code>, pack layer <code>src/bot/profile/config.ts#makeGerdaConfig</code></td>
+</tr>
+<tr>
+<td>Per-fork overrides</td>
+<td>Optional, gitignored <code>config/local.overrides.json</code>, baked in at build time</td>
+<td><code>tsup.config.ts</code>, checked by <code>src/shared/config/schema.ts#assertConfigOverrideKeys</code>; how to use: <a href="../EXTENDING/#overriding-config-in-a-fork-without-editing-schemats">EXTENDING.md</a></td>
+</tr>
+<tr>
+<td>Per-tick state</td>
+<td>The <code>BotState</code> blackboard; capabilities keep typed scratch in slices</td>
+<td><code>src/shared/kernel/capability.ts#BotState</code>, <code>src/shared/kernel/slice.ts#defineSlice</code></td>
+</tr>
+<tr>
+<td>In-bundle events</td>
+<td>A typed event bus between capabilities</td>
+<td><code>src/shared/kernel/bus.ts#Bus</code></td>
+</tr>
+<tr>
+<td>World model</td>
+<td><code>mc_world.json</code>, sectioned per world; each writer owns its own section</td>
+<td>bundle side <code>src/shared/kernel/world-store.ts</code>, <code>src/bot/capabilities/persistence.ts</code>; service side <code>harness/world_store.js</code>; schema <code>src/shared/domain/world-model.ts</code></td>
+</tr>
+<tr>
+<td>IPC keys</td>
+<td><code>GlobalVars</code> keys between the services</td>
+<td><code>harness/ipc.js</code>, tables in <a href="../IPC/">IPC.md</a></td>
+</tr>
+<tr>
+<td>Journal</td>
+<td>NDJSON log file plus an in-memory ring; the <code>get_logs</code> command tails the file</td>
+<td><code>src/shared/kernel/logger.ts#Logger</code>, sink <code>src/bot/entry/worker-bundle.ts#makeSink</code></td>
+</tr>
+<tr>
+<td>Event ring</td>
+<td>Whitelisted bus events, read with <code>poll_events</code></td>
+<td><code>src/bot/capabilities/event-export.ts</code></td>
+</tr>
+<tr>
+<td>Metrics</td>
+<td>Prometheus text, pushed on an interval when a push URL is set</td>
+<td><code>src/bot/capabilities/telemetry.ts</code></td>
+</tr>
+</tbody>
+</table>
+<p>Ore data comes from generated files in <code>config/</code>; regenerate them with the <code>just</code> recipes
+listed in the repo's <code>justfile</code> (<code>extract-ores-live</code>, <code>extract-ores</code>).</p>
+<h2 id="repo-layout-and-where-new-code-goes">Repo layout and where new code goes<a class="headerlink" href="#repo-layout-and-where-new-code-goes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Directory</th>
+<th>What it holds</th>
+<th>Put here…</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/core/</code></td>
+<td>The jsMacros/Java boundary (<code>runtime/</code>), the IPC envelope, dependency-free primitives</td>
+<td>a new game verb: <code>Runtime.ts</code> first, then the real impl and the mock</td>
+</tr>
+<tr>
+<td><code>src/shared/</code></td>
+<td>The reusable engine</td>
+<td>pure logic in <code>shared/domain/</code> with unit tests; movement in <code>shared/nav/</code></td>
+</tr>
+<tr>
+<td><code>src/bot/</code></td>
+<td>Gerda Bot</td>
+<td>behaviour in <code>bot/capabilities/</code> or <code>bot/missions/</code></td>
+</tr>
+<tr>
+<td><code>harness/</code></td>
+<td>jsMacros services, deployed as-is (not bundled)</td>
+<td>a mod-API bridge command in <code>ext.js</code> (hot-reloadable)</td>
+</tr>
+<tr>
+<td><code>mcp/</code></td>
+<td>The MCP server and the canonical bridge client</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>scripts/</code></td>
+<td>Host tooling behind <code>./gerda</code> (see <code>scripts/README.md</code>)</td>
+<td>ops and dev tools</td>
+</tr>
+<tr>
+<td><code>test-ts/</code></td>
+<td>vitest suites on the mock runtime</td>
+<td>tests for everything in <code>src/</code></td>
+</tr>
+<tr>
+<td><code>scenarios/</code></td>
+<td>Arena, bench and film-set specs (JSON)</td>
+<td>a new in-game test arena</td>
+</tr>
+<tr>
+<td><code>examples/</code></td>
+<td>Runnable templates, basic → advanced</td>
+<td>a worked example</td>
+</tr>
+<tr>
+<td><code>config/</code></td>
+<td>Generated ore table, optional local overrides</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h2 id="where-to-go-next">Where to go next<a class="headerlink" href="#where-to-go-next" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../EXTENDING/">EXTENDING.md</a> — add a mission, plan, capability or ext plugin; the SRG
+  workflow; the <code>Runtime</code> facade contract.</li>
+<li><a href="../BUILD_YOUR_OWN_BOT/">BUILD_YOUR_OWN_BOT.md</a> — write your own bot on the harness, from
+  primitives only up to the whole kernel.</li>
+<li><a href="../IPC/">IPC.md</a> — the bridge protocol, every <code>GlobalVars</code> key, tick pacing.</li>
+<li><a href="../SAFETY/">SAFETY.md</a> — the prevention, reaction and recovery tiers.</li>
+<li><a href="../MISSIONS/">MISSIONS.md</a> — every shipped mission, its params and outputs.</li>
+<li><a href="../TESTING/">TESTING.md</a> — the three test layers and what each git hook runs.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

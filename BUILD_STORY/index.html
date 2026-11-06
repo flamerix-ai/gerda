@@ -1,0 +1,1595 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-source bot framework for Minecraft on jsMacros, with Gerda Bot — an autonomous GregTech mining fleet — as the reference implementation.">
+      
+      
+      
+        <link rel="canonical" href="https://flamerix-ai.github.io/gerda/BUILD_STORY/">
+      
+      
+        <link rel="prev" href="../navbench/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Build story - Gerda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#how-gerda-was-built" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gerda" class="md-header__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gerda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Build story
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gerda" class="md-nav__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gerda
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup from zero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PORTABILITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Works on your MC version
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SERVER_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dedicated server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOT_INSTANCE_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bot instances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Gerda works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MOD_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test your mod in a real game
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_YOUR_OWN_BOT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build your own bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MISSIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FLEET_PLAYBOOK/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fleet playbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RIG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filming & headless rig
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXTENDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending Gerda Bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing (3 layers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SCENARIOS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenario files reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAFETY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety tiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IPC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge & IPC contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMMANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge command reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EYES_HANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eyes & hands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navbench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigator benches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build story
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build story
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#no-llm-in-the-runtime-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No LLM in the runtime loop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#by-the-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        By the numbers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-we-found-and-what-we-built" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What we found, and what we built
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What we found, and what we built">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#one-seam-to-the-game-with-a-mock-that-cannot-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One seam to the game, with a mock that cannot drift
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#our-own-navigator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Our own navigator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forge-member-names-are-srg-resolved-offline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Forge member names are SRG — resolved offline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#guarding-the-render-thread" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guarding the render thread
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#graaljs-threading-and-number-coercion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GraalJS threading and number coercion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-effects-not-attempts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify effects, not attempts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-camera-that-moves-every-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A camera that moves every frame
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#off-screen-capture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Off-screen capture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-film-rig-is-a-feature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The film rig is a feature
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-we-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How we work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-carries-over-to-your-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What carries over to your project
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#help-us-make-it-better" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Help us make it better
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#no-llm-in-the-runtime-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No LLM in the runtime loop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#by-the-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        By the numbers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-we-found-and-what-we-built" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What we found, and what we built
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What we found, and what we built">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#one-seam-to-the-game-with-a-mock-that-cannot-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One seam to the game, with a mock that cannot drift
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#our-own-navigator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Our own navigator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forge-member-names-are-srg-resolved-offline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Forge member names are SRG — resolved offline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#guarding-the-render-thread" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guarding the render thread
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#graaljs-threading-and-number-coercion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GraalJS threading and number coercion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-effects-not-attempts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify effects, not attempts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-camera-that-moves-every-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A camera that moves every frame
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#off-screen-capture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Off-screen capture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-film-rig-is-a-feature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The film rig is a feature
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-we-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How we work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-carries-over-to-your-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What carries over to your project
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#help-us-make-it-better" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Help us make it better
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="how-gerda-was-built">How Gerda was built<a class="headerlink" href="#how-gerda-was-built" title="Permanent link">&para;</a></h1>
+<p><em>Gerda — open-source bot framework by Flamerix AI.</em></p>
+<p>Gerda is a framework for writing and running bot code inside Minecraft on the jsMacros mod.
+Gerda Bot is the reference implementation on it: an autonomous ore-mining bot, and a small co-op
+fleet, for the GregTech CEu modpack Monifactory on Minecraft 1.20.1. It prospects veins, walks to
+them with its own navigator, digs them out, hauls the ore home, smelts, crafts a spare pickaxe so
+a worn one can be swapped out and goes back out. The bots join a co-op server as ordinary non-op
+players. Nobody hands them items in fleet play: they earn what they use.</p>
+<p>This page is about what we found while building it and how we solved it.</p>
+<h2 id="no-llm-in-the-runtime-loop">No LLM in the runtime loop<a class="headerlink" href="#no-llm-in-the-runtime-loop" title="Permanent link">&para;</a></h2>
+<p>The bot is ordinary deterministic code: a TypeScript kernel, compiled to one bundle that the
+<a href="https://jsmacros.wagyourtail.xyz/">jsMacros</a> mod runs inside the game client, 20 ticks a
+second. At runtime nothing calls a model. The API cost is zero, there is no latency spike while
+a prompt runs, and the same world state gives the same decision.</p>
+<p>An LLM <em>can</em> drive it. The repo ships a standard MCP server (<code>mcp/server.py</code>) that exposes live
+bots as tools: <code>mc_get_state</code>, <code>mc_send</code>, and fleet calls such as "a free bot, go get iron".
+Nothing in the bot depends on it: with no MCP client attached, the bots keep playing.</p>
+<p>How this differs from well-known neighbours:</p>
+<ul>
+<li><strong><a href="https://voyager.minedojo.org/">Voyager</a></strong> is a research system in which an LLM writes and
+  refines its own skill code as it plays. The LLM is the learner.</li>
+<li><strong><a href="https://github.com/kolbytn/mindcraft">Mindcraft</a></strong> puts an LLM in charge of an in-game
+  agent you can talk to. Great for conversation and open-ended play; every decision is a model
+  call.</li>
+<li><strong><a href="https://github.com/cabaletta/baritone">Baritone</a></strong> is an excellent pathfinding utility.
+  We learned a lot from its movement model before writing our own navigator.</li>
+</ul>
+<p>Gerda Bot takes a third route: plain code that plays on its own, with an LLM as an optional
+driver rather than a dependency.</p>
+<h2 id="by-the-numbers">By the numbers<a class="headerlink" href="#by-the-numbers" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>src/</code> is <strong>156 TypeScript files, ~24k lines</strong>, plus ~16k lines of tests.</li>
+<li>The tests: vitest suites for the kernel and Python suites for the host tooling.
+  <a href="../TESTING/">TESTING.md</a> has the current count.</li>
+</ul>
+<h2 id="what-we-found-and-what-we-built">What we found, and what we built<a class="headerlink" href="#what-we-found-and-what-we-built" title="Permanent link">&para;</a></h2>
+<h3 id="one-seam-to-the-game-with-a-mock-that-cannot-drift">One seam to the game, with a mock that cannot drift<a class="headerlink" href="#one-seam-to-the-game-with-a-mock-that-cannot-drift" title="Permanent link">&para;</a></h3>
+<p>Only one layer, the runtime facade, may touch jsMacros. It is a TypeScript interface with two
+implementations: the real one and an in-memory mock. Because both implement the same interface,
+the mock cannot drift: add a method to the real runtime and the mock stops compiling. This is
+why the whole test suite runs in seconds without Minecraft.</p>
+<h3 id="our-own-navigator">Our own navigator<a class="headerlink" href="#our-own-navigator" title="Permanent link">&para;</a></h3>
+<p>A mining bot keeps changing the world under its own path, and Baritone's standalone build
+exposes no Java API to scripts — only chat commands and position polling. So Gerda Bot has its
+own navigator: A* over a cached world view (D* Lite optional, off by default), and a greedy
+executor with sub-machines for ladders, pillaring, bridging and sprint-jump parkour. Hazard
+vetoes keep it out of lava, water traps and pits it cannot climb back from.</p>
+<p>We measured before switching. <code>navbench</code> races navigators on identical legs in the live game:
+ours arrives on every leg, like Baritone, and is within 13 % on speed; the slower legs come from
+deliberate safety margins. Ideas from Baritone (movement physics, goal types, block traits)
+live on as data. See <a href="../navbench/">navbench.md</a>.</p>
+<h3 id="forge-member-names-are-srg-resolved-offline">Forge member names are SRG — resolved offline<a class="headerlink" href="#forge-member-names-are-srg-resolved-offline" title="Permanent link">&para;</a></h3>
+<p>On Forge 1.20.1, class names are readable but class <em>members</em> keep obfuscated SRG names
+(<code>m_7583_</code>, <code>f_91073_</code>). GraalJS resolves members by their real name, so <code>mc.level</code> by its
+readable name is simply <code>undefined</code>. Our answers:</p>
+<ul>
+<li><strong>Ask the jsMacros facade, not raw fields.</strong> <code>Player.getPlayer() != null</code> tells you the client
+  is in a world; a raw-field probe cannot.</li>
+<li><strong>Look names up offline.</strong> <code>srg.py</code> resolves Mojang ↔ SRG names from the mapping files the
+  launcher already has on disk, with Parchment parameter names when available. No trial calls in
+  game.</li>
+<li><strong>Call by Mojang name.</strong> <code>srg('Player','getFoodData')</code> resolves the SRG name at runtime, and a
+  boot self-check verifies every hardcoded token against the current pack's map.</li>
+<li><strong>Read the source.</strong> <code>decompile.sh</code> decompiles the game or any mod jar to Mojang-named source.</li>
+</ul>
+<h3 id="guarding-the-render-thread">Guarding the render thread<a class="headerlink" href="#guarding-the-render-thread" title="Permanent link">&para;</a></h3>
+<p>A command that blocks the render thread for more than 500 ms makes jsMacros kill the handler,
+and a long block can drop the world. Three guards keep the game responsive: the <code>jeval</code> escape
+hatch rejects blocking code before it runs, the bridge restarts a stalled supervisor, and a lint
+rule stops committed harness code from blocking the render thread.</p>
+<h3 id="graaljs-threading-and-number-coercion">GraalJS threading and number coercion<a class="headerlink" href="#graaljs-threading-and-number-coercion" title="Permanent link">&para;</a></h3>
+<p>GraalJS binds each JS context to one thread, so timed sequences are driven from the host over
+separate bridge calls, never by closures handed between threads. A JS number passed to a Java
+<code>float</code> parameter must be exactly representable as a float, so the facade wraps such values in
+<code>Math.fround()</code>.</p>
+<h3 id="verify-effects-not-attempts">Verify effects, not attempts<a class="headerlink" href="#verify-effects-not-attempts" title="Permanent link">&para;</a></h3>
+<p>The water-bucket clutch places water under the bot mid-fall to survive long drops. It aims and
+retries every tick while the drop point is in reach, leads the aim by the horizontal drift, and
+counts the clutch as done only when the bucket is actually empty. The same rule runs through the
+kernel: eating is confirmed by the food level, a teleport by the position change, a deposit by
+re-reading the bag.</p>
+<h3 id="a-camera-that-moves-every-frame">A camera that moves every frame<a class="headerlink" href="#a-camera-that-moves-every-frame" title="Permanent link">&para;</a></h3>
+<p>Setting the player's rotation once per tick looks jerky on film. The camera client instead hooks
+Forge's per-frame <code>ViewportEvent.ComputeCameraAngles</code>, registered from GraalJS through the
+explicit-class <code>addListener</code> overload, so camera moves are smooth at any frame rate.</p>
+<h3 id="off-screen-capture">Off-screen capture<a class="headerlink" href="#off-screen-capture" title="Permanent link">&para;</a></h3>
+<p>The rig runs each client inside its own <strong>headless sway</strong> compositor with a 60 Hz output and
+records it with <code>wf-recorder</code>. Nothing appears on the monitor.</p>
+<h2 id="the-film-rig-is-a-feature">The film rig is a feature<a class="headerlink" href="#the-film-rig-is-a-feature" title="Permanent link">&para;</a></h2>
+<p>We shot our teaser with the same harness (<a href="../RIG/">RIG.md</a>). Bot and camera clients boot inside
+headless compositors. Scenes are staged from data and re-armed between laps, and a scripted
+camera flies smooth moves; inside a lap, the bot's moves are its own. The clutch shot starts
+with a scripted step off the ledge, and catching that fall is the bot's reflex. Takes are
+accepted by measurement: a motion probe rejects frozen or dead footage. The cut is assembled
+from a JSON cut list with burned-in captions.</p>
+<p>On set, too, the bots play as real players: they are non-op on our co-op server, and the camera
+client is the only op. The scenes around them are staged, from the sets to the items the camera
+drops to the bot; <a href="../RIG/#what-the-filmed-scenes-stage">RIG.md</a> lists what is staged and how.</p>
+<h2 id="how-we-work">How we work<a class="headerlink" href="#how-we-work" title="Permanent link">&para;</a></h2>
+<p>We build it with Claude Code; the process is built to catch mistakes before they land:</p>
+<ul>
+<li><strong>The git hooks are the gate.</strong> In-game tests cannot run in CI, and pure checks belong at
+  commit time. <code>pre-commit</code> runs <code>tsc</code>, <code>biome</code>, a defensive-code checker and <code>vitest</code>;
+  <code>pre-push</code> repeats them, adds the Python suites, and builds and validates the bundle.</li>
+<li><strong>Fail loudly.</strong> The defensive-code checker rejects <code>try/catch</code>, <code>as</code> casts, empty <code>catch</code>
+  blocks and dropped <code>Result</code>s outside a few boundary files. Fallible game reads return a typed
+  <code>Result</code>, never a made-up default. A core bug halts the worker; a mission bug drops only that
+  mission to ERROR. A silent <code>0</code> would hide the bug from whoever reads the log next.</li>
+<li><strong>One trunk, one worktree per task.</strong> Everything lands on one trunk by fast-forward. Each
+  task, human or agent, runs in its own git worktree, so parallel work doesn't collide.</li>
+<li><strong>Independent review.</strong> For changes that matter, a separate review agent, which never saw the
+  author's reasoning, tries to break the diff before it lands.</li>
+<li><strong>Every test has a known-bad twin.</strong> Each positive test is paired with an input that must
+  fail. A gate never seen rejecting anything proves nothing.</li>
+<li><strong>Write it down.</strong> <code>CLAUDE.md</code> and <code>docs/EXTENDING.md</code> are the onboarding that every
+  contributor, human or agent, reads first. When an approach is dropped, the reason and the
+  evidence are written down at once, so nobody retries it blind.</li>
+</ul>
+<h2 id="what-carries-over-to-your-project">What carries over to your project<a class="headerlink" href="#what-carries-over-to-your-project" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Measure the runtime before designing for it.</strong></li>
+<li><strong>One typed seam to the outside world, with a mock that cannot drift.</strong></li>
+<li><strong>Make the gate local and hard to skip.</strong></li>
+<li><strong>Fail loudly.</strong> Silent fallbacks turn into false beliefs later.</li>
+<li><strong>Verify effects, not attempts.</strong></li>
+<li><strong>Write down why an approach was dropped, when you drop it.</strong></li>
+</ol>
+<h2 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">&para;</a></h2>
+<p>Gerda Bot and the bundled mod plugins are tuned to Monifactory and GregTech CEu: ore registry,
+prospector and quests. The <a href="../PORTABILITY/">portability guide</a> maps what carries over to other
+packs and versions. Movement physics and real block breaking have no mock, so in-game behaviour is
+checked by a manual live gate (<code>just gate-live</code>). Run the bots only on servers that allow
+automation.</p>
+<h2 id="help-us-make-it-better">Help us make it better<a class="headerlink" href="#help-us-make-it-better" title="Permanent link">&para;</a></h2>
+<p>We are Flamerix AI, a software company, and we are asking for your advice. What is unclear or
+inconvenient? What looks wrong? How can we make Gerda clearer and easier for players, server
+admins and modders?</p>
+<ul>
+<li>Code (MPL-2.0): <a href="https://github.com/flamerix-ai/gerda">github.com/flamerix-ai/gerda</a></li>
+<li>Questions and ideas: <a href="https://github.com/flamerix-ai/gerda/discussions">GitHub Discussions</a></li>
+<li>Bugs and requests: <a href="https://github.com/flamerix-ai/gerda/issues">GitHub Issues</a></li>
+<li>Contact: <a href="mailto:hello@flamerix.ai">hello@flamerix.ai</a></li>
+</ul>
+<p>Made with the help of DRIM by <a href="https://flamerix.ai">Flamerix AI</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

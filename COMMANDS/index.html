@@ -1,0 +1,1850 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-source bot framework for Minecraft on jsMacros, with Gerda Bot — an autonomous GregTech mining fleet — as the reference implementation.">
+      
+      
+      
+        <link rel="canonical" href="https://flamerix-ai.github.io/gerda/COMMANDS/">
+      
+      
+        <link rel="prev" href="../IPC/">
+      
+      
+        <link rel="next" href="../EYES_HANDS/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Bridge command reference - Gerda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bridge-command-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gerda" class="md-header__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gerda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Bridge command reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gerda" class="md-nav__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gerda
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup from zero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PORTABILITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Works on your MC version
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SERVER_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dedicated server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOT_INSTANCE_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bot instances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Gerda works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MOD_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test your mod in a real game
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_YOUR_OWN_BOT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build your own bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MISSIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FLEET_PLAYBOOK/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fleet playbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RIG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filming & headless rig
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXTENDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending Gerda Bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing (3 layers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SCENARIOS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenario files reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAFETY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety tiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IPC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge & IPC contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge command reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge command reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ext-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ext plugins
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worker-bundle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker bundle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagnostic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagnostic
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EYES_HANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eyes & hands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navbench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigator benches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_STORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build story
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ext-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ext plugins
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worker-bundle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker bundle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagnostic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagnostic
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<!-- GENERATED by `just commands-ref` from harness/main.js META_COMMANDS, the harness/ext.js
+     plugin metas and WORKER_COMMAND_DOCS in src/bot/entry/worker-bundle.ts. Edit those rows,
+     never this file: test-ts/commands-ref.test.ts fails the commit when they differ. -->
+<h1 id="bridge-command-reference">Bridge command reference<a class="headerlink" href="#bridge-command-reference" title="Permanent link">&para;</a></h1>
+<p>Every command the bridge answers — 112 of them. Send one with
+<code>./gerda ctl send &lt;name&gt; '&lt;json args&gt;'</code> or the <code>mc_send</code> MCP tool; a running bot serves the
+same set as the <code>describe</code> command and the <code>mc://api</code> MCP resource. Where two layers declare
+one name, the container row wins, as in dispatch (<code>harness/main.js#buildManifest</code>).</p>
+<p>Arguments marked <strong>required</strong> must be present; the rest are optional. A command whose
+description starts with <code>DIAG:</code> is a diagnostic probe and is listed under
+<a href="#diagnostic">Diagnostic</a> instead of under its layer. The dispatch path behind the layers:
+<a href="../IPC/">IPC.md</a>.</p>
+<h2 id="bridge">Bridge<a class="headerlink" href="#bridge" title="Permanent link">&para;</a></h2>
+<p><code>harness/bridge.js</code> — Answered by the TCP gateway itself, so they work while main.js is deaf or stale.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Arguments</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bridge_diag</code></td>
+<td>—</td>
+<td>stable-layer health answered by bridge.js itself (service running-states + heartbeats + revs); works even when main is deaf/stale</td>
+</tr>
+<tr>
+<td><code>ping</code></td>
+<td>—</td>
+<td>connectivity test → pong, answered by bridge.js itself</td>
+</tr>
+<tr>
+<td><code>restart_service</code></td>
+<td><code>name</code> string — service: main|worker|bridge (default main)</td>
+<td>restart a jsMacros service via ServiceManager, bypassing main — recovers a stale/deaf main that can't restart itself</td>
+</tr>
+</tbody>
+</table>
+<h2 id="container">Container<a class="headerlink" href="#container" title="Permanent link">&para;</a></h2>
+<p><code>harness/main.js</code> — The supervisor's own commands: diagnostics, worker lifecycle, eval, and the eyes/hands primitives of <code>harness/screen.js</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Arguments</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>chat</code></td>
+<td><code>message</code> string <strong>required</strong></td>
+<td>send any text/command to chat — drive mod &amp; Baritone commands (/home, /sethome, /back, /warp, /tp, #goto …) via one generic passthrough</td>
+</tr>
+<tr>
+<td><code>click</code></td>
+<td><code>i</code> int — button index<br><code>text</code> string — label substring<br><code>x</code> int — GUI x = pixel/guiScale<br><code>y</code> int — GUI y = pixel/guiScale<br><code>button</code> int — 0=left 1=right</td>
+<td>click: real Screen.mouseClicked at GUI coords (x,y = screenshot-pixel/guiScale; drives FTB/custom GUIs), or a button by i/text</td>
+</tr>
+<tr>
+<td><code>close_screen</code></td>
+<td>—</td>
+<td>close the open GUI screen</td>
+</tr>
+<tr>
+<td><code>describe</code></td>
+<td>—</td>
+<td>this manifest — meta + live worker commands</td>
+</tr>
+<tr>
+<td><code>diag</code></td>
+<td>—</td>
+<td>one-call topology/health: live handlers+ext, worker heartbeat age, per-file deploy drift (bootRev vs disk). Main-local — works when the worker is dead</td>
+</tr>
+<tr>
+<td><code>eval</code></td>
+<td><code>code</code> string <strong>required</strong></td>
+<td>sandboxed JS eval (World/Player only)</td>
+</tr>
+<tr>
+<td><code>get_logs</code></td>
+<td><code>n</code> int — lines, default 100 max 500</td>
+<td>tail the NDJSON journal</td>
+</tr>
+<tr>
+<td><code>get_state</code></td>
+<td>—</td>
+<td>pos/health/dim/tool/worker snapshot</td>
+</tr>
+<tr>
+<td><code>goto</code></td>
+<td><code>x</code> int <strong>required</strong><br><code>y</code> int <strong>required</strong><br><code>z</code> int <strong>required</strong></td>
+<td>raw Baritone #goto x y z (movement primitive)</td>
+</tr>
+<tr>
+<td><code>halt</code></td>
+<td>—</td>
+<td>hard stop + #stop Baritone</td>
+</tr>
+<tr>
+<td><code>introspect</code></td>
+<td><code>filter</code> string<br><code>target</code> string — 'screen' to dump open-screen/button methods</td>
+<td>dump jsMacros method names (debug)</td>
+</tr>
+<tr>
+<td><code>inventory</code></td>
+<td>—</td>
+<td>FULL carry inventory: per-slot list + per-id totals (carry), hotbar detail, ore/tool summary</td>
+</tr>
+<tr>
+<td><code>jeval</code></td>
+<td><code>code</code> string <strong>required</strong></td>
+<td>PRIVILEGED raw eval — full jsMacros/Java scope (Java.type, Client, mod APIs); loopback only</td>
+</tr>
+<tr>
+<td><code>key</code></td>
+<td><code>key</code> string <strong>required</strong> — e.g. key.inventory, key.drop<br><code>hold</code> bool<br><code>release</code> bool</td>
+<td>press a named keybind</td>
+</tr>
+<tr>
+<td><code>keypress</code></td>
+<td><code>code</code> int <strong>required</strong><br><code>scancode</code> int<br><code>mods</code> int</td>
+<td>raw GLFW key to the screen (Enter=257 Backspace=259 Esc=256)</td>
+</tr>
+<tr>
+<td><code>knowledge</code></td>
+<td><code>sig</code> string — world signature; default = current world<br><code>all</code> bool — return every world section + the signature list</td>
+<td>read world-scoped knowledge (waypoints/resources/stats) for the current or a given world signature</td>
+</tr>
+<tr>
+<td><code>knowledge_set</code></td>
+<td><code>sig</code> string<br><code>waypoints</code> array<br><code>resources</code> array<br><code>stats</code> object</td>
+<td>merge waypoints/resources/stats into world-scoped knowledge (read-modify-write; other worlds + unspecified sections untouched)</td>
+</tr>
+<tr>
+<td><code>latest_screenshot</code></td>
+<td>—</td>
+<td>path+mtime of newest screenshot PNG</td>
+</tr>
+<tr>
+<td><code>load</code></td>
+<td><code>code</code> string <strong>required</strong></td>
+<td>load a passive module (runs in parallel)</td>
+</tr>
+<tr>
+<td><code>poll_events</code></td>
+<td><code>since</code> int — last seq seen (0/omitted = all currently buffered)</td>
+<td>drain the bounded event ring since a cursor → {events, seq}; pass the returned seq next time</td>
+</tr>
+<tr>
+<td><code>read_screen</code></td>
+<td>—</td>
+<td>open GUI: title + button widgets (text/pos/active)</td>
+</tr>
+<tr>
+<td><code>reload_ext</code></td>
+<td><code>path</code> string — override ext file path<br><code>code</code> string — inline ext code instead of the file</td>
+<td>re-eval ext.js (reloadable mod-API plugins: EMI/prospector/FTB) WITHOUT reloading main.js — ship new mod commands via sync + this</td>
+</tr>
+<tr>
+<td><code>reload_main</code></td>
+<td><code>delay</code> int — ms before restart, default 1000 (lets the response flush first)</td>
+<td>restart the main supervisor service itself (re-reads main.js from disk; headless GUI-free reload). Use after editing main.js; ext.js uses reload_ext</td>
+</tr>
+<tr>
+<td><code>reload_worker</code></td>
+<td><code>name</code> string<br><code>delay</code> int — ms between stop and start, default 1500</td>
+<td>idempotent worker reload = halt+start as ONE off-thread command (never deaf-locks main like a blocking halt can). Prefer this over manual halt→start; scripts/ops/reload_worker.py drives it</td>
+</tr>
+<tr>
+<td><code>scan</code></td>
+<td><code>radius</code> int<br><code>scan_y_range</code> int</td>
+<td>read-only ore scan around player</td>
+</tr>
+<tr>
+<td><code>screenshot</code></td>
+<td><code>name</code> string — filename (default ai_shot.png)</td>
+<td>native in-game screenshot (jsMacros Player.takeScreenshot → screenshots/ai_shot.png; works unfocused while rendering)</td>
+</tr>
+<tr>
+<td><code>scroll</code></td>
+<td><code>x</code> int<br><code>y</code> int<br><code>amount</code> int — default -3 (down)</td>
+<td>scroll the open screen at (x,y); amount +up/-down notches</td>
+</tr>
+<tr>
+<td><code>services</code></td>
+<td>—</td>
+<td>list registered jsMacros services</td>
+</tr>
+<tr>
+<td><code>start</code></td>
+<td><code>name</code> string</td>
+<td>start the worker service (loads bundle)</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>—</td>
+<td>container + module status</td>
+</tr>
+<tr>
+<td><code>stop</code></td>
+<td>—</td>
+<td>graceful stop of the worker</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>text</code> string <strong>required</strong></td>
+<td>type text into the focused widget (click a search box first)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ext-plugins">Ext plugins<a class="headerlink" href="#ext-plugins" title="Permanent link">&para;</a></h2>
+<p><code>harness/ext.js</code> — Mod-API plugins, reloaded live with <code>reload_ext</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Arguments</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>assign</code></td>
+<td><code>allowed</code> object — {minX,maxX,minZ,maxZ} or null=whole world<br><code>forbidden</code> array — [{minX,maxX,minZ,maxZ}, …] peer claims to avoid<br><code>claimedVeins</code> array — [{x,z}, …] vein columns peers are drilling (drill skips near them)<br><code>hazards</code> array — [{kind,x,z}, …] fleet-union hazard columns (treated like own recorded hazards)</td>
+<td>push a fleet assignment (hub→bot, fleet hub assignment): XZ region this bot may mine + peer-claimed regions/veins to avoid + fleet-shared hazards</td>
+</tr>
+<tr>
+<td><code>cam_aim</code></td>
+<td><code>yaw</code> number <strong>required</strong><br><code>pitch</code> number <strong>required</strong><br><code>roll</code> number — dutch angle, degrees (vanilla has none)<br><code>smooth</code> number — per-frame ease 0..1 (1 = snap, 0.15 ≈ soft pan)</td>
+<td>Hold the camera at an absolute yaw/pitch every FRAME (Forge ViewportEvent hook). Eases toward the angle by <code>smooth</code>; survives the player's own rotation.</td>
+</tr>
+<tr>
+<td><code>cam_free</code></td>
+<td>—</td>
+<td>Release the camera hook — vanilla/spectator control again. The listener stays registered but stops writing angles.</td>
+</tr>
+<tr>
+<td><code>cam_hud</code></td>
+<td><code>hide</code> boolean — default true</td>
+<td>Hide/show the HUD on this client (vanilla F1 + the jsMacros overlay). Always hide before a take.</td>
+</tr>
+<tr>
+<td><code>cam_look_at</code></td>
+<td><code>x</code> number <strong>required</strong><br><code>y</code> number <strong>required</strong><br><code>z</code> number <strong>required</strong><br><code>roll</code> number<br><code>smooth</code> number</td>
+<td>Aim the camera at a world point every FRAME. Poll it (~4 Hz) with a moving subject's position for a smooth tracking pan — the easing does the interpolation.</td>
+</tr>
+<tr>
+<td><code>cam_pose</code></td>
+<td><code>x</code> number <strong>required</strong><br><code>y</code> number <strong>required</strong><br><code>z</code> number <strong>required</strong><br><code>yaw</code> number<br><code>pitch</code> number<br><code>spectator</code> boolean — also /gamemode spectator @s</td>
+<td>Place the CAMERA client (op) at x/y/z with an optional yaw/pitch, optionally switching to spectator. Vanilla /tp — camera client only, never a bot.</td>
+</tr>
+<tr>
+<td><code>cam_spectate</code></td>
+<td><code>target</code> string — player name; omit to release</td>
+<td>POV shot: vanilla /spectate <player\|uuid> so the camera rides a bot's eyes (smooth, no code). Omit target to release.</td>
+</tr>
+<tr>
+<td><code>cam_state</code></td>
+<td>—</td>
+<td>Camera hook state: mode, registered?, eased angles, and the per-frame counter (must climb at FPS, not 20/s).</td>
+</tr>
+<tr>
+<td><code>count_item</code></td>
+<td><code>item</code> string <strong>required</strong> — item id, e.g. minecraft:iron_ingot</td>
+<td>read-only: total count of an item id across the whole carry inventory (hotbar + main)</td>
+</tr>
+<tr>
+<td><code>drawer_deposit</code></td>
+<td><code>pos</code> array <strong>required</strong> — [x,y,z] of the drawer block<br><code>items</code> array</td>
+<td>string — only deposit these ids (whitelist)<br><code>keep</code> array</td>
+</tr>
+<tr>
+<td><code>emi_recipe</code></td>
+<td><code>item</code> string <strong>required</strong></td>
+<td>EMI: open recipe GUI for what CRAFTS this item</td>
+</tr>
+<tr>
+<td><code>emi_search</code></td>
+<td><code>text</code> string <strong>required</strong><br><code>limit</code> int</td>
+<td>EMI item search (headless): set search text → return matching item ids as data</td>
+</tr>
+<tr>
+<td><code>emi_uses</code></td>
+<td><code>item</code> string <strong>required</strong></td>
+<td>EMI: open recipe GUI for where this item is USED</td>
+</tr>
+<tr>
+<td><code>go_base</code></td>
+<td><code>name</code> string</td>
+<td>FTB Essentials /home <name> — teleport to the bot's saved base home (default name 'base'). Fire-and-forget — verify the move.</td>
+</tr>
+<tr>
+<td><code>grid</code></td>
+<td><code>axis</code> string — xz (top-down, default) | xy | zy (vertical profiles)<br><code>radius</code> int — in-plane half-size (default 8, max 20)<br><code>y</code> int — xz: the Y level (default bot feet)<br><code>z</code> int — xy: the fixed Z (default bot)<br><code>x</code> int — zy: the fixed X (default bot)<br><code>h</code> int — vertical: Y half-height (default = radius)</td>
+<td>ASCII block-slice of the world (X-ray): axis xz=top-down (default), xy/zy=vertical profile; air=. ore=O bot=@, dynamic legend for the rest</td>
+</tr>
+<tr>
+<td><code>interact_entity</code></td>
+<td><code>uuid</code> string — target entity uuid (wins over pos)<br><code>pos</code> array — [x,y,z] block cell — nearest matching entity within radius<br><code>entity</code> string — entity-type substring filter (default 'item_frame'; NOT <code>type</code> — that's the envelope field)<br><code>radius</code> number — pos search radius (default 2.0)<br><code>item</code> string — item id to hold + place (default: keep held)<br><code>verify</code> string — consumed | none (default: consumed if item given, else none)</td>
+<td>right-click a held item onto an ENTITY (vanilla item frame / armor stand — unreachable via interact_place's block path). Target by uuid, or nearest type-matching entity near pos (type default item_frame). verify=consumed (held stack dropped) or none.</td>
+</tr>
+<tr>
+<td><code>interact_place</code></td>
+<td><code>pos</code> array <strong>required</strong> — [x,y,z] of the target block<br><code>item</code> string — item id to hold + place (default: keep held)<br><code>face</code> string — up/down/north/south/east/west (default: toward the player)<br><code>verify</code> string — consumed | none (default: consumed if item given, else none)</td>
+<td>right-click a held item onto a block face (item frame / display / pedestal / lever). Aims the face centre (default: side toward the player) + interactBlock; verify=consumed (a held stack dropped — frames/displays) or none (dispatch only). The headless primitive of the interact mission.</td>
+</tr>
+<tr>
+<td><code>jm_refresh</code></td>
+<td>—</td>
+<td>live-reload JourneyMap's waypoint list from disk (WaypointStore.reset) so bot-written waypoints appear without a relog</td>
+</tr>
+<tr>
+<td><code>journeymap_sync</code></td>
+<td>—</td>
+<td>mirror the bot's waypoints + discovered veins into JourneyMap as visible waypoints (writes journeymap/data/sp/<save>/waypoints/<id>.json, JM's own id scheme) + live-refresh</td>
+</tr>
+<tr>
+<td><code>markers</code></td>
+<td><code>ore</code> string — vein/ore kind filter<br><code>near</code> int<br><code>sig</code> string — world signature; default = current world</td>
+<td>query accumulated ore markers (mc_world.json resources, current world) sorted by distance</td>
+</tr>
+<tr>
+<td><code>ore_registry</code></td>
+<td><code>namespace</code> string — filter to one mod namespace (e.g. gtceu)</td>
+<td>LIVE ore-block ids from the Forge registry (forge:ores tag ∪ *_ore id scan) — the generator behind config/ores_live.json</td>
+</tr>
+<tr>
+<td><code>prospect</code></td>
+<td><code>want</code> string<br><code>keep_open</code> bool</td>
+<td>run HV prospector: hold→scan→wait→extract veins as data→cache→close; returns resources + nearest vein per ore</td>
+</tr>
+<tr>
+<td><code>prospector_status</code></td>
+<td><code>lowPct</code> int — low-energy threshold %, default 15</td>
+<td>read-only: hotbar prospector stored energy (charge/max/pct + low flag) — recharge before it dies</td>
+</tr>
+<tr>
+<td><code>quest_claim</code></td>
+<td><code>quest</code> string <strong>required</strong> — 16-hex quest id whose rewards to claim</td>
+<td>MUTATING: claim ONLY the named quest's rewards (ClaimRewardMessage per reward). Never claims other quests' rewards</td>
+</tr>
+<tr>
+<td><code>quest_complete</code></td>
+<td><code>task</code> string — 16-hex task id (submit just this task)<br><code>quest</code> string — 16-hex quest id (submit all its tasks)</td>
+<td>MUTATING: submit FTB quest task(s) (SubmitTaskMessage). Item tasks need the item already in inventory (legal, not consumed when consume_items=false)</td>
+</tr>
+<tr>
+<td><code>quests</code></td>
+<td><code>chapter</code> string — filter by chapter filename (e.g. 'genesis')<br><code>quest</code> string — filter to one quest by 16-hex id (case-insensitive)</td>
+<td>read-only FTB Quests live status (completion/deps/unclaimed per quest+task) — the objective engine's FTB status feed</td>
+</tr>
+<tr>
+<td><code>read_chat</code></td>
+<td><code>lines</code> int — max lines (default 20)<br><code>filter</code> string — case-insensitive substring filter</td>
+<td>read recent received chat lines as data (newest first, optional substring filter)</td>
+</tr>
+<tr>
+<td><code>recipe</code></td>
+<td><code>item</code> string <strong>required</strong><br><code>limit</code> int — max recipes (default 5)<br><code>craftOnly</code> bool — only crafting-table ≤3×3 recipes (default true)<br><code>alts</code> bool — include per-cell ingredient alternatives (capped; default false — they explode for wood)</td>
+<td>resolve craft recipe(s) for an item as DATA via EMI (grid + ingredients + output) — headless, pack-correct; feeds scripts/dev/resolve_craft_chain.py</td>
+</tr>
+<tr>
+<td><code>reflect</code></td>
+<td><code>expr</code> string <strong>required</strong> — JS expr evaluated in ext scope, e.g. "Player.openInventory()"<br><code>filter</code> string — case-insensitive substring filter on member names OR their Mojang annotation (e.g. "Rot" finds m_146922_ →setYRot)<br><code>sig</code> bool — include param/return signatures (default true)<br><code>fields</code> bool — include public fields (default true)<br><code>mojang</code> bool — annotate SRG names (m_…/f_…) with Mojang names via srg_names.json (default true)<br><code>depth</code> int — recurse into member types this many levels (0-2, default 0)</td>
+<td>reflect any expression's runtime class — method signatures, fields, optional recursion (API-exploration tool, generalizes introspect)</td>
+</tr>
+<tr>
+<td><code>rtp</code></td>
+<td>—</td>
+<td>FTB Essentials /rtp — random teleport</td>
+</tr>
+<tr>
+<td><code>sethome</code></td>
+<td><code>name</code> string</td>
+<td>FTB Essentials /sethome [name] — set a home at the current position</td>
+</tr>
+<tr>
+<td><code>spawn</code></td>
+<td>—</td>
+<td>FTB Essentials /spawn — teleport to world spawn</td>
+</tr>
+<tr>
+<td><code>storage_add</code></td>
+<td><code>pos</code> array <strong>required</strong> — [x,y,z] of the container block<br><code>kind</code> string — drawer|chest|barrel|container (auto for drawers)<br><code>facing</code> string — drawer face override: north|south|east|west</td>
+<td>manually register one container in the storage network (auto-detects drawer kind/facing; pass kind/facing to override)</td>
+</tr>
+<tr>
+<td><code>storage_list</code></td>
+<td>—</td>
+<td>list the registered storage-network containers for the current world</td>
+</tr>
+<tr>
+<td><code>storage_remove</code></td>
+<td><code>pos</code> array — [x,y,z] to remove<br><code>all</code> bool — clear the entire registry for this world</td>
+<td>remove a container from the storage network by position (or all=true to clear the registry)</td>
+</tr>
+<tr>
+<td><code>storage_scan</code></td>
+<td><code>radius</code> int — horizontal scan radius (default 6, max 16)<br><code>height</code> int — vertical scan range ± (default 4, max 8)</td>
+<td>scan a cube around the bot for containers (drawers/chests/barrels) and register them in mc_world.json storages (drawer contents recorded live). Hybrid discovery — pair with storage_add/storage_remove</td>
+</tr>
+<tr>
+<td><code>tool_info</code></td>
+<td><code>slot</code> int — hotbar index 0-8 (default: held)</td>
+<td>decode held/slot tool NBT → durability + AoE (GT.Behaviours) + GTCEu stats (GT.Tool) + electric charge</td>
+</tr>
+<tr>
+<td><code>tp_waypoint</code></td>
+<td><code>name</code> string<br><code>ore</code> string<br><code>x</code> int<br><code>y</code> int<br><code>z</code> int</td>
+<td>fast-teleport: {x,z[,y]} coords | {name} waypoint | {ore} nearest vein (vanilla /tp; veins land at current Y). Fire-and-forget — verify the move.</td>
+</tr>
+<tr>
+<td><code>unassign</code></td>
+<td>—</td>
+<td>clear this bot's fleet assignment (mine anywhere again)</td>
+</tr>
+<tr>
+<td><code>use_item</code></td>
+<td><code>item</code> string — item id to equip first (else uses held)<br><code>look_down</code> number — pitch degrees (e.g. 80 to aim at the ground before placing)<br><code>clicks</code> int — how many short right-clicks (default 1)</td>
+<td>equip an item to the hand and tap key.use (right-click); optional look_down pitch + repeat clicks</td>
+</tr>
+<tr>
+<td><code>warp</code></td>
+<td><code>name</code> string <strong>required</strong></td>
+<td>FTB Essentials /warp <name> — fast travel to a named warp</td>
+</tr>
+<tr>
+<td><code>wp_add</code></td>
+<td><code>name</code> string <strong>required</strong><br><code>x</code> int <strong>required</strong><br><code>z</code> int <strong>required</strong><br><code>y</code> int<br><code>kind</code> string<br><code>dim</code> string</td>
+<td>add a JourneyMap waypoint live via the native API (WaypointStore.add) — visible immediately, no file/reload. dim defaults to current, y to player Y, kind sets color</td>
+</tr>
+<tr>
+<td><code>wp_list</code></td>
+<td>—</td>
+<td>list JourneyMap waypoints live (from WaypointStore.getAll)</td>
+</tr>
+<tr>
+<td><code>wp_remove</code></td>
+<td><code>name</code> string <strong>required</strong></td>
+<td>remove JourneyMap waypoint(s) by name via the native API (WaypointStore.remove) — immediate</td>
+</tr>
+</tbody>
+</table>
+<h2 id="worker-bundle">Worker bundle<a class="headerlink" href="#worker-bundle" title="Permanent link">&para;</a></h2>
+<p><code>src/bot/entry/worker-bundle.ts</code> — Gerda Bot's own commands, answered by the kernel inside the loaded bundle.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Arguments</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add_waypoint</code></td>
+<td><code>name</code> string<br><code>kind</code> string<br><code>x</code> int<br><code>y</code> int<br><code>z</code> int</td>
+<td>record a waypoint (at the player, or at x/y/z)</td>
+</tr>
+<tr>
+<td><code>continue</code></td>
+<td>—</td>
+<td>approve the pending plan step (alias: proceed)</td>
+</tr>
+<tr>
+<td><code>goto_waypoint</code></td>
+<td><code>name</code> string — default: nearest vein</td>
+<td>send the bot to a known vein, then mine it</td>
+</tr>
+<tr>
+<td><code>metrics</code></td>
+<td>—</td>
+<td>write the telemetry .prom snapshot now + log its path</td>
+</tr>
+<tr>
+<td><code>mission_abort</code></td>
+<td>—</td>
+<td>stop the active mission → IDLE</td>
+</tr>
+<tr>
+<td><code>mission_start</code></td>
+<td><code>name</code> string <strong>required</strong><br><code>params</code> object</td>
+<td>activate a mission by name (switchable at runtime, no reload)</td>
+</tr>
+<tr>
+<td><code>mission_status</code></td>
+<td>—</td>
+<td>log the active mission + phase</td>
+</tr>
+<tr>
+<td><code>missions</code></td>
+<td>—</td>
+<td>log the available mission names</td>
+</tr>
+<tr>
+<td><code>nav_engine</code></td>
+<td><code>engine</code> string — default|astar|dstar|auto (omit → report current)</td>
+<td>set the navigator engine for production GOTO (no redeploy) — D* Lite only engages on filler-free legs</td>
+</tr>
+<tr>
+<td><code>pause</code></td>
+<td>—</td>
+<td>pause the bot → PAUSED</td>
+</tr>
+<tr>
+<td><code>plan_abort</code></td>
+<td>—</td>
+<td>abort the plan + active mission → IDLE</td>
+</tr>
+<tr>
+<td><code>plan_start</code></td>
+<td><code>name</code> string <strong>required</strong></td>
+<td>load + start a registered plan (the orchestrator chains its mission steps)</td>
+</tr>
+<tr>
+<td><code>plan_status</code></td>
+<td>—</td>
+<td>log the plan, cursor, status, blocked reason, active mission</td>
+</tr>
+<tr>
+<td><code>plans</code></td>
+<td>—</td>
+<td>log the available plan names</td>
+</tr>
+<tr>
+<td><code>proceed</code></td>
+<td>—</td>
+<td>approve the pending plan step (alias: continue)</td>
+</tr>
+<tr>
+<td><code>remove_waypoint</code></td>
+<td><code>name</code> string <strong>required</strong></td>
+<td>remove a waypoint by name</td>
+</tr>
+<tr>
+<td><code>resume</code></td>
+<td>—</td>
+<td>resume the bot from PAUSED</td>
+</tr>
+<tr>
+<td><code>run</code></td>
+<td>—</td>
+<td>flip the plan to auto and drain to completion (or until a guard blocks)</td>
+</tr>
+<tr>
+<td><code>save_now</code></td>
+<td>—</td>
+<td>flush persistence to disk</td>
+</tr>
+<tr>
+<td><code>select</code></td>
+<td><code>step</code> string — step index or id (jump)<br><code>mission</code> string — run this mission ad-hoc<br><code>params</code> object</td>
+<td>jump to a plan step, or run a single mission ad-hoc</td>
+</tr>
+<tr>
+<td><code>smoke</code></td>
+<td><code>eat</code> bool — also dispatch one real bite (destructive)</td>
+<td>live facade smoke test (worker context): logs SMOKE per check + SMOKE_DONE</td>
+</tr>
+<tr>
+<td><code>step</code></td>
+<td>—</td>
+<td>advance exactly one plan step, then wait for approval again</td>
+</tr>
+</tbody>
+</table>
+<h2 id="diagnostic">Diagnostic<a class="headerlink" href="#diagnostic" title="Permanent link">&para;</a></h2>
+<p>Probes for testing and debugging; most are idle/paused only.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Layer</th>
+<th>Arguments</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>greedy_drive</code></td>
+<td>worker</td>
+<td><code>x</code> int <strong>required</strong><br><code>y</code> int <strong>required</strong><br><code>z</code> int <strong>required</strong></td>
+<td>per-tick greedy nav to x/y/z (continuous veto; safe live test) — idle/paused only</td>
+</tr>
+<tr>
+<td><code>greedy_drive_stop</code></td>
+<td>worker</td>
+<td>—</td>
+<td>clear the per-tick greedy target + release keys</td>
+</tr>
+<tr>
+<td><code>greedy_stop</code></td>
+<td>worker</td>
+<td>—</td>
+<td>release the greedy navigator's movement keys (abort)</td>
+</tr>
+<tr>
+<td><code>greedy_to</code></td>
+<td>worker</td>
+<td><code>x</code> int <strong>required</strong><br><code>y</code> int <strong>required</strong><br><code>z</code> int <strong>required</strong></td>
+<td>drive one tick of the greedy navigator toward x/y/z — call repeatedly</td>
+</tr>
+<tr>
+<td><code>nav_trace</code></td>
+<td>worker</td>
+<td><code>tail</code> int — return only the last N rows</td>
+<td>dump the un-sampled per-tick parkour trace of the last greedy_drive</td>
+</tr>
+<tr>
+<td><code>sensors</code></td>
+<td>worker</td>
+<td><code>items</code> array — item ids to report stock for<br><code>includeStorage</code> boolean — also count the open container's storage slots (default carry only)</td>
+<td>live read-out of the sustain-loop sensors — vein exhaustion + item stock (the cycle's guards)</td>
+</tr>
+<tr>
+<td><code>set_arrival</code></td>
+<td>worker</td>
+<td><code>dist</code> number — e.g. 0.4 for exact-block</td>
+<td>runtime arrival tolerance for greedy_drive (≤0 clears → cfg.nav.gotoArrivalDist)</td>
+</tr>
+<tr>
+<td><code>set_dstar</code></td>
+<td>worker</td>
+<td><code>on</code> bool — force the D* Lite incremental engine<br><code>noFiller</code> bool — strip bridge/pillar/mine so D* engages</td>
+<td>per-drive engine override for greedy_drive A/B — D* Lite engine + strip filler moves</td>
+</tr>
+<tr>
+<td><code>set_timeout</code></td>
+<td>worker</td>
+<td><code>ticks</code> number — e.g. 3000 (~150s)</td>
+<td>runtime timeout (ticks) for greedy_drive — raise for a long natural traverse (≤0 clears → cfg.nav.gotoTimeoutTicks)</td>
+</tr>
+<tr>
+<td><code>storage_probe</code></td>
+<td>worker</td>
+<td><code>x</code> int <strong>required</strong><br><code>y</code> int <strong>required</strong><br><code>z</code> int <strong>required</strong></td>
+<td>read a placed container's contents from the worker thread (kind/facing/slots)</td>
+</tr>
+<tr>
+<td><code>trace</code></td>
+<td>worker</td>
+<td><code>on</code> bool — omit → report current state</td>
+<td>toggle per-tick decision tracing (T:TICK lines in get_logs) without a reload</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>
