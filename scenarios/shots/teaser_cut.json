@@ -1,0 +1,257 @@
+{
+  "name": "teaser",
+  "fps": 60,
+  "width": 1920,
+  "height": 1080,
+  "takes_dir": "release/takes/teaser",
+  "out": "release/gerda_teaser_final.mp4",
+  "fade_in": 0.5,
+  "fade_out": 0.8,
+  "_doc": [
+    "Cut list for the teaser — the EDIT half of scenarios/shots/teaser.json (which is the",
+    "SHOOT half). Assemble with scripts/rig/assemble.py; every in/out below was verified",
+    "frame-by-frame against the actual takes, not copied from shoot-day notes.",
+    "",
+    "Shoot-day estimates were optimistic on three shots — the numbers here are the measured",
+    "ones: 02b_shaft dies at 5.5 s (not 15), 04_nav loses the bot at 6.0 s (not 8),",
+    "04_nav_bridge2 is parked from 5.6 s. Re-verify after any re-shoot; do not restore the",
+    "old guesses.",
+    "",
+    "01_clutch.mp4 was RE-SHOT on a STATIC in-pit camera and holds the hook slot",
+    "at 3.2-5.3 (see the segment note; full-frame duty 0.0 % at the defaults is expected for a",
+    "static shot — accept it with motion_probe --preset static-hook, docs/RIG.md § Static hook",
+    "shots).",
+    "HISTORY: the earlier shader-camera tracking take held the hook with: ledge at 3.2,",
+    "leap 3.4, wall-fall 3.6, intact on the canyon floor from 4.3 — no damage flash; the",
+    "clutch is live-verified (journal PLACE{attempts:2} -> RETRIEVED, hp20). The splash is",
+    "not readable in this wide framing (water lives ~3 ticks; the tracking camera reaches",
+    "the floor ~0.3 s late) — fixing it means a lower/closer shot def, not a re-take. The",
+    "gap leap (04_nav_bridge2 2.8-5.6) is the alternate hook.",
+    "",
+    "05_economy.mp4 was RE-SHOT again (25-block patch, 30 s laps, human-input",
+    "reflex fixed) and now carries BOTH economy slots: the base is lap 2 at 46.0-57.7 and",
+    "economy_mine is the lap-1 burst at 20.6-24.2. 05_economy_enc.mp4 is retired.",
+    "HISTORY: the earlier shader-camera take of this shot was ~90% frozen frames",
+    "(static 7.3-19.95 and 23.4-49, only live window the burst 19.9-23.4), which is why the",
+    "economy base rode 05_economy_enc (8-22 window clean, HARD OUT 42.8) until the re-shoot.",
+    "",
+    "CAPTIONS: EN only, burned in by assemble.py — state LABELS",
+    "top-left + narrative LINES bottom. Anchored to segment ids, so re-timing a segment carries",
+    "its captions. The prospect caption exists to explain the standstill: prospecting is a",
+    "scan, not a hang. Branding line = 'by Flamerix AI' only. Rates in labels are {speed},",
+    "filled from the segment. hook_clutch carries the LINE only: 2.1 s cannot hold a label and",
+    "a line back to back (each needs its own MIN_HOLD_S and MAX_CPS budget, assemble.py), and",
+    "sharing the screen puts the combined read over MAX_CPS."
+  ],
+  "segments": [
+    {
+      "id": "hook_clutch",
+      "src": "01_clutch.mp4",
+      "in": 3.2,
+      "out": 5.3,
+      "note": "HOOK (re-shot, static in-pit camera on the west column): empty pad t3.2-3.8 builds the beat, the pre-impact water lands on the pad at t3.8, the bot drops onto it at t3.9 and scoops the bucket back by t4.1, then stands intact at 20 hp. Take is real-time 60 fps (15.5 s file for a 12 s roll = warm-up frames)."
+    },
+    {
+      "id": "prospect",
+      "src": "02a_prospect.mp4",
+      "in": 6.6,
+      "out": 11.0,
+      "note": "Bot centred in the glade holding the HV prospector. Standing-hero shot — prospecting is visually a no-op. Before 6.4 an out-of-focus foreground object crosses the low frame."
+    },
+    {
+      "id": "prospect_gui",
+      "src": "02a_gui.mp4",
+      "in": 4.0,
+      "out": 6.6,
+      "filters": [
+        "drawbox=x=0:y=0:w=420:h=118:color=black@1:t=fill",
+        "drawbox=x=0:y=104:w=300:h=140:color=black@1:t=fill"
+      ],
+      "note": "GUI insert (the bot's OWN display, recorded in parallel). The take burns in the bot HUD (Miner/Tool/WP) plus an FPS counter top-left — the two drawboxes mask them. Scene behind the GUI is night while every other shot is day; the panel fills most of the frame so it reads as an insert, not a continuity break."
+    },
+    {
+      "id": "shaft",
+      "src": "02b_shaft.mp4",
+      "in": 0.3,
+      "out": 5.5,
+      "note": "High wide over the mesa ridge: bot digs in and SINKS out of view at t4.5-5.0, leaving the shaft mouth. Everything after 5.5 is an empty slow drift over static terrain."
+    },
+    {
+      "id": "vein",
+      "src": "03_vein.mp4",
+      "in": 6.0,
+      "out": 60.0,
+      "speed": 3.0,
+      "note": "Ore chamber eaten block by block; the wall breaks through to daylight at t46 and is a full sky portal by t52-56. Action is continuous but repetitive — 3x is the fit (2x just doubles the same beat)."
+    },
+    {
+      "id": "climb",
+      "src": "04_nav.mp4",
+      "in": 0.6,
+      "out": 5.8,
+      "note": "Navigator stair-climbs the terracotta wall — reads as the walk home out of the gorge. Bot is last discernible at 6.0 and gone by 6.25."
+    },
+    {
+      "id": "economy",
+      "src": "05_economy.mp4",
+      "in": 46.0,
+      "out": 57.7,
+      "speed": 1.5,
+      "note": "Sustain loop, lap 2 of the re-shoot (25-block patch, 30 s laps, human-input reflex fixed): mines the patch, walks to the furnace bank and back. motion_probe crop 700,380,700x400 live 46.0-57.7 at 90.6 % duty. AVOID 25.5-37.7 (lap-1 tail freeze) and 67.8-72.9. The old 05_economy_enc.mp4 source is retired from this slot."
+    },
+    {
+      "id": "economy_mine",
+      "src": "05_economy.mp4",
+      "in": 20.6,
+      "out": 24.2,
+      "note": "Mining burst, lap 1 of the re-shoot: crop-run live 20.5-25.5 at 98 % duty; full-frame live 22.5-25.3 at 96 %."
+    },
+    {
+      "id": "finale",
+      "src": "08_finale_enc.mp4",
+      "in": 1.0,
+      "out": 121.0,
+      "speed": 20.0,
+      "note": "Static wide on the base, timelapsed 20x. Camera is pixel-stable across the whole take. IN is 1.0 because the bottom-right corner is still unrendered chunk void at 0.2."
+    }
+  ],
+  "captions": {
+    "font": "Inter",
+    "label_font": "JetBrains Mono",
+    "cues": [
+      {
+        "seg": "hook_clutch",
+        "at": 0.2,
+        "dur": 1.9,
+        "layer": "line",
+        "text": "Falls, places water, scoops it back"
+      },
+      {
+        "seg": "prospect",
+        "at": 0.2,
+        "dur": 4.0,
+        "layer": "label",
+        "text": "Prospect"
+      },
+      {
+        "seg": "prospect",
+        "at": 0.3,
+        "dur": 4.0,
+        "layer": "line",
+        "text": "Standing still on purpose —\nthe prospector is scanning for veins"
+      },
+      {
+        "seg": "prospect_gui",
+        "at": 0.1,
+        "dur": 2.4,
+        "layer": "label",
+        "text": "Prospect · vein map"
+      },
+      {
+        "seg": "prospect_gui",
+        "at": 0.1,
+        "dur": 2.4,
+        "layer": "line",
+        "text": "Reads the vein map right off the scanner"
+      },
+      {
+        "seg": "shaft",
+        "at": 0.2,
+        "dur": 4.8,
+        "layer": "label",
+        "text": "Descend"
+      },
+      {
+        "seg": "shaft",
+        "at": 0.3,
+        "dur": 4.6,
+        "layer": "line",
+        "text": "Picks the best vein, digs straight down"
+      },
+      {
+        "seg": "vein",
+        "at": 0.2,
+        "dur": 17.6,
+        "layer": "label",
+        "text": "Mine · {speed} speed"
+      },
+      {
+        "seg": "vein",
+        "at": 0.5,
+        "dur": 5.5,
+        "layer": "line",
+        "text": "Mines the vein out, block by block"
+      },
+      {
+        "seg": "vein",
+        "at": 6.5,
+        "dur": 5.0,
+        "layer": "line",
+        "text": "Right tool per ore, junk tossed on the go"
+      },
+      {
+        "seg": "vein",
+        "at": 12.0,
+        "dur": 5.5,
+        "layer": "line",
+        "text": "No LLM in the loop —\njust deterministic TypeScript"
+      },
+      {
+        "seg": "climb",
+        "at": 0.2,
+        "dur": 4.8,
+        "layer": "label",
+        "text": "Goto"
+      },
+      {
+        "seg": "climb",
+        "at": 0.3,
+        "dur": 4.6,
+        "layer": "line",
+        "text": "Own pathfinder climbs out — no Baritone"
+      },
+      {
+        "seg": "economy",
+        "at": 0.2,
+        "dur": 7.4,
+        "layer": "label",
+        "text": "Sustain loop · {speed}"
+      },
+      {
+        "seg": "economy",
+        "at": 0.3,
+        "dur": 7.2,
+        "layer": "line",
+        "text": "Mine → smelt → craft → repair, on repeat"
+      },
+      {
+        "seg": "economy_mine",
+        "at": 0.1,
+        "dur": 3.3,
+        "layer": "label",
+        "text": "Mine"
+      },
+      {
+        "seg": "economy_mine",
+        "at": 0.2,
+        "dur": 3.2,
+        "layer": "line",
+        "text": "Every block earned — no /give, no cheats"
+      },
+      {
+        "seg": "finale",
+        "at": 0.2,
+        "dur": 5.0,
+        "layer": "label",
+        "text": "Base · {speed} timelapse"
+      },
+      {
+        "seg": "finale",
+        "at": 0.4,
+        "dur": 4.8,
+        "layer": "line",
+        "text": "Gerda — open-source bot framework\nby Flamerix AI\ngithub.com/flamerix-ai/gerda"
+      }
+    ]
+  }
+}

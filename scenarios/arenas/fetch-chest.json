@@ -1,0 +1,12 @@
+{
+  "desc": "fetch GOTO leg (own navigator; Baritone removed) — greedy walks a flat floor to a chest at an explicit {x,y,z} target, then RESTOCK opens + withdraws. A 12-block straight floor walk: bot at x0, chest at x12. PASS = FETCH_RESTOCK (only logs after GOTO arrival → RESTOCK), proving the greedy GOTO drove the bot to the chest with no Baritone. No scan involved (fetch targets a literal coord).",
+  "ops": [
+    { "op": "clear", "from": [-2, 100, -2], "to": [14, 105, 2] },
+    { "op": "fill", "from": [-2, 100, -2], "to": [14, 100, 2], "block": "minecraft:stone" },
+    { "op": "set", "pos": [12, 101, 0], "block": "minecraft:chest" },
+    { "op": "clearinv" },
+    { "op": "player", "pos": [0, 101, 0] }
+  ],
+  "mission": { "name": "fetch", "params": { "x": 12, "y": 101, "z": 0 } },
+  "expect": { "events": ["FETCH_RESTOCK"], "timeout": 40 }
+}

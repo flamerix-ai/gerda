@@ -1,0 +1,18 @@
+{
+  "desc": "Detour — a wall across the straight line forces a route-around. Exercises greedy's A* path planner. Floor x40..72 z-4..6, wall at x56 spanning z-3..4 (gap open at z5,6); straight z=1 is blocked, must swing to z5.",
+  "ops": [
+    { "op": "clear", "from": [40, 87, -4], "to": [72, 96, 6] },
+    { "op": "fill", "from": [40, 87, -4], "to": [72, 87, 6], "block": "minecraft:stone" },
+    { "op": "fill", "from": [56, 88, -3], "to": [56, 92, 4], "block": "minecraft:stone" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 64 },
+    { "op": "select", "slot": 0 }
+  ],
+  "start": [42, 88, 1],
+  "legs": [
+    { "name": "around", "to": [68, 88, 1] }
+  ],
+  "repeats": 3,
+  "timeout": 35
+}

@@ -1,0 +1,19 @@
+{
+  "desc": "sustain-cycle Stage 2 — the INFINITE autonomous loop, end to end. Base = a 3-furnace bank (x=5, z=0..2, plan opens the middle 5,101,1). Shaft = a dig site at (0,101,0) with an adjacent 1-high 3×3 iron-ore patch (z=-1..-3) the bot reaches without a bridge; it also carries cobblestone filler (a real mining bot always has cobble — the nav fail-fasts with FILLER_LOW if it tries to bridge with none). NOTE: the arena asserts ONE productive lap (which passes). Sustained multi-lap from a FIXED shaft is blocked by two PRE-EXISTING issues (not the plan): the safety reflex PAUSEs lap 2 on 'human input detected', and the greedy navigator intermittently reports blocked_no_path on a 2-3 block flat-ground short hop. Real autonomy adds a veinExhausted→prospect-new-shaft branch + a settle-window fix for the input reflex. The bot, kitted with a pickaxe + coal, runs plan sustain-cycle: mine a 3-ore batch → walk to the bank → collect ready ingots (nothing on lap 1) → load the raw ore (furnace cooks unattended) → walk back to the shaft → LOOP. PASS (one productive lap) = ORE_FOUND (mined) + GOTO_ARRIVED (walked to base) + SMELT_LOADED (loaded the furnace), no ERROR. The loop never finishes (next→0); a second lap's collect harvests lap 1's ingots — verified live via get_logs (recurring ORCH_STEP_START step:0 + SMELT_COLLECTED). Stop it with plan_abort/halt. Coords are pinned here; they move to config/a base waypoint for a real base.",
+  "ops": [
+    { "op": "clear", "from": [-4, 101, -5], "to": [9, 105, 4] },
+    { "op": "fill", "from": [-4, 100, -5], "to": [9, 100, 4], "block": "minecraft:stone" },
+    { "op": "set", "pos": [5, 101, 0], "block": "minecraft:furnace" },
+    { "op": "set", "pos": [5, 101, 1], "block": "minecraft:furnace" },
+    { "op": "set", "pos": [5, 101, 2], "block": "minecraft:furnace" },
+    { "op": "fill", "from": [-1, 101, -3], "to": [1, 101, -1], "block": "minecraft:iron_ore" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 32 },
+    { "op": "give", "item": "minecraft:coal", "count": 16 },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 101, 0] }
+  ],
+  "plan": "sustain-cycle",
+  "expect": { "events": ["ORE_FOUND", "GOTO_ARRIVED", "SMELT_LOADED"], "timeout": 180 }
+}

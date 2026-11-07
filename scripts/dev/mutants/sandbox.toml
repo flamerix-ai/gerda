@@ -1,0 +1,1559 @@
+# Mutants of the sandbox guards (scripts/sandbox/{sbx.sh,provision.sh,Containerfile}).
+#
+#   python3 scripts/dev/mutants.py list sandbox
+#   python3 scripts/dev/mutants.py run sandbox [mutant ...]
+#
+# Every die-shaped line of the files in [scope] carries `# gate:<id>` (an id of [gates]) or
+# `# not-a-gate: <reason>`; `just gate-tags` fails otherwise. A mutant replaces its `anchor`
+# (exactly one occurrence, on a line tagged with its gate id) in a copy of the tree, and its
+# `test`s must fail with every `expect_message`, `expect_failures` failing tests in all.
+command = ["python3", "-m", "unittest"]
+ran_line = '^Ran \d+ tests? in \d+\.\d+s$'
+skip_marker = "skipped="
+failure_marker = " (scripts.tests."
+failure_exit = 1
+
+[scope]
+files = [
+    "scripts/sandbox/sbx.sh",
+    "scripts/sandbox/provision.sh",
+    "scripts/sandbox/Containerfile",
+]
+
+[gates]
+unverified-instance-removed = "a failed install removes the instance it made, so nothing unverified stays runnable"
+die-exits = "die ends the step with status 1"
+pins-file-present = "missing pins are an error, never an unpinned install"
+pins-dir-column = "every pins row is five tab-separated fields with a known pack dir"
+pins-match-manifest = "the pins list exactly the files of the zip's manifest"
+pins-checked-before-install = "the pins are checked before anything is installed"
+pack-files-dir = "the installed files are compared with their dir, not only name + sha256"
+pack-files-nonempty = "an install with no pack files is a failure, also unpinned"
+pack-files-match-pins = "the installed files are exactly the pinned files and bytes"
+pack-verified-after-install = "the step verifies what the launcher (or the copy) installed"
+from-copy-complete = "a --from copy that misses a pinned file fails and names it"
+from-dir-shape = "--from must point at an instance with a mods/ folder"
+from-dir-exists = "--from must name an existing directory"
+from-outside-instance = "a --from dir inside the instance it would replace is refused"
+instance-ownership = "an instance the step did not start is never removed"
+launch-single-game = "no second game is launched from a data root that runs one"
+click-geometry = "a dialog without readable geometry is never clicked blind"
+import-untitled-dialog = "only the non-dialog window titled as the launcher is the main window"
+import-fail-fatal = "an import failure ends the step"
+import-own-display = "the import runs on its own X display, never the game's"
+import-launcher-idle = "a running launcher of the root is never driven"
+import-timeout = "an import that never commits times out"
+import-log-failure = "a failure the launcher logs fails the import without any dialog"
+import-launcher-alive = "a launcher that exits during the import fails it at once"
+import-xdotool-return = "a Return that xdotool could not press fails the import"
+import-dialog-timeout = "a New Instance dialog that ignores Return times out"
+import-xdotool-click = "clicks xdotool could not make fail the import"
+import-optional-timeout = "an optional-mods dialog that ignores the clicks times out"
+import-blocked-window = "the Blocked mods dialog fails the import, also with nothing in the log"
+import-unknown-window = "any other launcher window fails the import"
+import-instance-name = "an instance created under another name fails the import"
+import-curseforge-type = "the imported instance must be a CurseForge (flame) import"
+launcher-no-flame-key = "the launcher is seeded never to fetch the CurseForge app's API key"
+client-pinned = "the client is installed against its pins file"
+fetch-sha256 = "a download with another sha256 fails and is moved aside"
+wait-log-fail-pattern = "a fail line in a watched log is a failure"
+wait-log-timeout = "a log without its ok line times out as a failure"
+server-done = "a server that does not reach Done fails the step"
+warmup-title = "a warm-up launch that misses the title screen fails"
+warmup-mappings = "a warm-up without the Forge mappings fails"
+warmup-jsm-services = "a warm-up that lost the jsMacros services fails"
+repo-is-gerda = "a clone without ./gerda is refused"
+repo-needs-verified-client = "repo never syncs into an unverified client instance"
+repo-sync-deployed = "a sync that deployed no main.js fails"
+world-server-sha1 = "a vanilla server jar with another sha1 fails"
+world-level-dat = "a world generation without level.dat fails"
+pack-instance-name = "a pack instance name is a plain name (no path)"
+pack-sha-format = "a pack sha256 argument must be 64 hex digits"
+pack-zip-sha256 = "a local pack zip with another sha256 is refused"
+pack-url-needs-sha = "a pack url needs a sha256 (or --unpinned)"
+add-mods-nonempty = "add-mods with no jar fails"
+start-matrix-needs-verified-pack = "start-matrix never starts an unverified pack instance"
+start-matrix-bridge = "start-matrix fails when the bridge never answers"
+start-needs-verified-client = "start never starts an unverified client instance"
+start-joined = "start fails when the bot did not join the server"
+start-bridge = "start fails when the bridge never answers"
+verify-ping = "verify fails when the bridge never answers 3 pings in a row"
+verify-smoke = "verify fails when the smoke fails 3 times"
+record-black-check = "a black recording fails the record step"
+image-archive-sha256 = "the image build checks the bun and uv archives against their pins"
+prov-die-exits = "provision.sh die ends with status 1"
+prov-from-shape = "provision --from must point at an instance with a mods/ folder"
+wait-step-rc = "provision wait fails on a failed step"
+wait-still-running = "provision wait returns 3, not success, for a step still running"
+prov-pack-instance-name = "provision pack refuses a non-plain name before any copy"
+destroy-needs-yes = "destroy needs its --yes"
+destroy-container-label = "destroy removes only a container `up` labelled"
+destroy-volume-label = "destroy removes only a volume `up` labelled"
+destroy-reports-failure = "a failed removal is reported as a failure"
+up-labels = "up labels the container and the volumes it creates"
+cache-key-by-url = "a download's cache file is keyed by its whole url, so two urls never share a file"
+fetch-needs-pin = "a download with no sha256 pin is refused before it starts"
+unpinned-only-pack = "the UNPINNED token skips the check only in the pack step"
+pins-set = "every sha256 pin in pins.env is set (64 hex digits)"
+dispatch-unknown-fails = "an unknown sbx.sh step prints the usage and fails"
+prov-dispatch-unknown-fails = "an unknown provision.sh step prints the usage and fails"
+verified-instance-kept = "a failure after the check never removes the verified instance"
+
+[[mutant]]
+name = "unverified-rm-dropped"
+gate = "unverified-instance-removed"
+file = "scripts/sandbox/sbx.sh"
+anchor = "rm -rf -- \"$UNVERIFIED\""
+replace = ": -- \"$UNVERIFIED\""
+test = [
+    "scripts.tests.test_sandbox_scripts.PackInstanceTests.test_a_failed_check_removes_the_unverified_instance",
+]
+expect_message = [
+    "FAIL: test_a_failed_check_removes_the_unverified_instance (",
+    "AssertionError: True is not false",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "unverified-never-set"
+gate = "unverified-instance-removed"
+file = "scripts/sandbox/sbx.sh"
+anchor = "UNVERIFIED=$inst"
+replace = "UNVERIFIED=\"\""
+test = [
+    "scripts.tests.test_sandbox_scripts.PackInstanceTests.test_a_failed_check_removes_the_unverified_instance",
+]
+expect_message = [
+    "FAIL: test_a_failed_check_removes_the_unverified_instance (",
+    "'removed the unverified instance' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "die-exits-0"
+gate = "die-exits"
+file = "scripts/sandbox/sbx.sh"
+anchor = "  exit 1   # gate:die-exits"
+replace = "  exit 0   # gate:die-exits"
+test = [
+    "scripts.tests.test_sandbox_steps.DieTests.test_die_ends_the_step_with_status_1",
+]
+expect_message = [
+    "FAIL: test_die_ends_the_step_with_status_1 (",
+    "AssertionError: 0 != 1",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "pins-missing-falls-open"
+gate = "pins-file-present"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ -f \"$1\" ] || die \"pins file $1 is missing"
+replace = "[ -f \"$1\" ] || return 0; true || die \"pins file $1 is missing"
+test = [
+    "scripts.tests.test_sandbox_scripts.VerifyPackFilesTests.test_missing_pins_are_an_error_not_unpinned",
+]
+expect_message = [
+    "FAIL: test_missing_pins_are_an_error_not_unpinned (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "pins-row-check-dropped"
+gate = "pins-dir-column"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ -z \"$bad\" ] || die"
+replace = "[ -z \"$bad\" ] || true"
+test = [
+    "scripts.tests.test_sandbox_scripts.VerifyPackFilesTests.test_a_pins_row_without_a_known_dir_fails",
+]
+expect_message = [
+    "FAIL: test_a_pins_row_without_a_known_dir_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 5
+
+[[mutant]]
+name = "pins-row-field-count-dropped"
+gate = "pins-dir-column"
+file = "scripts/sandbox/sbx.sh"
+anchor = "NF != 5 || index("
+replace = "index("
+test = [
+    "scripts.tests.test_sandbox_scripts.VerifyPackFilesTests.test_a_pins_row_without_a_known_dir_fails",
+]
+expect_message = [
+    "FAIL: test_a_pins_row_without_a_known_dir_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "pins-row-dir-check-dropped"
+gate = "pins-dir-column"
+file = "scripts/sandbox/sbx.sh"
+anchor = " || index(dirs, \" \" $3 \" \") == 0 {"
+replace = " {"
+test = [
+    "scripts.tests.test_sandbox_scripts.VerifyPackFilesTests.test_a_pins_row_without_a_known_dir_fails",
+]
+expect_message = [
+    "FAIL: test_a_pins_row_without_a_known_dir_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 3
+
+[[mutant]]
+name = "pins-vs-manifest-ignored"
+gate = "pins-match-manifest"
+file = "scripts/sandbox/sbx.sh"
+anchor = "<(manifest_ids \"$2\") > /dev/null \\\n    || die"
+replace = "<(manifest_ids \"$2\") > /dev/null \\\n    || true || die"
+test = [
+    "scripts.tests.test_sandbox_scripts.VerifyPackFilesTests.test_pins_of_another_pack_fail",
+    "scripts.tests.test_sandbox_scripts.PackInstanceTests.test_foreign_pins_stop_the_step_before_the_launcher",
+]
+expect_message = [
+    "FAIL: test_pins_of_another_pack_fail (",
+    "FAIL: test_foreign_pins_stop_the_step_before_the_launcher (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 2
+
+[[mutant]]
+name = "pins-check-skipped"
+gate = "pins-checked-before-install"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ -z \"$pins\" ] || check_pins_file \"$pins\" \"$zip\""
+replace = "true"
+test = [
+    "scripts.tests.test_sandbox_scripts.PackInstanceTests.test_foreign_pins_stop_the_step_before_the_launcher",
+]
+expect_message = [
+    "FAIL: test_foreign_pins_stop_the_step_before_the_launcher (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "files-compared-without-dir"
+gate = "pack-files-dir"
+file = "scripts/sandbox/sbx.sh"
+anchor = "diff <(cut -f3-5 \"$pins\" | LC_ALL=C sort) \"$got\""
+replace = "diff <(cut -f4,5 \"$pins\" | LC_ALL=C sort) <(cut -f2,3 \"$got\" | LC_ALL=C sort)"
+test = [
+    "scripts.tests.test_sandbox_scripts.VerifyPackFilesTests.test_a_file_in_another_dir_fails",
+]
+expect_message = [
+    "FAIL: test_a_file_in_another_dir_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "list-without-dir"
+gate = "pack-files-dir"
+file = "scripts/sandbox/sbx.sh"
+anchor = "printf '%s\\t%s\\t%s\\n' \"$d\" \"${f##*/}\""
+replace = "printf '%s\\t%s\\n' \"${f##*/}\""
+test = [
+    "scripts.tests.test_sandbox_scripts.VerifyPackFilesTests.test_the_pinned_files_pass",
+]
+expect_message = [
+    "FAIL: test_the_pinned_files_pass (",
+    "AssertionError: 1 != 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "empty-install-passes"
+gate = "pack-files-nonempty"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ \"$n\" -gt 0 ] || die \"no files in"
+replace = "[ \"$n\" -gt 0 ] || true \"no files in"
+test = [
+    "scripts.tests.test_sandbox_scripts.VerifyPackFilesTests.test_an_empty_install_fails_also_unpinned",
+]
+expect_message = [
+    "FAIL: test_an_empty_install_fails_also_unpinned (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "extra-files-tolerated"
+gate = "pack-files-match-pins"
+file = "scripts/sandbox/sbx.sh"
+anchor = "diff <(cut -f3-5 \"$pins\" | LC_ALL=C sort) \"$got\""
+replace = "diff <(cut -f3-5 \"$pins\" | LC_ALL=C sort) <(grep -Ff <(cut -f4 \"$pins\") \"$got\")"
+test = [
+    "scripts.tests.test_sandbox_scripts.VerifyPackFilesTests.test_an_extra_or_disabled_file_fails",
+]
+expect_message = [
+    "FAIL: test_an_extra_or_disabled_file_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "pins-diff-ignored"
+gate = "pack-files-match-pins"
+file = "scripts/sandbox/sbx.sh"
+anchor = "head -n 20 \"$STATE/$tag-files.diff\"; die"
+replace = "head -n 20 \"$STATE/$tag-files.diff\"; true"
+test = [
+    "scripts.tests.test_sandbox_scripts.VerifyPackFilesTests.test_a_changed_byte_fails",
+]
+expect_message = [
+    "FAIL: test_a_changed_byte_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "verify-after-install-dropped"
+gate = "pack-verified-after-install"
+file = "scripts/sandbox/sbx.sh"
+anchor = "verify_pack_files \"$game\" \"$tag\" \"$pins\""
+replace = "true"
+test = [
+    "scripts.tests.test_sandbox_scripts.PackInstanceTests.test_the_step_checks_what_the_launcher_installed",
+]
+expect_message = [
+    "FAIL: test_the_step_checks_what_the_launcher_installed (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "missing-pinned-skipped"
+gate = "from-copy-complete"
+file = "scripts/sandbox/sbx.sh"
+anchor = "missing+=(\"$d/$name\"); continue"
+replace = "continue"
+test = [
+    "scripts.tests.test_sandbox_scripts.FromDirTests.test_a_missing_pinned_file_fails_and_names_it",
+]
+expect_message = [
+    "FAIL: test_a_missing_pinned_file_fails_and_names_it (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "missing-pinned-not-fatal"
+gate = "from-copy-complete"
+file = "scripts/sandbox/sbx.sh"
+anchor = "| head -n 30; die \"${#missing[@]} pinned"
+replace = "| head -n 30; true \"${#missing[@]} pinned"
+test = [
+    "scripts.tests.test_sandbox_scripts.FromDirTests.test_a_missing_pinned_file_fails_and_names_it",
+]
+expect_message = [
+    "FAIL: test_a_missing_pinned_file_fails_and_names_it (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "from-without-mods-accepted"
+gate = "from-dir-shape"
+file = "scripts/sandbox/sbx.sh"
+anchor = "die \"no mods/ in $1, $1/minecraft"
+replace = "true \"no mods/ in $1, $1/minecraft"
+test = [
+    "scripts.tests.test_sandbox_scripts.FromDirTests.test_a_dir_without_mods_is_refused",
+]
+expect_message = [
+    "FAIL: test_a_dir_without_mods_is_refused (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "from-missing-dir-accepted"
+gate = "from-dir-exists"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ -d \"$2\" ] || die \"--from $2: no such directory\""
+replace = "true || die \"--from $2: no such directory\""
+test = [
+    "scripts.tests.test_sandbox_scripts.PackArgsTests.test_from_needs_a_directory",
+]
+expect_message = [
+    "FAIL: test_from_needs_a_directory (",
+    "'no such directory' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "from-inside-instance-accepted"
+gate = "from-outside-instance"
+file = "scripts/sandbox/sbx.sh"
+anchor = "die \"--from $from is inside $inst itself\""
+replace = "true"
+test = [
+    "scripts.tests.test_sandbox_scripts.PackInstanceTests.test_a_from_dir_inside_the_instance_is_refused",
+]
+expect_message = [
+    "FAIL: test_a_from_dir_inside_the_instance_is_refused (",
+    "'inside' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "foreign-instance-removed"
+gate = "instance-ownership"
+file = "scripts/sandbox/sbx.sh"
+anchor = "is_done \"$tag-started\" || die \"$inst exists"
+replace = "true || die \"$inst exists"
+test = [
+    "scripts.tests.test_sandbox_scripts.PackInstanceTests.test_an_instance_the_step_did_not_start_is_never_removed",
+]
+expect_message = [
+    "FAIL: test_an_instance_the_step_did_not_start_is_never_removed (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "second-game-launched"
+gate = "launch-single-game"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ -z \"$(game_pids \"$ld\")\" ] || die \"a game from"
+replace = "true || die \"a game from"
+test = [
+    "scripts.tests.test_sandbox_steps.LaunchTests.test_a_second_game_of_the_same_root_is_refused",
+]
+expect_message = [
+    "FAIL: test_a_second_game_of_the_same_root_is_refused (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "geometry-unchecked"
+gate = "click-geometry"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ -n \"$X\" ] && [ -n \"$Y\" ] && [ -n \"$WIDTH\" ] && [ -n \"$HEIGHT\" ] || return 1"
+replace = "true"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_an_unclickable_optional_dialog_fails",
+]
+expect_message = [
+    "FAIL: test_an_unclickable_optional_dialog_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 2
+
+[[mutant]]
+name = "dialog-read-as-main"
+gate = "import-untitled-dialog"
+file = "scripts/sandbox/sbx.sh"
+anchor = "*_NET_WM_WINDOW_TYPE_DIALOG*|*\"WM_TRANSIENT_FOR(WINDOW)\"*) echo dialog ;;"
+replace = "*_NET_WM_WINDOW_TYPE_DIALOG*|*\"WM_TRANSIENT_FOR(WINDOW)\"*) echo main ;;"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_an_untitled_dialog_is_not_the_main_window",
+]
+expect_message = [
+    "FAIL: test_an_untitled_dialog_is_not_the_main_window (",
+    "\"unexpected launcher window 'Freesm Launcher Maple 2.3.1'\" not found in",
+]
+expect_failures = 3
+
+[[mutant]]
+name = "dialog-type-mark-ignored"
+gate = "import-untitled-dialog"
+file = "scripts/sandbox/sbx.sh"
+anchor = "*_NET_WM_WINDOW_TYPE_DIALOG*|*\"WM_TRANSIENT_FOR(WINDOW)\"*)"
+replace = "*\"WM_TRANSIENT_FOR(WINDOW)\"*)"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_an_untitled_dialog_is_not_the_main_window",
+]
+expect_message = [
+    "FAIL: test_an_untitled_dialog_is_not_the_main_window (",
+    "\"unexpected launcher window 'Freesm Launcher Maple 2.3.1'\" not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "dialog-transient-mark-ignored"
+gate = "import-untitled-dialog"
+file = "scripts/sandbox/sbx.sh"
+anchor = "*_NET_WM_WINDOW_TYPE_DIALOG*|*\"WM_TRANSIENT_FOR(WINDOW)\"*)"
+replace = "*_NET_WM_WINDOW_TYPE_DIALOG*)"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_an_untitled_dialog_is_not_the_main_window",
+]
+expect_message = [
+    "FAIL: test_an_untitled_dialog_is_not_the_main_window (",
+    "\"unexpected launcher window 'Freesm Launcher Maple 2.3.1'\" not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "main-by-title-only"
+gate = "import-untitled-dialog"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ \"$kind\" = main ] && [[ $title == \"Freesm Launcher\"* ]] && continue"
+replace = "[[ $title == \"Freesm Launcher\"* ]] && continue"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_an_untitled_dialog_is_not_the_main_window",
+]
+expect_message = [
+    "FAIL: test_an_untitled_dialog_is_not_the_main_window (",
+    "\"unexpected launcher window 'Freesm Launcher Maple 2.3.1'\" not found in",
+]
+expect_failures = 3
+
+[[mutant]]
+name = "main-by-kind-only"
+gate = "import-untitled-dialog"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ \"$kind\" = main ] && [[ $title == \"Freesm Launcher\"* ]] && continue"
+replace = "[ \"$kind\" = main ] && continue"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_a_second_non_dialog_window_is_not_the_main_window",
+]
+expect_message = [
+    "FAIL: test_a_second_non_dialog_window_is_not_the_main_window (",
+    "\"unexpected launcher window 'Some Window'\" not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "import-fail-returns"
+gate = "import-fail-fatal"
+file = "scripts/sandbox/sbx.sh"
+anchor = "  die \"launcher import: $3"
+replace = "  true \"launcher import: $3"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_an_unexpected_window_fails",
+]
+expect_message = [
+    "ERROR: test_an_unexpected_window_fails (",
+    "TimeoutExpired",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "import-on-the-game-display"
+gate = "import-own-display"
+file = "scripts/sandbox/sbx.sh"
+anchor = "local DISP=${SBX_IMPORT_DISPLAY:-:98}"
+replace = "local DISP=$DISP"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_the_import_runs_on_its_own_display",
+]
+expect_message = [
+    "FAIL: test_the_import_runs_on_its_own_display (",
+    "'ensure_x :98' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "running-launcher-driven"
+gate = "import-launcher-idle"
+file = "scripts/sandbox/sbx.sh"
+anchor = "|| die \"the launcher of $root is running"
+replace = "|| true \"the launcher of $root is running"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_a_running_launcher_is_never_driven",
+]
+expect_message = [
+    "FAIL: test_a_running_launcher_is_never_driven (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "import-never-times-out"
+gate = "import-timeout"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ $t -lt \"$IMPORT_TIMEOUT\" ] || import_fail"
+replace = "true || import_fail"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_an_import_that_never_commits_times_out",
+]
+expect_message = [
+    "ERROR: test_an_import_that_never_commits_times_out (",
+    "TimeoutExpired",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "launcher-log-ignored"
+gate = "import-log-failure"
+file = "scripts/sandbox/sbx.sh"
+anchor = "grep -aqE \"$IMPORT_FAIL\" \"$log\" && import_fail"
+replace = "false && import_fail"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_a_failure_in_the_launcher_log_fails_without_a_dialog",
+]
+expect_message = [
+    "FAIL: test_a_failure_in_the_launcher_log_fails_without_a_dialog (",
+    "'the launcher reported: Instance creation failed' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "launcher-exit-ignored"
+gate = "import-launcher-alive"
+file = "scripts/sandbox/sbx.sh"
+anchor = "    [ -n \"$(import_pids \"$root\")\" ] \\"
+replace = "    true \\"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_a_launcher_that_exits_fails_at_once",
+]
+expect_message = [
+    "FAIL: test_a_launcher_that_exits_fails_at_once (",
+    "'the launcher exited during the import' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "return-failure-ignored"
+gate = "import-xdotool-return"
+file = "scripts/sandbox/sbx.sh"
+anchor = "xdo key Return; } || import_fail"
+replace = "xdo key Return; } || true"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_a_failed_return_key_fails",
+]
+expect_message = [
+    "FAIL: test_a_failed_return_key_fails (",
+    "'xdotool could not press Return' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "new-instance-never-times-out"
+gate = "import-dialog-timeout"
+file = "scripts/sandbox/sbx.sh"
+anchor = "elif [ $((t - new_at)) -gt \"$IMPORT_DIALOG_TIMEOUT\" ]; then import_fail \"$root\" \"$log\" \"the New Instance dialog did not take Return\"; fi ;;"
+replace = "fi ;;"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_a_dialog_that_ignores_return_times_out",
+]
+expect_message = [
+    "FAIL: test_a_dialog_that_ignores_return_times_out (",
+    "'the New Instance dialog did not take Return' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "click-failure-ignored"
+gate = "import-xdotool-click"
+file = "scripts/sandbox/sbx.sh"
+anchor = "|| import_fail \"$root\" \"$log\" \"xdotool could not click"
+replace = "|| true \"$root\" \"$log\" \"xdotool could not click"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_an_unclickable_optional_dialog_fails",
+]
+expect_message = [
+    "FAIL: test_an_unclickable_optional_dialog_fails (",
+    "'xdotool could not click the Select Optional Mods dialog' not found in",
+]
+expect_failures = 2
+
+[[mutant]]
+name = "optional-never-times-out"
+gate = "import-optional-timeout"
+file = "scripts/sandbox/sbx.sh"
+anchor = "elif [ $((t - opt_at)) -gt \"$IMPORT_DIALOG_TIMEOUT\" ]; then import_fail \"$root\" \"$log\" \"the Select Optional Mods dialog did not take the clicks\"; fi ;;"
+replace = "fi ;;"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_an_optional_dialog_that_ignores_the_clicks_times_out",
+]
+expect_message = [
+    "FAIL: test_an_optional_dialog_that_ignores_the_clicks_times_out (",
+    "'the Select Optional Mods dialog did not take the clicks' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "blocked-window-ignored"
+gate = "import-blocked-window"
+file = "scripts/sandbox/sbx.sh"
+anchor = "\"Blocked mods found\"*|\"Blocked files found\"*)\n          import_fail"
+replace = "\"Blocked mods found\"*|\"Blocked files found\"*)\n          :"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_the_blocked_dialog_fails_without_a_log_line",
+]
+expect_message = [
+    "FAIL: test_the_blocked_dialog_fails_without_a_log_line (",
+    "'files blocked for third-party launchers' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "unknown-window-ignored"
+gate = "import-unknown-window"
+file = "scripts/sandbox/sbx.sh"
+anchor = "*) import_fail \"$root\" \"$log\" \"unexpected launcher window"
+replace = "*) : \"$root\" \"$log\" \"unexpected launcher window"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_an_unexpected_window_fails",
+]
+expect_message = [
+    "FAIL: test_an_unexpected_window_fails (",
+    "\"unexpected launcher window 'Update available\" not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "other-instance-ignored"
+gate = "import-instance-name"
+file = "scripts/sandbox/sbx.sh"
+anchor = "import_fail \"$root\" \"$log\" \"the launcher created"
+replace = "true \"$root\" \"$log\" \"the launcher created"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_an_instance_under_another_name_fails",
+]
+expect_message = [
+    "FAIL: test_an_instance_under_another_name_fails (",
+    "'the launcher created' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "flame-type-unchecked"
+gate = "import-curseforge-type"
+file = "scripts/sandbox/sbx.sh"
+anchor = "grep -q '^ManagedPackType=flame' \"$inst/instance.cfg\" || die"
+replace = "true || die"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherImportTests.test_an_import_that_is_not_a_curseforge_instance_fails",
+]
+expect_message = [
+    "FAIL: test_an_import_that_is_not_a_curseforge_instance_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "flame-key-fetch-on"
+gate = "launcher-no-flame-key"
+file = "scripts/sandbox/sbx.sh"
+anchor = "cat > \"$LDIR/freesmlauncher.cfg\" <<'EOF'\n[General]\nConfigVersion=1.3\nLanguage=en_US\nFlameKeyShouldBeFetchedOnStartup=false"
+replace = "cat > \"$LDIR/freesmlauncher.cfg\" <<'EOF'\n[General]\nConfigVersion=1.3\nLanguage=en_US\nFlameKeyShouldBeFetchedOnStartup=true"
+test = [
+    "scripts.tests.test_sandbox_scripts.LauncherSeedTests.test_the_seeded_launcher_config_turns_the_key_fetch_off",
+    "scripts.tests.test_sandbox_scripts.LauncherSeedTests.test_no_tracked_file_turns_the_key_fetch_on",
+]
+expect_message = [
+    "FAIL: test_the_seeded_launcher_config_turns_the_key_fetch_off (",
+    "FAIL: test_no_tracked_file_turns_the_key_fetch_on (",
+    "'FlameKeyShouldBeFetchedOnStartup=false' not found in",
+]
+expect_failures = 2
+
+[[mutant]]
+name = "client-unpinned"
+gate = "client-pinned"
+file = "scripts/sandbox/sbx.sh"
+anchor = "pack_instance \"$LDIR\" Monifactory \"$zip\" client \"$SBX_DIR/monifactory-$MONI_VERSION-client-files.tsv\""
+replace = "pack_instance \"$LDIR\" Monifactory \"$zip\" client \"\""
+test = [
+    "scripts.tests.test_sandbox_steps.ClientWarmupTests.test_the_client_is_installed_against_its_pins",
+]
+expect_message = [
+    "FAIL: test_the_client_is_installed_against_its_pins (",
+    "' client /' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "download-sha-ignored"
+gate = "fetch-sha256"
+file = "scripts/sandbox/sbx.sh"
+anchor = "die \"sha256 mismatch for $(basename \"$dest\")"
+replace = "true \"sha256 mismatch for $(basename \"$dest\")"
+test = [
+    "scripts.tests.test_sandbox_steps.FetchTests.test_a_download_with_another_sha256_fails_and_is_moved_aside",
+]
+expect_message = [
+    "FAIL: test_a_download_with_another_sha256_fails_and_is_moved_aside (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "log-fail-reads-ok"
+gate = "wait-log-fail-pattern"
+file = "scripts/sandbox/sbx.sh"
+anchor = "echo \"log FAIL after ${i}s: ${l:0:300}\"; return 1; fi"
+replace = "echo \"log FAIL after ${i}s: ${l:0:300}\"; return 0; fi"
+test = [
+    "scripts.tests.test_sandbox_steps.WaitLogTests.test_a_fail_line_is_a_failure",
+]
+expect_message = [
+    "FAIL: test_a_fail_line_is_a_failure (",
+    "AssertionError: 0 != 1",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "log-timeout-reads-ok"
+gate = "wait-log-timeout"
+file = "scripts/sandbox/sbx.sh"
+anchor = "cut -c1-300; return 2"
+replace = "cut -c1-300; return 0"
+test = [
+    "scripts.tests.test_sandbox_steps.WaitLogTests.test_no_ok_line_is_a_timeout",
+]
+expect_message = [
+    "FAIL: test_no_ok_line_is_a_timeout (",
+    "AssertionError: 0 != 2",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "server-crash-ignored"
+gate = "server-done"
+file = "scripts/sandbox/sbx.sh"
+anchor = "|| die \"server did not reach Done"
+replace = "|| true \"server did not reach Done"
+test = [
+    "scripts.tests.test_sandbox_steps.ServerStartTests.test_a_crashed_boot_fails",
+]
+expect_message = [
+    "FAIL: test_a_crashed_boot_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "warmup-title-ignored"
+gate = "warmup-title"
+file = "scripts/sandbox/sbx.sh"
+anchor = "die \"warm-up launch did not reach the title screen\""
+replace = "true \"warm-up launch did not reach the title screen\""
+test = [
+    "scripts.tests.test_sandbox_steps.ClientWarmupTests.test_a_warm_up_that_misses_the_title_screen_fails",
+]
+expect_message = [
+    "FAIL: test_a_warm_up_that_misses_the_title_screen_fails (",
+    "'warm-up launch did not reach the title screen' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "warmup-mappings-ignored"
+gate = "warmup-mappings"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ -f \"$MAPPINGS\" ] || die \"warm-up done"
+replace = "true || die \"warm-up done"
+test = [
+    "scripts.tests.test_sandbox_steps.ClientWarmupTests.test_a_warm_up_without_mappings_fails",
+]
+expect_message = [
+    "FAIL: test_a_warm_up_without_mappings_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "warmup-services-ignored"
+gate = "warmup-jsm-services"
+file = "scripts/sandbox/sbx.sh"
+anchor = "|| die \"jsMacros options.json lost"
+replace = "|| true \"jsMacros options.json lost"
+test = [
+    "scripts.tests.test_sandbox_steps.ClientWarmupTests.test_a_warm_up_that_lost_the_services_fails",
+]
+expect_message = [
+    "FAIL: test_a_warm_up_that_lost_the_services_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "any-clone-accepted"
+gate = "repo-is-gerda"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ -x ./gerda ] || die"
+replace = "true || die"
+test = [
+    "scripts.tests.test_sandbox_steps.RepoTests.test_a_clone_that_is_not_gerda_is_refused",
+]
+expect_message = [
+    "FAIL: test_a_clone_that_is_not_gerda_is_refused (",
+    "'has no ./gerda CLI' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "unverified-client-synced"
+gate = "repo-needs-verified-client"
+file = "scripts/sandbox/sbx.sh"
+anchor = "is_done client-files || die \"$INST has no verified"
+replace = "true || die \"$INST has no verified"
+test = [
+    "scripts.tests.test_sandbox_steps.RepoTests.test_an_unverified_instance_is_never_synced",
+]
+expect_message = [
+    "FAIL: test_an_unverified_instance_is_never_synced (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "empty-sync-accepted"
+gate = "repo-sync-deployed"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ -f \"$GAME/config/jsMacros/Macros/main.js\" ] || die \"sync did not deploy"
+replace = "true || die \"sync did not deploy"
+test = [
+    "scripts.tests.test_sandbox_steps.RepoTests.test_a_sync_that_deployed_nothing_fails",
+]
+expect_message = [
+    "FAIL: test_a_sync_that_deployed_nothing_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "server-jar-sha1-ignored"
+gate = "world-server-sha1"
+file = "scripts/sandbox/sbx.sh"
+anchor = "rm -f \"$jar\"; die \"sha1 mismatch"
+replace = "rm -f \"$jar\"; true \"sha1 mismatch"
+test = [
+    "scripts.tests.test_sandbox_steps.WorldGenTests.test_a_server_jar_with_another_sha1_fails_and_is_dropped",
+]
+expect_message = [
+    "FAIL: test_a_server_jar_with_another_sha1_fails_and_is_dropped (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "missing-world-accepted"
+gate = "world-level-dat"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ -f \"$dir/world/level.dat\" ] || die"
+replace = "true || die"
+test = [
+    "scripts.tests.test_sandbox_steps.WorldGenTests.test_a_generation_without_a_world_fails",
+]
+expect_message = [
+    "FAIL: test_a_generation_without_a_world_fails (",
+    "'no level.dat after the 1.20.1 world generation' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "any-pack-name"
+gate = "pack-instance-name"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[[ $name =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ ]] || die \"instance name"
+replace = "true || die \"instance name"
+test = [
+    "scripts.tests.test_sandbox_scripts.PackArgsTests.test_an_instance_name_that_is_not_a_plain_name_is_refused",
+]
+expect_message = [
+    "FAIL: test_an_instance_name_that_is_not_a_plain_name_is_refused (",
+    "'letters, digits' not found in",
+]
+expect_failures = 4
+
+[[mutant]]
+name = "pack-name-unanchored-start"
+gate = "pack-instance-name"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[[ $name =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ ]] || die \"instance name"
+replace = "[[ $name =~ [A-Za-z0-9][A-Za-z0-9._-]*$ ]] || die \"instance name"
+test = [
+    "scripts.tests.test_sandbox_scripts.PackArgsTests.test_an_instance_name_that_is_not_a_plain_name_is_refused",
+]
+expect_message = [
+    "FAIL: test_an_instance_name_that_is_not_a_plain_name_is_refused (",
+    "'letters, digits' not found in",
+]
+expect_failures = 4
+
+[[mutant]]
+name = "pack-name-unanchored-end"
+gate = "pack-instance-name"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[[ $name =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ ]] || die \"instance name"
+replace = "[[ $name =~ ^[A-Za-z0-9][A-Za-z0-9._-]* ]] || die \"instance name"
+test = [
+    "scripts.tests.test_sandbox_scripts.PackArgsTests.test_an_instance_name_that_is_not_a_plain_name_is_refused",
+]
+expect_message = [
+    "FAIL: test_an_instance_name_that_is_not_a_plain_name_is_refused (",
+    "'letters, digits' not found in",
+]
+expect_failures = 2
+
+[[mutant]]
+name = "pack-name-first-char-widened"
+gate = "pack-instance-name"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[[ $name =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ ]] || die \"instance name"
+replace = "[[ $name =~ ^[A-Za-z0-9._-]+$ ]] || die \"instance name"
+test = [
+    "scripts.tests.test_sandbox_scripts.PackArgsTests.test_an_instance_name_that_is_not_a_plain_name_is_refused",
+]
+expect_message = [
+    "FAIL: test_an_instance_name_that_is_not_a_plain_name_is_refused (",
+    "'letters, digits' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "any-sha-text"
+gate = "pack-sha-format"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[[ $sha =~ ^[0-9a-f]{64}$ ]] || die \"not a sha256"
+replace = "true || die \"not a sha256"
+test = [
+    "scripts.tests.test_sandbox_scripts.PackFromUrlTests.test_a_malformed_sha256_is_refused",
+]
+expect_message = [
+    "FAIL: test_a_malformed_sha256_is_refused (",
+    "'not a sha256' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "local-zip-sha-ignored"
+gate = "pack-zip-sha256"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ \"$(sha256sum \"$zip\" | cut -d' ' -f1)\" = \"$sha\" ] || die \"sha256 mismatch for $src\""
+replace = "true || die \"sha256 mismatch for $src\""
+test = [
+    "scripts.tests.test_sandbox_steps.PackZipTests.test_a_local_zip_with_another_sha256_is_refused",
+]
+expect_message = [
+    "FAIL: test_a_local_zip_with_another_sha256_is_refused (",
+    "'sha256 mismatch for /",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "url-without-sha"
+gate = "pack-url-needs-sha"
+file = "scripts/sandbox/sbx.sh"
+anchor = "else die \"a modpack url needs the zip's sha256"
+replace = "else zip=$(cached \"$src\"); true \"a modpack url needs the zip's sha256"
+test = [
+    "scripts.tests.test_sandbox_scripts.PackFromUrlTests.test_a_url_without_a_sha256_is_refused_before_any_download",
+]
+expect_message = [
+    "FAIL: test_a_url_without_a_sha256_is_refused_before_any_download (",
+    "\"needs the zip's sha256\" not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "no-jar-accepted"
+gate = "add-mods-nonempty"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ $n -gt 0 ] || die \"no *.jar in $dir\""
+replace = "true || die \"no *.jar in $dir\""
+test = [
+    "scripts.tests.test_sandbox_steps.AddModsTests.test_a_folder_without_jars_fails",
+]
+expect_message = [
+    "FAIL: test_a_folder_without_jars_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "unverified-pack-started"
+gate = "start-matrix-needs-verified-pack"
+file = "scripts/sandbox/sbx.sh"
+anchor = "is_done \"pack-$name-files\" || die"
+replace = "true || die"
+test = [
+    "scripts.tests.test_sandbox_steps.StartMatrixTests.test_an_unverified_pack_instance_is_never_started",
+]
+expect_message = [
+    "FAIL: test_an_unverified_pack_instance_is_never_started (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "matrix-bridge-silence-ok"
+gate = "start-matrix-bridge"
+file = "scripts/sandbox/sbx.sh"
+anchor = "die \"$name: bridge $port does not answer ping\""
+replace = "true \"$name: bridge $port does not answer ping\""
+test = [
+    "scripts.tests.test_sandbox_steps.StartMatrixTests.test_a_bridge_that_never_answers_fails",
+]
+expect_message = [
+    "FAIL: test_a_bridge_that_never_answers_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "unverified-client-started"
+gate = "start-needs-verified-client"
+file = "scripts/sandbox/sbx.sh"
+anchor = "is_done client-files || die \"the Monifactory instance"
+replace = "true || die \"the Monifactory instance"
+test = [
+    "scripts.tests.test_sandbox_steps.StartTests.test_an_unverified_client_is_never_started",
+]
+expect_message = [
+    "FAIL: test_an_unverified_client_is_never_started (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "no-join-ok"
+gate = "start-joined"
+file = "scripts/sandbox/sbx.sh"
+anchor = "die \"the bot did not join the server\"; }"
+replace = "true \"the bot did not join the server\"; }"
+test = [
+    "scripts.tests.test_sandbox_steps.StartTests.test_a_bot_that_did_not_join_fails",
+]
+expect_message = [
+    "FAIL: test_a_bot_that_did_not_join_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "start-bridge-silence-ok"
+gate = "start-bridge"
+file = "scripts/sandbox/sbx.sh"
+anchor = "die \"joined, but the bridge does not answer ping"
+replace = "true \"joined, but the bridge does not answer ping"
+test = [
+    "scripts.tests.test_sandbox_steps.StartTests.test_a_bridge_that_never_answers_fails",
+]
+expect_message = [
+    "FAIL: test_a_bridge_that_never_answers_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "unsettled-bridge-ok"
+gate = "verify-ping"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ $ok -ge 3 ] || die \"bridge never answered"
+replace = "true || die \"bridge never answered"
+test = [
+    "scripts.tests.test_sandbox_steps.VerifyTests.test_a_bridge_that_never_settles_fails",
+]
+expect_message = [
+    "FAIL: test_a_bridge_that_never_settles_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "failing-smoke-ok"
+gate = "verify-smoke"
+file = "scripts/sandbox/sbx.sh"
+anchor = "tail -n 30 \"$LOGS/smoke.log\"; die \"smoke failed 3 times"
+replace = "tail -n 30 \"$LOGS/smoke.log\"; true \"smoke failed 3 times"
+test = [
+    "scripts.tests.test_sandbox_steps.VerifyTests.test_a_failing_smoke_fails",
+]
+expect_message = [
+    "FAIL: test_a_failing_smoke_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "record-without-min-luma"
+gate = "record-black-check"
+file = "scripts/sandbox/sbx.sh"
+anchor = "python3 \"$probe\" --min-luma \"$REC_MIN_LUMA\" \"$out\" || die"
+replace = "python3 \"$probe\" \"$out\" || die"
+test = [
+    "scripts.tests.test_sandbox_steps.RecordTests.test_a_black_take_fails",
+]
+expect_message = [
+    "FAIL: test_a_black_take_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "record-check-ignored"
+gate = "record-black-check"
+file = "scripts/sandbox/sbx.sh"
+anchor = "\"$out\" || die \"the recording failed the check above"
+replace = "\"$out\" || true \"the recording failed the check above"
+test = [
+    "scripts.tests.test_sandbox_steps.RecordTests.test_a_black_take_fails",
+]
+expect_message = [
+    "FAIL: test_a_black_take_fails (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "archives-unchecked"
+gate = "image-archive-sha256"
+file = "scripts/sandbox/Containerfile"
+anchor = "| sha256sum -c - \\"
+replace = "| true \\"
+test = [
+    "scripts.tests.test_sandbox_scripts.ImagePinTests.test_archives_are_checked_before_they_are_unpacked",
+]
+expect_message = [
+    "FAIL: test_archives_are_checked_before_they_are_unpacked (",
+    "not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "prov-die-exits-0"
+gate = "prov-die-exits"
+file = "scripts/sandbox/provision.sh"
+anchor = "echo \"FAIL: provision: $*\" >&2; exit 1;"
+replace = "echo \"FAIL: provision: $*\" >&2; exit 0;"
+test = [
+    "scripts.tests.test_sandbox_steps.DieTests.test_provision_die_ends_with_status_1",
+]
+expect_message = [
+    "FAIL: test_provision_die_ends_with_status_1 (",
+    "AssertionError: 0 != 1",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "prov-from-without-mods"
+gate = "prov-from-shape"
+file = "scripts/sandbox/provision.sh"
+anchor = "[ -n \"$g\" ] || die \"--from $src: no mods/"
+replace = "true || die \"--from $src: no mods/"
+test = [
+    "scripts.tests.test_sandbox_scripts.ProvisionFromTests.test_a_folder_without_mods_stops_before_the_step",
+]
+expect_message = [
+    "FAIL: test_a_folder_without_mods_stops_before_the_step (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "failed-step-waits-on"
+gate = "wait-step-rc"
+file = "scripts/sandbox/provision.sh"
+anchor = "die \"$step exited $rc"
+replace = "true \"$step exited $rc"
+test = [
+    "scripts.tests.test_sandbox_steps.ProvisionWaitTests.test_a_failed_step_fails",
+]
+expect_message = [
+    "FAIL: test_a_failed_step_fails (",
+    "'client exited 1' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "running-step-reads-done"
+gate = "wait-still-running"
+file = "scripts/sandbox/provision.sh"
+anchor = "wait again\"; return 3"
+replace = "wait again\"; return 0"
+test = [
+    "scripts.tests.test_sandbox_steps.ProvisionWaitTests.test_a_step_still_running_is_exit_3",
+]
+expect_message = [
+    "FAIL: test_a_step_still_running_is_exit_3 (",
+    "AssertionError: 0 != 3",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "prov-any-pack-name"
+gate = "prov-pack-instance-name"
+file = "scripts/sandbox/provision.sh"
+anchor = "|| die \"pack: instance name '$name'"
+replace = "|| true \"pack: instance name '$name'"
+test = [
+    "scripts.tests.test_sandbox_scripts.PackArgsTests.test_provision_refuses_the_name_before_any_copy",
+]
+expect_message = [
+    "FAIL: test_provision_refuses_the_name_before_any_copy (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 4
+
+[[mutant]]
+name = "prov-pack-name-unanchored-start"
+gate = "prov-pack-instance-name"
+file = "scripts/sandbox/provision.sh"
+anchor = "[[ $name =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ ]] || die \"pack:"
+replace = "[[ $name =~ [A-Za-z0-9][A-Za-z0-9._-]*$ ]] || die \"pack:"
+test = [
+    "scripts.tests.test_sandbox_scripts.PackArgsTests.test_provision_refuses_the_name_before_any_copy",
+]
+expect_message = [
+    "FAIL: test_provision_refuses_the_name_before_any_copy (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 4
+
+[[mutant]]
+name = "prov-pack-name-unanchored-end"
+gate = "prov-pack-instance-name"
+file = "scripts/sandbox/provision.sh"
+anchor = "[[ $name =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ ]] || die \"pack:"
+replace = "[[ $name =~ ^[A-Za-z0-9][A-Za-z0-9._-]* ]] || die \"pack:"
+test = [
+    "scripts.tests.test_sandbox_scripts.PackArgsTests.test_provision_refuses_the_name_before_any_copy",
+]
+expect_message = [
+    "FAIL: test_provision_refuses_the_name_before_any_copy (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 2
+
+[[mutant]]
+name = "prov-pack-name-first-char-widened"
+gate = "prov-pack-instance-name"
+file = "scripts/sandbox/provision.sh"
+anchor = "[[ $name =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ ]] || die \"pack:"
+replace = "[[ $name =~ ^[A-Za-z0-9._-]+$ ]] || die \"pack:"
+test = [
+    "scripts.tests.test_sandbox_scripts.PackArgsTests.test_provision_refuses_the_name_before_any_copy",
+]
+expect_message = [
+    "FAIL: test_provision_refuses_the_name_before_any_copy (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "destroy-without-yes"
+gate = "destroy-needs-yes"
+file = "scripts/sandbox/provision.sh"
+anchor = "destroy) [ \"${1:-}\" = --yes ] || die"
+replace = "destroy) true || die"
+test = [
+    "scripts.tests.test_sandbox_scripts.DestroyTests.test_destroy_needs_its_yes",
+]
+expect_message = [
+    "FAIL: test_destroy_needs_its_yes (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "unlabelled-container-removed"
+gate = "destroy-container-label"
+file = "scripts/sandbox/provision.sh"
+anchor = "labelled container \"$NAME\" || die"
+replace = "true || die"
+test = [
+    "scripts.tests.test_sandbox_scripts.DestroyTests.test_an_unlabelled_container_is_not_removed",
+]
+expect_message = [
+    "FAIL: test_an_unlabelled_container_is_not_removed (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "unlabelled-volume-removed"
+gate = "destroy-volume-label"
+file = "scripts/sandbox/provision.sh"
+anchor = "labelled volume \"$HOME_VOL\" || die"
+replace = "true || die"
+test = [
+    "scripts.tests.test_sandbox_scripts.DestroyTests.test_an_unlabelled_volume_is_not_removed",
+]
+expect_message = [
+    "FAIL: test_an_unlabelled_volume_is_not_removed (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "container-rm-failure-ok"
+gate = "destroy-reports-failure"
+file = "scripts/sandbox/provision.sh"
+anchor = "\"$NAME\" >/dev/null || die \"could not remove container"
+replace = "\"$NAME\" >/dev/null || true \"could not remove container"
+test = [
+    "scripts.tests.test_sandbox_scripts.DestroyTests.test_a_failed_removal_is_reported_as_a_failure",
+]
+expect_message = [
+    "FAIL: test_a_failed_removal_is_reported_as_a_failure (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "volume-rm-failure-ok"
+gate = "destroy-reports-failure"
+file = "scripts/sandbox/provision.sh"
+anchor = "\"$HOME_VOL\" >/dev/null || die \"could not remove volume"
+replace = "\"$HOME_VOL\" >/dev/null || true \"could not remove volume"
+test = [
+    "scripts.tests.test_sandbox_scripts.DestroyTests.test_a_failed_removal_is_reported_as_a_failure",
+]
+expect_message = [
+    "FAIL: test_a_failed_removal_is_reported_as_a_failure (",
+    "AssertionError: 0 == 0",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "cache-keyed-by-file-name"
+gate = "cache-key-by-url"
+file = "scripts/sandbox/sbx.sh"
+anchor = "cached() { echo \"$CACHE/dl/$(printf %s \"$1\" | sha256sum | cut -c1-64)-$(basename"
+replace = "cached() { echo \"$CACHE/dl/$(basename"
+test = [
+    "scripts.tests.test_sandbox_scripts.CachedKeyTests.test_two_urls_with_the_same_file_name_get_two_files",
+]
+expect_message = [
+    "FAIL: test_two_urls_with_the_same_file_name_get_two_files (",
+    "dl/download' == '",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "volumes-unlabelled"
+gate = "up-labels"
+file = "scripts/sandbox/provision.sh"
+anchor = "podman volume create --label \"$LABEL\" \"$v\""
+replace = "podman volume create \"$v\""
+test = [
+    "scripts.tests.test_sandbox_scripts.DestroyTests.test_up_labels_the_container_and_the_volumes_it_creates",
+]
+expect_message = [
+    "FAIL: test_up_labels_the_container_and_the_volumes_it_creates (",
+    "AssertionError: False is not true",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "container-unlabelled"
+gate = "up-labels"
+file = "scripts/sandbox/provision.sh"
+anchor = "podman run -d --name \"$NAME\" --label \"$LABEL\" --hostname"
+replace = "podman run -d --name \"$NAME\" --hostname"
+test = [
+    "scripts.tests.test_sandbox_scripts.DestroyTests.test_up_labels_the_container_and_the_volumes_it_creates",
+]
+expect_message = [
+    "FAIL: test_up_labels_the_container_and_the_volumes_it_creates (",
+    "'--label gerda.sandbox=1' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "fetch-empty-pin-downloads"
+gate = "fetch-needs-pin"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ -n \"$sha\" ] || die \"no sha256 pin for"
+replace = "true || die \"no sha256 pin for"
+test = [
+    "scripts.tests.test_sandbox_steps.FetchTests.test_no_pin_is_refused_before_any_download",
+]
+expect_message = [
+    "FAIL: test_no_pin_is_refused_before_any_download (",
+    "'no sha256 pin for' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "unpinned-in-any-step"
+gate = "unpinned-only-pack"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ \"$sha\" != UNPINNED ] || [ \"$CUR\" = pack ] ||"
+replace = "[ \"$sha\" != UNPINNED ] || true ||"
+test = [
+    "scripts.tests.test_sandbox_steps.FetchTests.test_unpinned_is_refused_outside_the_pack_step",
+]
+expect_message = [
+    "FAIL: test_unpinned_is_refused_outside_the_pack_step (",
+    "AssertionError: 0 != 1",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "blank-launcher-pin"
+gate = "pins-set"
+file = "scripts/sandbox/pins.env"
+anchor = "LAUNCHER_SHA256=\"efda8e2097c4729663d6b548252b64e9bec6d9b0ffdd65da01939021d3f2707e\""
+replace = "LAUNCHER_SHA256=\"\""
+test = [
+    "scripts.tests.test_sandbox_scripts.PinsFileTests.test_every_pin_is_set",
+]
+expect_message = [
+    "FAIL: test_every_pin_is_set (",
+    "['LAUNCHER_SHA256']",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "blank-client-zip-pin"
+gate = "pins-set"
+file = "scripts/sandbox/pins.env"
+anchor = "CLIENT_ZIP_SHA256=\"1cfe8c26842a4bf1a979ae40a640650feb3f4ed65853abf3f08caf156136d70b\""
+replace = "CLIENT_ZIP_SHA256=\"\""
+test = [
+    "scripts.tests.test_sandbox_scripts.PinsFileTests.test_every_pin_is_set",
+]
+expect_message = [
+    "FAIL: test_every_pin_is_set (",
+    "['CLIENT_ZIP_SHA256']",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "dispatch-unknown-ok"
+gate = "dispatch-unknown-fails"
+file = "scripts/sandbox/sbx.sh"
+anchor = "[ -z \"$cmd\" ] || [ \"$cmd\" = -h ] || [ \"$cmd\" = help ] ;;"
+replace = "[ -z \"$cmd\" ] || [ \"$cmd\" = -h ] || [ \"$cmd\" = help ] || true ;;"
+test = [
+    "scripts.tests.test_sandbox_steps.DispatchTests.test_an_unknown_sbx_step_fails",
+]
+expect_message = [
+    "FAIL: test_an_unknown_sbx_step_fails (",
+    "AssertionError: 0 != 1",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "prov-dispatch-unknown-ok"
+gate = "prov-dispatch-unknown-fails"
+file = "scripts/sandbox/provision.sh"
+anchor = "[ -z \"$cmd\" ] || [ \"$cmd\" = -h ] || [ \"$cmd\" = help ] ;;"
+replace = "[ -z \"$cmd\" ] || [ \"$cmd\" = -h ] || [ \"$cmd\" = help ] || true ;;"
+test = [
+    "scripts.tests.test_sandbox_steps.DispatchTests.test_an_unknown_provision_step_fails",
+]
+expect_message = [
+    "FAIL: test_an_unknown_provision_step_fails (",
+    "AssertionError: 0 != 1",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "verified-stays-unverified"
+gate = "verified-instance-kept"
+file = "scripts/sandbox/sbx.sh"
+anchor = "    UNVERIFIED=\"\"   # gate:verified-instance-kept"
+replace = "    :   # gate:verified-instance-kept"
+test = [
+    "scripts.tests.test_sandbox_scripts.PackInstanceTests.test_a_failure_after_the_check_keeps_the_verified_instance",
+]
+expect_message = [
+    "FAIL: test_a_failure_after_the_check_keeps_the_verified_instance (",
+    "'removed the unverified instance' unexpectedly found in",
+]
+expect_failures = 1

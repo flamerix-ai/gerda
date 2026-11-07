@@ -1,0 +1,22 @@
+{
+  "desc": "restock-craft leg (#22/#23) — the conditional craft want/min path, live. Bot stands on a small stone platform with ONE iron ingot and zero nuggets. Runs `craft {want:iron_nugget, min:16, chain:[1 ingot→9 nuggets], table:false}`: below min (0<16) AND ingredients present → it crafts (2×2 player grid, no table). PASS = a CRAFT event (the manual-grid place→take fired). This is the with-materials path the sustain loop's restock leg takes once the furnace bank has cooked ingots; the skip-when-short path is proven by the sustain-cycle arena (CRAFT_NO_MATERIALS) + unit tests.",
+  "ops": [
+    { "op": "clear", "from": [-2, 100, -2], "to": [2, 105, 2] },
+    { "op": "fill", "from": [-2, 100, -2], "to": [2, 100, 2], "block": "minecraft:stone" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:iron_ingot", "count": 1 },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 101, 0] }
+  ],
+  "mission": {
+    "name": "craft",
+    "params": {
+      "want": "minecraft:iron_nugget",
+      "min": 16,
+      "chain": [{ "grid": ["minecraft:iron_ingot"], "times": 1 }],
+      "table": false
+    }
+  },
+  "expect": { "events": ["CRAFT"], "timeout": 40 }
+}

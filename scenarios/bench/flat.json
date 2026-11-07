@@ -1,0 +1,18 @@
+{
+  "desc": "Flat traverse — straight sprint over open stone at two distances (12, 24 blocks). The baseline: greedy's driveWalkStep.",
+  "ops": [
+    { "op": "clear", "from": [39, 88, -1], "to": [70, 94, 3] },
+    { "op": "fill", "from": [39, 88, -1], "to": [70, 88, 3], "block": "minecraft:stone" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 64 },
+    { "op": "select", "slot": 0 }
+  ],
+  "start": [41, 89, 1],
+  "legs": [
+    { "name": "flat12", "to": [53, 89, 1] },
+    { "name": "flat24", "to": [65, 89, 1] }
+  ],
+  "repeats": 3,
+  "timeout": 25
+}

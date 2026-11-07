@@ -1,0 +1,24 @@
+{
+  "desc": "Climb — a 6-step staircase (+1 block per +1 x). Exercises greedy's stepUp move. Flat lead-in x41..43, stairs x44..49 rising y90..95, top landing x50..53.",
+  "ops": [
+    { "op": "clear", "from": [40, 88, -1], "to": [55, 105, 3] },
+    { "op": "fill", "from": [41, 88, 0], "to": [43, 88, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [44, 88, 0], "to": [44, 89, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [45, 88, 0], "to": [45, 90, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [46, 88, 0], "to": [46, 91, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [47, 88, 0], "to": [47, 92, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [48, 88, 0], "to": [48, 93, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [49, 88, 0], "to": [49, 94, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [50, 94, 0], "to": [53, 94, 2], "block": "minecraft:stone" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 64 },
+    { "op": "select", "slot": 0 }
+  ],
+  "start": [42, 89, 1],
+  "legs": [
+    { "name": "climb6", "to": [52, 95, 1] }
+  ],
+  "repeats": 3,
+  "timeout": 30
+}

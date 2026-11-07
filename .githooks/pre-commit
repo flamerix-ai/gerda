@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Pre-commit gate: the fast pure checks that block a broken commit — `just check-ts`
+# (typecheck, lint, the defensive-code checker, vitest). The python suites take over a minute,
+# so only pre-push runs them, inside the full `just check`. One home for both sets: the justfile.
+# Replaces the former GitHub Actions workflow (removed: the live in-game gates can't
+# run in CI anyway, and the pure ones belong at commit time, not after the push).
+# Never skip it with --no-verify: if it fails, fix the cause (rerun `just check-ts` to see it).
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+# git exports GIT_DIR / GIT_INDEX_FILE / GIT_WORK_TREE into hooks; a test that runs git in a
+# scratch repo would inherit them and write the REAL index/config. Drop git's repo-local set.
+# shellcheck disable=SC2046
+unset $(git rev-parse --local-env-vars)
+# git started outside the flake devShell (a plain shell, an IDE, an agent) runs this hook without
+# the gate's tools on PATH. Re-enter through the devShell once, and ONLY where a gate cannot pass
+# as is: no `just`, or the private repo (scripts/private/) without gitleaks — pre-commit's
+# `check-ts` needs no gitleaks, but the trigger is pre-push's (its snapshot guard and `just
+# pubsim` die without it), kept identical so one rule and one test suite cover both hooks; a
+# private checkout without gitleaks is outside the devShell anyway. A fork needs no gitleaks and
+# never pays for nix. No probe of nix itself: on the `just` axis a broken devShell only swaps one
+# failure for another; on the gitleaks axis this hook can fail a commit `check-ts` alone would
+# pass, and that is accepted — only a private checkout reaches it, and there the devShell is the
+# working setup. No flake.nix or no nix: run as is. The exported marker stops a
+# devShell that still lacks the tool from re-entering forever.
+if [ -z "${GERDA_HOOK_DEVSHELL:-}" ] && [ -f flake.nix ] \
+  && { ! command -v just || { [ -d scripts/private ] && ! command -v gitleaks; }; } > /dev/null 2>&1 \
+  && command -v nix > /dev/null 2>&1; then
+  echo "pre-commit: just/gitleaks not on PATH — re-entering the flake devShell (nix develop)" >&2
+  export GERDA_HOOK_DEVSHELL=1
+  exec nix develop "$PWD" -c bash "$0" "$@"
+fi
+just check-ts

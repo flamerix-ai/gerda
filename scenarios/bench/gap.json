@@ -1,0 +1,19 @@
+{
+  "desc": "Gap — a 2-air-block void (x86,87) over a catch floor; a dist-3 jump (parkour-gap2 geometry). Exercises greedy's parkour move. Placed at x80+ so it never overlaps the detour arena (x40-72). Near platform x81..85 (run-up), far x88..93, catch floor y86 (~3-block fall = survivable, not death).",
+  "ops": [
+    { "op": "clear", "from": [80, 85, -1], "to": [94, 96, 3] },
+    { "op": "fill", "from": [80, 86, -1], "to": [94, 86, 3], "block": "minecraft:stone" },
+    { "op": "fill", "from": [81, 90, 0], "to": [85, 90, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [88, 90, 0], "to": [93, 90, 2], "block": "minecraft:stone" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 64 },
+    { "op": "select", "slot": 0 }
+  ],
+  "start": [82, 91, 1],
+  "legs": [
+    { "name": "jump3", "to": [92, 91, 1] }
+  ],
+  "repeats": 3,
+  "timeout": 30
+}

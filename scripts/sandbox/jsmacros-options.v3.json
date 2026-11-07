@@ -1,0 +1,51 @@
+{
+  "version": 3,
+  "core": {
+    "maxLockTime": 500,
+    "defaultProfile": "default",
+    "anythingIgnored": [
+      "Sound",
+      "Tick",
+      "RecvPacket",
+      "SendPacket"
+    ],
+    "profiles": {
+      "default": [
+        {
+          "triggerType": "EVENT",
+          "event": "ProfileLoad",
+          "scriptFile": "index.js",
+          "enabled": true,
+          "joined": false
+        }
+      ]
+    },
+    "services": {
+      "main": {
+        "file": "main.js",
+        "enabled": true
+      },
+      "bridge": {
+        "file": "bridge.js",
+        "enabled": true
+      }
+    }
+  },
+  "client": {
+    "sortMethod": "Enabled",
+    "sortServicesMethod": "Enabled",
+    "showSlotIndexes": false,
+    "disableKeyWhenScreenOpen": true,
+    "editorLinterOverrides": {},
+    "editorHistorySize": 20,
+    "editorSuggestions": true,
+    "editorFont": "jsmacros:monocraft",
+    "externalEditor": false,
+    "externalEditorCommand": "code %MacroFolder %File",
+    "showRunningServices": false,
+    "serviceAutoReload": false
+  },
+  "js": {
+    "extraGraalOptions": {}
+  }
+}

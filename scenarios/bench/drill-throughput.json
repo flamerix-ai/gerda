@@ -1,0 +1,21 @@
+{
+  "name": "drill-throughput",
+  "desc": "Drill end-to-end throughput: walk to the vein (GOTO, impl-sensitive), dig a shaft down through SOLID ground (DESCEND, greedy-only), mine a 3x3x3 embedded iron cluster (MINE/DIG_TO, greedy-only). Whole-mission throughput per planner (astar, dstar) — NOT a pure nav A/B (the point-to-point legs are that). Geometry: a COMPACT solid stone hill (~600 blocks — kept small so the /fill doesn't strain the integrated server) with no void: a narrow pre-dug shaft over cleared air would trip the descend deep-fall guard once GOTO's ~2.5-block arrival lands the bot off the column, so it's solid. The precise-descend fix (anchor the shaft to the MARKER column, not the arrival block) is what this exercises end-to-end: GOTO arrives off-column, DESCEND walks ONTO the marker (GoalXZ) before cutting, so the 3x3x3 iron at the marker is always exposed. x96+ so it never overlaps the flat/climb/detour/gap arenas.",
+  "mission": { "name": "drill", "params": { "ore": "iron" } },
+  "marker": { "ore": "iron", "x": 110, "z": 0 },
+  "collect": "minecraft:raw_iron",
+  "done_event": "VEINS_DEPLETED",
+  "ops": [
+    { "op": "clear", "from": [104, 107, -3], "to": [116, 112, 3] },
+    { "op": "fill", "from": [104, 99, -2], "to": [116, 106, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [109, 101, -1], "to": [111, 103, 1], "block": "minecraft:iron_ore" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 64 },
+    { "op": "select", "slot": 0 }
+  ],
+  "start": [107, 107, 0],
+  "impls": ["astar", "dstar"],
+  "repeats": 2,
+  "timeout": 150
+}

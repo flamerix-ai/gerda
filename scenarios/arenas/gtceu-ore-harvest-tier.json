@@ -1,0 +1,35 @@
+{
+  "desc": "GTCEu mod check (no mission): tungstate ore needs an IRON pickaxe. Places gtceu:tungstate_ore, kits a stone and an iron pickaxe, and asks the game's own harvest predicate (Player.hasCorrectToolForDrops, the call Forge makes on a block break to decide the drops) with each one in hand. PASS = the block is there, it requires the correct tool, the stone pickaxe would get no drop, the iron pickaxe would. Known-bad twin: gtceu-ore-harvest-tier-knownbad.",
+  "ops": [
+    { "op": "clear", "from": [-2, 101, -2], "to": [2, 104, 3] },
+    { "op": "fill", "from": [-2, 100, -2], "to": [2, 100, 3], "block": "minecraft:stone" },
+    { "op": "set", "pos": [0, 101, 2], "block": "gtceu:tungstate_ore" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:stone_pickaxe" },
+    { "op": "give", "item": "minecraft:iron_pickaxe" },
+    { "op": "player", "pos": [0, 101, 0] },
+    { "op": "wait", "ticks": 40 }
+  ],
+  "checks": [
+    {
+      "desc": "the placed block is GTCEu tungstate ore",
+      "jeval": "World.getBlock(0, 101, 2).getId()",
+      "expect": "gtceu:tungstate_ore"
+    },
+    {
+      "desc": "it drops only for the correct tool",
+      "jeval": "World.getBlock(0, 101, 2).getBlockStateHelper().isToolRequired()",
+      "expect": true
+    },
+    {
+      "desc": "a stone pickaxe in hand gets no drop",
+      "jeval": "(function () { Player.openInventory().setSelectedHotbarSlotIndex(0); var p = Player.getPlayer(); var state = World.getBlock(0, 101, 2).getBlockStateHelper().getRaw(); return { held: p.getMainHand().getItemId(), drops: p.getRaw()[srg('Player', 'hasCorrectToolForDrops')](state) }; })()",
+      "expect": { "held": "minecraft:stone_pickaxe", "drops": false }
+    },
+    {
+      "desc": "an iron pickaxe in hand gets the drop",
+      "jeval": "(function () { Player.openInventory().setSelectedHotbarSlotIndex(1); var p = Player.getPlayer(); var state = World.getBlock(0, 101, 2).getBlockStateHelper().getRaw(); return { held: p.getMainHand().getItemId(), drops: p.getRaw()[srg('Player', 'hasCorrectToolForDrops')](state) }; })()",
+      "expect": { "held": "minecraft:iron_pickaxe", "drops": true }
+    }
+  ]
+}

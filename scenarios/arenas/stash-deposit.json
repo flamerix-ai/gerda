@@ -1,0 +1,24 @@
+{
+  "desc": "stash mission end-to-end — the sustain-loop 'unload' leg. The bot starts a few blocks from a storage chest, carrying raw iron + iron ingots (to deposit) plus a diamond pickaxe (to KEEP, not on the whitelist). It greedy-walks to the chest, opens it (useOnBlock — the step fetch is missing), shift-clicks the whitelisted ids in, and closes. PASS = STASH_DEPOSITED then STASH_DONE, no ERROR; the pickaxe must remain in the bag (whitelist filtering). Chest at (5,101,0); bot starts at (0,101,0).",
+  "ops": [
+    { "op": "clear", "from": [-2, 101, -2], "to": [7, 104, 2] },
+    { "op": "fill", "from": [-2, 100, -2], "to": [7, 100, 2], "block": "minecraft:stone" },
+    { "op": "set", "pos": [5, 101, 0], "block": "minecraft:chest" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:raw_iron", "count": 12 },
+    { "op": "give", "item": "minecraft:iron_ingot", "count": 4 },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 101, 0] }
+  ],
+  "mission": {
+    "name": "stash",
+    "params": {
+      "x": 5,
+      "y": 101,
+      "z": 0,
+      "items": ["minecraft:raw_iron", "minecraft:iron_ingot"]
+    }
+  },
+  "expect": { "events": ["STASH_DEPOSITED", "STASH_DONE"], "timeout": 90 }
+}

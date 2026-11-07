@@ -1,0 +1,14 @@
+{
+  "desc": "ENGINE bridge — a 5-wide void (too wide to parkour, max 4) between two floor platforms, with a CATCH-FLOOR at y=93 (7 below the y=100 walk level: invisible to the planner's 5-cell drop scan so it still bridges, but a failed cross is a ~2-heart fall, NOT a death that wedges the headless client). Driven by greedy_drive: the bridgePlace movement chains cobblestone across the gap and walks over. Verify by position crossing to x≈8 + cobblestone in the void cells.",
+  "ops": [
+    { "op": "clear", "from": [-2, 90, -2], "to": [12, 112, 2] },
+    { "op": "fill", "from": [-2, 93, -2], "to": [12, 93, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [-1, 100, 0], "to": [0, 100, 0], "block": "minecraft:stone" },
+    { "op": "fill", "from": [6, 100, 0], "to": [9, 100, 0], "block": "minecraft:stone" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 64 },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 101, 0] }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "desc": "goto mission — the generic travel / return-to-base primitive. The bot greedy-walks from (0,101,0) to a destination at (8,101,0) over a flat stone platform and stops. PASS = GOTO_ARRIVED (reached the destination), no ERROR. The standalone form of fetch's GOTO leg, with nothing after it — the sustain loop's base-return walk.",
+  "ops": [
+    { "op": "clear", "from": [-2, 101, -2], "to": [10, 104, 2] },
+    { "op": "fill", "from": [-2, 100, -2], "to": [10, 100, 2], "block": "minecraft:stone" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 101, 0] }
+  ],
+  "mission": {
+    "name": "goto",
+    "params": { "x": 8, "y": 101, "z": 0 }
+  },
+  "expect": { "events": ["GOTO_ARRIVED"], "timeout": 60 }
+}

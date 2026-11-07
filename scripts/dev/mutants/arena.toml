@@ -1,0 +1,551 @@
+# Mutants of the arena check guards (scripts/dev/arena.py: checks, known-bad twins, spec
+# validation). Same rules as sandbox.toml; [scope.python] names the functions the lint reads.
+command = ["python3", "-m", "unittest"]
+ran_line = '^Ran \d+ tests? in \d+\.\d+s$'
+skip_marker = "skipped="
+failure_marker = " (scripts.tests."
+failure_exit = 1
+
+[scope.python]
+"scripts/dev/arena.py" = [
+    "check_outcome",
+    "wrong_outcome",
+    "twin_index",
+    "run_checks",
+    "validate_arena_spec",
+    "asserts",
+]
+
+[gates]
+check-jeval-error = "a jeval error fails an unmarked check, with the error text"
+check-value = "an unmarked check passes only on its exact expected value (canonical JSON)"
+wrong-jeval-error = "a jeval error is no refusal of a wrong claim"
+wrong-accepted = "a wrong claim that holds fails its check"
+wrong-twin-passed = "a wrong check is refused only when its unmarked twin passed"
+wrong-gets-right-value = "a wrong check passes only on its twin's right value (not null, not a third value)"
+wrong-has-twin = "a wrong check needs exactly one unmarked twin with the same jeval"
+wrong-twin-differs = "the twin states a value other than the wrong one"
+checks-fold = "one failed check fails the check list"
+spec-checks-list = "checks is a non-empty list"
+spec-check-jeval = "every check has a non-empty jeval string"
+spec-check-expect = "every check has an expect value"
+spec-wrong-literal = "wrong is literally true or absent"
+spec-known-bad-text = "known_bad names the wrong behaviour it asserts"
+spec-known-bad-marks = "a known-bad arena marks a wrong check"
+spec-wrong-needs-known-bad = "a wrong check only in a known-bad arena"
+asserts-checks = "an arena with checks joins the full gate"
+run-checks-wired = "every arena with checks runs them, with or without a mission"
+load-validates = "loading an arena validates it before any build"
+set-refuses-checks = "a film set carries no checks and no known_bad"
+
+[[mutant]]
+name = "check-error-compared"
+gate = "check-jeval-error"
+file = "scripts/dev/arena.py"
+anchor = "    if not reply.get(\"ok\"):\n        return False, f\"[FAIL] {desc}: jeval error: {reply.get('error')}\"  # gate:check-jeval-error"
+replace = "    if False:\n        return False, f\"[FAIL] {desc}: jeval error: {reply.get('error')}\"  # gate:check-jeval-error"
+test = [
+    "scripts.tests.test_arena_checks.CheckOutcomeTests.test_a_jeval_error_is_a_fail_with_the_error_text",
+]
+expect_message = [
+    "FAIL: test_a_jeval_error_is_a_fail_with_the_error_text (",
+    "'jeval error: boom' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "check-always-passes"
+gate = "check-value"
+file = "scripts/dev/arena.py"
+anchor = "    if _canon(got) == _canon(want):  # gate:check-value"
+replace = "    if True:  # gate:check-value"
+test = [
+    "scripts.tests.test_arena_checks.CheckOutcomeTests.test_a_different_value_fails_and_shows_both",
+]
+expect_message = [
+    "FAIL: test_a_different_value_fails_and_shows_both (",
+    "AssertionError: True is not false",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "check-truthy-equality"
+gate = "check-value"
+file = "scripts/dev/arena.py"
+anchor = "    if _canon(got) == _canon(want):  # gate:check-value"
+replace = "    if got == want:  # gate:check-value"
+test = [
+    "scripts.tests.test_arena_checks.CheckOutcomeTests.test_one_is_not_true",
+]
+expect_message = [
+    "FAIL: test_one_is_not_true (",
+    "AssertionError: True is not false",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "check-mismatch-passes"
+gate = "check-value"
+file = "scripts/dev/arena.py"
+anchor = "    return False, f\"[FAIL] {desc}: got {json.dumps(got)}, expected {json.dumps(want)}\"  # gate:check-value"
+replace = "    return True, f\"[FAIL] {desc}: got {json.dumps(got)}, expected {json.dumps(want)}\"  # gate:check-value"
+test = [
+    "scripts.tests.test_arena_checks.CheckOutcomeTests.test_a_different_value_fails_and_shows_both",
+]
+expect_message = [
+    "FAIL: test_a_different_value_fails_and_shows_both (",
+    "AssertionError: True is not false",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "wrong-error-compared"
+gate = "wrong-jeval-error"
+file = "scripts/dev/arena.py"
+anchor = "    if not reply.get(\"ok\"):\n        return False, f\"[FAIL] {desc}: jeval error: {reply.get('error')}\"  # gate:wrong-jeval-error"
+replace = "    if False:\n        return False, f\"[FAIL] {desc}: jeval error: {reply.get('error')}\"  # gate:wrong-jeval-error"
+test = [
+    "scripts.tests.test_arena_checks.WrongCheckOutcomeTests.test_a_jeval_error_on_a_wrong_check_fails",
+]
+expect_message = [
+    "FAIL: test_a_jeval_error_on_a_wrong_check_fails (",
+    "'jeval error: boom' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "wrong-claim-accepted"
+gate = "wrong-accepted"
+file = "scripts/dev/arena.py"
+anchor = "    if _canon(got) == _canon(check[\"expect\"]):"
+replace = "    if False:"
+test = [
+    "scripts.tests.test_arena_checks.WrongCheckOutcomeTests.test_an_accepted_wrong_value_fails",
+]
+expect_message = [
+    "FAIL: test_an_accepted_wrong_value_fails (",
+    "'cannot tell right from wrong' not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "twin-verdict-ignored"
+gate = "wrong-twin-passed"
+file = "scripts/dev/arena.py"
+anchor = "    if not twin_passed:"
+replace = "    if False:"
+test = [
+    "scripts.tests.test_arena_checks.WrongCheckOutcomeTests.test_a_failed_twin_fails_the_refusal",
+]
+expect_message = [
+    "FAIL: test_a_failed_twin_fails_the_refusal (",
+    "AssertionError: True is not false",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "twin-verdict-not-passed"
+gate = "wrong-twin-passed"
+file = "scripts/dev/arena.py"
+anchor = "verdicts[i] = wrong_outcome(ch, replies[i], checks[t], verdicts[t][0])"
+replace = "verdicts[i] = wrong_outcome(ch, replies[i], checks[t], True)"
+test = [
+    "scripts.tests.test_arena_checks.RunChecksTests.test_a_wrong_check_is_judged_by_its_twin_verdict",
+]
+expect_message = [
+    "FAIL: test_a_wrong_check_is_judged_by_its_twin_verdict (",
+    "\"[FAIL] wrong: its unmarked twin 'twin' failed\" not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "any-other-value-refuses"
+gate = "wrong-gets-right-value"
+file = "scripts/dev/arena.py"
+anchor = "    if _canon(got) != _canon(twin[\"expect\"]):"
+replace = "    if False:"
+test = [
+    "scripts.tests.test_arena_checks.WrongCheckOutcomeTests.test_a_third_value_fails",
+    "scripts.tests.test_arena_checks.KnownBadVerdictTests.test_a_null_reply_fails",
+]
+expect_message = [
+    "FAIL: test_a_third_value_fails (",
+    "FAIL: test_a_null_reply_fails (",
+    "AssertionError: True is not false",
+]
+expect_failures = 5
+
+[[mutant]]
+name = "twin-count-unchecked"
+gate = "wrong-has-twin"
+file = "scripts/dev/arena.py"
+anchor = "    if len(twins) != 1:\n        raise SpecError("
+replace = "    if False:\n        raise SpecError("
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_wrong_check_with_two_twins_is_refused",
+]
+expect_message = [
+    "FAIL: test_a_wrong_check_with_two_twins_is_refused (",
+    "AssertionError: SpecError not raised",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "twin-refusal-swallowed"
+gate = "wrong-has-twin"
+file = "scripts/dev/arena.py"
+anchor = "                except SpecError as e:\n                    raise SpecError("
+replace = "                except SpecError as e:\n                    continue\n                    raise SpecError("
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_wrong_check_without_a_twin_is_refused",
+]
+expect_message = [
+    "FAIL: test_a_wrong_check_without_a_twin_is_refused (",
+    "AssertionError: SpecError not raised",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "twin-may-repeat-the-claim"
+gate = "wrong-twin-differs"
+file = "scripts/dev/arena.py"
+anchor = "                if _canon(checks[t][\"expect\"]) == _canon(ch[\"expect\"]):"
+replace = "                if False:"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_twin_that_expects_the_wrong_value_is_refused",
+]
+expect_message = [
+    "FAIL: test_a_twin_that_expects_the_wrong_value_is_refused (",
+    "AssertionError: SpecError not raised",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "failed-check-not-folded"
+gate = "checks-fold"
+file = "scripts/dev/arena.py"
+anchor = "        ok = ok and passed  # gate:checks-fold"
+replace = "        ok = ok  # gate:checks-fold"
+test = [
+    "scripts.tests.test_arena_checks.RunChecksTests.test_every_check_runs_even_after_a_failure",
+]
+expect_message = [
+    "FAIL: test_every_check_runs_even_after_a_failure (",
+    "AssertionError: True is not false",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "checks-list-unchecked"
+gate = "spec-checks-list"
+file = "scripts/dev/arena.py"
+anchor = "        if not isinstance(checks, list) or not checks:"
+replace = "        if False:"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_an_empty_check_list_is_refused",
+]
+expect_message = [
+    "FAIL: test_an_empty_check_list_is_refused (",
+]
+expect_failures = 2
+
+[[mutant]]
+name = "checks-empty-allowed"
+gate = "spec-checks-list"
+file = "scripts/dev/arena.py"
+anchor = "        if not isinstance(checks, list) or not checks:"
+replace = "        if not isinstance(checks, list):"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_an_empty_check_list_is_refused",
+]
+expect_message = [
+    "FAIL: test_an_empty_check_list_is_refused (",
+    "AssertionError: SpecError not raised",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "checks-non-list-allowed"
+gate = "spec-checks-list"
+file = "scripts/dev/arena.py"
+anchor = "        if not isinstance(checks, list) or not checks:"
+replace = "        if not checks:"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_an_empty_check_list_is_refused",
+]
+expect_message = [
+    "FAIL: test_an_empty_check_list_is_refused (",
+    "does not match",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "check-jeval-unchecked"
+gate = "spec-check-jeval"
+file = "scripts/dev/arena.py"
+anchor = "            if not isinstance(ch, dict) or not isinstance(ch.get(\"jeval\"), str) or not ch[\"jeval\"].strip():"
+replace = "            if False:"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_check_without_code_is_refused",
+]
+expect_message = [
+    "FAIL: test_a_check_without_code_is_refused (",
+]
+expect_failures = 3
+
+[[mutant]]
+name = "check-dict-unchecked"
+gate = "spec-check-jeval"
+file = "scripts/dev/arena.py"
+anchor = "            if not isinstance(ch, dict) or not isinstance(ch.get(\"jeval\"), str)"
+replace = "            if not isinstance(ch.get(\"jeval\"), str)"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_check_without_code_is_refused",
+]
+expect_message = [
+    "ERROR: test_a_check_without_code_is_refused (",
+    "AttributeError",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "check-jeval-type-unchecked"
+gate = "spec-check-jeval"
+file = "scripts/dev/arena.py"
+anchor = " or not isinstance(ch.get(\"jeval\"), str) or not ch[\"jeval\"].strip():"
+replace = " or not ch[\"jeval\"].strip():"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_check_without_code_is_refused",
+]
+expect_message = [
+    "ERROR: test_a_check_without_code_is_refused (",
+    "KeyError",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "check-blank-jeval-allowed"
+gate = "spec-check-jeval"
+file = "scripts/dev/arena.py"
+anchor = " or not isinstance(ch.get(\"jeval\"), str) or not ch[\"jeval\"].strip():"
+replace = " or not isinstance(ch.get(\"jeval\"), str):"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_check_without_code_is_refused",
+]
+expect_message = [
+    "FAIL: test_a_check_without_code_is_refused (",
+    "AssertionError: SpecError not raised",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "check-expect-unchecked"
+gate = "spec-check-expect"
+file = "scripts/dev/arena.py"
+anchor = "            if \"expect\" not in ch:"
+replace = "            if False:"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_check_without_expect_is_refused",
+]
+expect_message = [
+    "FAIL: test_a_check_without_expect_is_refused (",
+    "AssertionError: SpecError not raised",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "wrong-any-truthy"
+gate = "spec-wrong-literal"
+file = "scripts/dev/arena.py"
+anchor = "            if \"wrong\" in ch and ch[\"wrong\"] is not True:"
+replace = "            if False:"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_wrong_must_be_literally_true",
+]
+expect_message = [
+    "FAIL: test_wrong_must_be_literally_true (",
+    "does not match",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "known-bad-text-unchecked"
+gate = "spec-known-bad-text"
+file = "scripts/dev/arena.py"
+anchor = "        if not isinstance(spec[\"known_bad\"], str) or not spec[\"known_bad\"].strip():"
+replace = "        if False:"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_known_bad_must_name_its_wrong_behaviour",
+]
+expect_message = [
+    "FAIL: test_a_known_bad_must_name_its_wrong_behaviour (",
+    "AssertionError: SpecError not raised",
+]
+expect_failures = 3
+
+[[mutant]]
+name = "known-bad-blank-allowed"
+gate = "spec-known-bad-text"
+file = "scripts/dev/arena.py"
+anchor = "        if not isinstance(spec[\"known_bad\"], str) or not spec[\"known_bad\"].strip():"
+replace = "        if not isinstance(spec[\"known_bad\"], str):"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_known_bad_must_name_its_wrong_behaviour",
+]
+expect_message = [
+    "FAIL: test_a_known_bad_must_name_its_wrong_behaviour (",
+    "AssertionError: SpecError not raised",
+]
+expect_failures = 2
+
+[[mutant]]
+name = "known-bad-type-unchecked"
+gate = "spec-known-bad-text"
+file = "scripts/dev/arena.py"
+anchor = "        if not isinstance(spec[\"known_bad\"], str) or not spec[\"known_bad\"].strip():"
+replace = "        if not spec[\"known_bad\"].strip():"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_known_bad_must_name_its_wrong_behaviour",
+]
+expect_message = [
+    "ERROR: test_a_known_bad_must_name_its_wrong_behaviour (",
+    "AttributeError",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "known-bad-unmarked"
+gate = "spec-known-bad-marks"
+file = "scripts/dev/arena.py"
+anchor = "        if not wrong:\n            raise SpecError(f\"arena '{name}': a known-bad arena marks"
+replace = "        if False:\n            raise SpecError(f\"arena '{name}': a known-bad arena marks"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_known_bad_without_a_marked_wrong_check_is_refused",
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_known_bad_that_asserts_nothing_is_refused",
+]
+expect_message = [
+    "FAIL: test_a_known_bad_without_a_marked_wrong_check_is_refused (",
+    "FAIL: test_a_known_bad_that_asserts_nothing_is_refused (",
+    "AssertionError: SpecError not raised",
+]
+expect_failures = 2
+
+[[mutant]]
+name = "wrong-outside-known-bad"
+gate = "spec-wrong-needs-known-bad"
+file = "scripts/dev/arena.py"
+anchor = "    elif wrong:\n        raise SpecError("
+replace = "    elif False:\n        raise SpecError("
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_wrong_check_outside_a_known_bad_is_refused",
+]
+expect_message = [
+    "FAIL: test_a_wrong_check_outside_a_known_bad_is_refused (",
+    "AssertionError: SpecError not raised",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "checks-do-not-gate"
+gate = "asserts-checks"
+file = "scripts/dev/arena.py"
+anchor = ".get(\"events\") or spec.get(\"checks\"))  # gate:asserts-checks"
+replace = ".get(\"events\"))  # gate:asserts-checks"
+test = [
+    "scripts.tests.test_arena_checks.ShippedGtceuPairTests.test_both_load_and_join_the_full_gate",
+]
+expect_message = [
+    "FAIL: test_both_load_and_join_the_full_gate (",
+    "not found in",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "mission-less-checks-skipped"
+gate = "run-checks-wired"
+file = "scripts/dev/arena.py"
+anchor = "            return True\n        return run_checks(c, checks)"
+replace = "            return True\n        return True"
+test = [
+    "scripts.tests.test_arena_checks.RunChecksTests.test_a_mission_less_arena_runs_its_checks",
+]
+expect_message = [
+    "FAIL: test_a_mission_less_arena_runs_its_checks (",
+    "AssertionError: True is not false",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "eventless-mission-checks-skipped"
+gate = "run-checks-wired"
+file = "scripts/dev/arena.py"
+anchor = "        if checks:\n            return run_checks(c, checks)"
+replace = "        if checks:\n            return True"
+test = [
+    "scripts.tests.test_arena_checks.RunChecksTests.test_a_mission_arena_without_events_runs_its_checks",
+]
+expect_message = [
+    "FAIL: test_a_mission_arena_without_events_runs_its_checks (",
+    "AssertionError: True is not false",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "mission-checks-not-folded"
+gate = "run-checks-wired"
+file = "scripts/dev/arena.py"
+anchor = "        ok = run_checks(c, checks) and ok"
+replace = "        ok = ok"
+test = [
+    "scripts.tests.test_arena_checks.RunChecksTests.test_a_mission_arena_runs_its_checks_after_the_verdict",
+]
+expect_message = [
+    "FAIL: test_a_mission_arena_runs_its_checks_after_the_verdict (",
+    "AssertionError: True is not false",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "load-skips-validation"
+gate = "load-validates"
+file = "scripts/dev/arena.py"
+anchor = "    else:\n        validate_arena_spec(spec, name)"
+replace = "    else:\n        pass"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_load_validates_the_arena",
+]
+expect_message = [
+    "FAIL: test_load_validates_the_arena (",
+    "AssertionError: SpecError not raised",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "set-may-carry-checks"
+gate = "set-refuses-checks"
+file = "scripts/dev/arena.py"
+anchor = "\"expect\", \"checks\", \"known_bad\"):"
+replace = "\"expect\", \"known_bad\"):"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_set_cannot_carry_checks",
+]
+expect_message = [
+    "FAIL: test_a_set_cannot_carry_checks (",
+    "AssertionError: SpecError not raised",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "set-may-carry-known-bad"
+gate = "set-refuses-checks"
+file = "scripts/dev/arena.py"
+anchor = "\"expect\", \"checks\", \"known_bad\"):"
+replace = "\"expect\", \"checks\"):"
+test = [
+    "scripts.tests.test_arena_checks.ValidationTests.test_a_set_cannot_carry_checks",
+]
+expect_message = [
+    "FAIL: test_a_set_cannot_carry_checks (",
+    "AssertionError: SpecError not raised",
+]
+expect_failures = 1

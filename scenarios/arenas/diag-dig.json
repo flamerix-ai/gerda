@@ -1,0 +1,12 @@
+{
+  "desc": "Diagonal-through-rock = L-shape verify — bot embedded in a fully-solid mass, target same-level but diagonally offset (4,101,4). With NO diagonal-mine move, the planner can only reach it by cardinal mineTraverse in an L (L-composition). Build-only: drive greedy_drive {x:4,y:101,z:4}; verify it digs an L (one axis then the other) and reaches the target.",
+  "ops": [
+    { "op": "fill", "from": [-1, 99, -1], "to": [6, 103, 6], "block": "minecraft:stone" },
+    { "op": "set", "pos": [0, 101, 0], "block": "minecraft:air" },
+    { "op": "set", "pos": [0, 102, 0], "block": "minecraft:air" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 101, 0] }
+  ]
+}

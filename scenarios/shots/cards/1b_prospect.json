@@ -1,0 +1,28 @@
+{
+  "_doc": [
+    "Console card for showcase row 1b: the bridge call 01a_prospect_gui makes and the part of",
+    "its answer that names the iron vein. The command is the one trigger_bot.sh sends in that",
+    "shot, port and 30 s timeout included (bridge_ctl, which ./gerda ctl dispatches to). The response lines are bridge_ctl's",
+    "json.dumps(indent=2) print of the ext.js prospect reply, cut to its contiguous `veins`",
+    "block: with want \"iron\" the reply's veins holds only iron, as {x, z, dist, cells, bbox}.",
+    "Fill every <FILL:...> token from release/takes/showcase/01a_prospect_gui.during.log",
+    "(--set iron_x=... or `values`), never from a guess: the render refuses an unfilled token."
+  ],
+  "out": "release/takes/showcase/card_1b_prospect.mp4",
+  "fps": 60,
+  "width": 1920,
+  "height": 1080,
+  "duration": 3.0,
+  "title": "gerda — bridge 55545",
+  "font_size": 30,
+  "prompt": "$",
+  "command": "./gerda ctl --port 55545 --timeout 30 send prospect '{\"want\":\"iron\",\"keep_open\":true}'",
+  "response": [
+    "  \"veins\": {",
+    "    \"iron\": {",
+    "      \"x\": <FILL:iron_x>,",
+    "      \"z\": <FILL:iron_z>,",
+    "      \"dist\": <FILL:iron_dist>,",
+    "      \"cells\": <FILL:iron_cells>,"
+  ]
+}

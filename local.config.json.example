@@ -1,0 +1,8 @@
+{
+  "_comment": "Copy to local.config.json (gitignored). Every key is optional — env vars (MC_INSTANCES_ROOT, …) override; without either, the launcher instances dir is autodetected (FreesmLauncher/Prism/MultiMC). The account keys are needed only by the scripts that use them (bind_instance_accounts.py, the demo/film scripts), which fail loud when they are missing; serverRoot has a default (python3 scripts/local_config.py server_dir prints the resolved server dir).",
+  "instancesRoot": "~/.local/share/PrismLauncher/instances",
+  "humanInstance": "Monifactory",
+  "fleetInstances": [],
+  "humanAccountName": "your-offline-account-name",
+  "cameraAccountName": "Steve"
+}

@@ -1,0 +1,14 @@
+{
+  "desc": "Parkour 3-air gap — a 3-air-block void (x=1,2,3) → land 4 cells away (x=4), a dist-4 jump that ONLY clears at real SPRINT speed. A LONG runway (x=-5..0) gives the run-up room to reach sprint; CATCH-FLOOR at y=93 (a miss = ~2-heart fall, not death). greedy_drive to x=8: expect the run-up to retreat→charge→sprint-launch and land on x=4+, NOT fall. The executor must reach cfg.nav.parkourTakeoffSpeed at the take-off edge or it ABORTS to a bridge (never undershoots).",
+  "ops": [
+    { "op": "clear", "from": [-7, 90, -2], "to": [12, 112, 2] },
+    { "op": "fill", "from": [-7, 93, -2], "to": [12, 93, 2], "block": "minecraft:stone" },
+    { "op": "fill", "from": [-5, 100, 0], "to": [0, 100, 0], "block": "minecraft:stone" },
+    { "op": "fill", "from": [4, 100, 0], "to": [10, 100, 0], "block": "minecraft:stone" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 64 },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 101, 0] }
+  ]
+}

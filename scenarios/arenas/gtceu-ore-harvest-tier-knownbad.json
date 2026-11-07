@@ -1,0 +1,32 @@
+{
+  "desc": "KNOWN-BAD twin of gtceu-ore-harvest-tier: the same build; two of its checks verbatim (the ore is placed; a stone pickaxe in hand gets no drop); and one check marked \"wrong\" that asks the same stone-pickaxe question but claims the drop. That claim is false in GTCEu. The arena PASSES only when the game refuses it by answering exactly the right value of its unmarked twin, the stone-pickaxe check, and every unmarked check passes. It FAILS if the wrong claim is accepted, if the answer is anything else (a null, a missing pickaxe, a third value), if the ore was not placed, or if any jeval errors.",
+  "known_bad": "a stone pickaxe harvests gtceu:tungstate_ore (GTCEu needs iron)",
+  "ops": [
+    { "op": "clear", "from": [-2, 101, -2], "to": [2, 104, 3] },
+    { "op": "fill", "from": [-2, 100, -2], "to": [2, 100, 3], "block": "minecraft:stone" },
+    { "op": "set", "pos": [0, 101, 2], "block": "gtceu:tungstate_ore" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:stone_pickaxe" },
+    { "op": "give", "item": "minecraft:iron_pickaxe" },
+    { "op": "player", "pos": [0, 101, 0] },
+    { "op": "wait", "ticks": 40 }
+  ],
+  "checks": [
+    {
+      "desc": "the placed block is GTCEu tungstate ore",
+      "jeval": "World.getBlock(0, 101, 2).getId()",
+      "expect": "gtceu:tungstate_ore"
+    },
+    {
+      "desc": "a stone pickaxe in hand gets no drop",
+      "jeval": "(function () { Player.openInventory().setSelectedHotbarSlotIndex(0); var p = Player.getPlayer(); var state = World.getBlock(0, 101, 2).getBlockStateHelper().getRaw(); return { held: p.getMainHand().getItemId(), drops: p.getRaw()[srg('Player', 'hasCorrectToolForDrops')](state) }; })()",
+      "expect": { "held": "minecraft:stone_pickaxe", "drops": false }
+    },
+    {
+      "desc": "WRONG ON PURPOSE: a stone pickaxe in hand gets the drop",
+      "wrong": true,
+      "jeval": "(function () { Player.openInventory().setSelectedHotbarSlotIndex(0); var p = Player.getPlayer(); var state = World.getBlock(0, 101, 2).getBlockStateHelper().getRaw(); return { held: p.getMainHand().getItemId(), drops: p.getRaw()[srg('Player', 'hasCorrectToolForDrops')](state) }; })()",
+      "expect": { "held": "minecraft:stone_pickaxe", "drops": true }
+    }
+  ]
+}

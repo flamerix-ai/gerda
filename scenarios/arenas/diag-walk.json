@@ -1,0 +1,11 @@
+{
+  "desc": "Open diagonal walk (verify) — flat platform; greedy_drive {x:6,y:101,z:6} should walk a TRUE diagonal (x and z rise together), not an L. Build-only.",
+  "ops": [
+    { "op": "clear", "from": [-2, 100, -2], "to": [9, 104, 9] },
+    { "op": "fill", "from": [-2, 100, -2], "to": [9, 100, 9], "block": "minecraft:stone" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 101, 0] }
+  ]
+}

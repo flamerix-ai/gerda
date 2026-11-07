@@ -1,0 +1,12 @@
+{
+  "desc": "mineDescend registry move — bot embedded in a FULLY SOLID rock mass (no walkable surface to skirt over), target buried FORWARD + DOWN. The cheapest dig route to a diagonal target is a descending staircase (mineDescend = 2 breaks/step, beats mineTraverse+mineDown = 3). Build-only: drive greedy_drive {x:6,y:95,z:0}; verify the bot ends forward (x≈5-6) AND down (y≈95-96) and a DIAGONAL of rock cells became air (a staircase, not an L-shaped tunnel).",
+  "ops": [
+    { "op": "fill", "from": [-1, 92, -1], "to": [9, 103, 1], "block": "minecraft:stone" },
+    { "op": "set", "pos": [0, 101, 0], "block": "minecraft:air" },
+    { "op": "set", "pos": [0, 102, 0], "block": "minecraft:air" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 101, 0] }
+  ]
+}

@@ -1,0 +1,5 @@
+# LF in every checkout. Git for Windows defaults to core.autocrlf=true, and a CRLF checkout fails
+# biome's format check and the commands-ref test, and breaks the bash hooks under .githooks/.
+* text=auto eol=lf
+# cmd.exe misparses some LF-only batch files.
+*.cmd text eol=crlf

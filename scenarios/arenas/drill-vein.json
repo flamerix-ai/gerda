@@ -1,0 +1,18 @@
+{
+  "desc": "drill happy path — descend a shaft, expose an adjacent ore, mine it (no gap/pillar). Success = DRILL_VEIN_REACHED (found the seeded vein, descended, exposed+started mining it) with no ERROR. NOT VEINS_DEPLETED: that's a persistence side-effect that fires only when the mining slice's `exhausted` flag is set (SCAN cycled cfg.scan.maxCycles dry) AND there are vein waypoints to grey out — the drill's happy path ends via DRILL_DEPTH_DONE→PAUSED (descend.ts), which never sets `exhausted`, so VEINS_DEPLETED is unreachable here (stale pre-EXCAVATE assertion, removed).",
+  "ops": [
+    { "op": "clear", "from": [-2, 95, -2], "to": [4, 110, 2] },
+    { "op": "fill", "from": [0, 101, 0], "to": [0, 106, 0], "block": "minecraft:stone" },
+    { "op": "set", "pos": [0, 100, 0], "block": "minecraft:stone" },
+    { "op": "set", "pos": [2, 101, 0], "block": "minecraft:iron_ore" },
+    { "op": "set", "pos": [2, 100, 0], "block": "minecraft:stone" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 64 },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 107, 0] }
+  ],
+  "marker": { "ore": "iron", "x": 0, "z": 0 },
+  "mission": { "name": "drill", "params": { "ore": "iron" } },
+  "expect": { "events": ["DRILL_VEIN_REACHED"], "timeout": 60 }
+}

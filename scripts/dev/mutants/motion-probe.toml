@@ -1,0 +1,202 @@
+# Mutants of the --min-luma guard of scripts/rig/motion_probe.py and the verdict it rides on.
+# Same rules as sandbox.toml; [scope.python] names the functions the lint reads.
+command = ["python3", "-m", "unittest"]
+ran_line = '^Ran \d+ tests? in \d+\.\d+s$'
+skip_marker = "skipped="
+failure_marker = " (scripts.tests."
+failure_exit = 1
+
+[scope.python]
+"scripts/rig/motion_probe.py" = [
+    "frame_luma",
+    "gate_verdict",
+]
+
+[gates]
+luma-no-frames = "no frames is an error, never a dark take"
+probe-refuses-empty = "zero measurements REFUSE, never pass"
+min-luma-gates = "--min-luma fails a take whose mean luma is under the bound"
+max-static-gate = "--max-static fails a take with a longer freeze"
+min-windows-gate = "--min-windows fails a take with too few live windows"
+min-luma-needs-measurement = "--min-luma without a luma measurement REFUSES"
+verdict-fail = "a failed gate is the fail verdict"
+min-luma-finite = "a non-finite --min-luma is refused"
+min-luma-wired = "the CLI measures luma and hands --min-luma to the verdict"
+
+[[mutant]]
+name = "luma-empty-unnamed"
+gate = "luma-no-frames"
+file = "scripts/rig/motion_probe.py"
+anchor = "    if not frames:\n        raise ValueError(\"frame_luma: no frames\")"
+replace = "    if False:\n        raise ValueError(\"frame_luma: no frames\")"
+test = [
+    "scripts.tests.test_motion_probe.LumaGateTests.test_no_frames_is_an_error_not_a_dark_take",
+]
+expect_message = [
+    "FAIL: test_no_frames_is_an_error_not_a_dark_take (",
+    "does not match",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "empty-series-judged"
+gate = "probe-refuses-empty"
+file = "scripts/rig/motion_probe.py"
+anchor = "    if int(result.get(\"samples\", 0)) < 1:"
+replace = "    if False:"
+test = [
+    "scripts.tests.test_motion_probe.MinWindowsGateTests.test_an_empty_series_still_REFUSES_under_min_windows",
+]
+expect_message = [
+    "FAIL: test_an_empty_series_still_REFUSES_under_min_windows (",
+    "!= 'refuse'",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "min-luma-report-only"
+gate = "min-luma-gates"
+file = "scripts/rig/motion_probe.py"
+anchor = "min_windows is None and min_luma is None:"
+replace = "min_windows is None:"
+test = [
+    "scripts.tests.test_motion_probe.LumaGateTests.test_a_black_take_FAILS_by_name",
+]
+expect_message = [
+    "FAIL: test_a_black_take_FAILS_by_name (",
+    "!= 'fail'",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "min-luma-never-fails"
+gate = "min-luma-gates"
+file = "scripts/rig/motion_probe.py"
+anchor = "        if luma[\"mean\"] < min_luma:  # gate:min-luma-gates"
+replace = "        if False:  # gate:min-luma-gates"
+test = [
+    "scripts.tests.test_motion_probe.LumaGateTests.test_a_black_take_FAILS_by_name",
+]
+expect_message = [
+    "FAIL: test_a_black_take_FAILS_by_name (",
+    "!= 'fail'",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "min-luma-bound-inclusive"
+gate = "min-luma-gates"
+file = "scripts/rig/motion_probe.py"
+anchor = "        if luma[\"mean\"] < min_luma:  # gate:min-luma-gates"
+replace = "        if luma[\"mean\"] <= min_luma:  # gate:min-luma-gates"
+test = [
+    "scripts.tests.test_motion_probe.LumaGateTests.test_a_mean_exactly_at_the_bound_passes",
+]
+expect_message = [
+    "FAIL: test_a_mean_exactly_at_the_bound_passes (",
+    "!= 'ok'",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "max-static-never-fails"
+gate = "max-static-gate"
+file = "scripts/rig/motion_probe.py"
+anchor = "    if max_static is not None and longest > max_static + EPS:"
+replace = "    if False:"
+test = [
+    "scripts.tests.test_motion_probe.FrozenTakeTests.test_a_frozen_take_has_no_window_and_FAILS_the_gate",
+]
+expect_message = [
+    "FAIL: test_a_frozen_take_has_no_window_and_FAILS_the_gate (",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "min-windows-never-fails"
+gate = "min-windows-gate"
+file = "scripts/rig/motion_probe.py"
+anchor = "    if min_windows is not None and windows < min_windows:"
+replace = "    if False:"
+test = [
+    "scripts.tests.test_motion_probe.MinWindowsGateTests.test_too_few_windows_FAILS_by_name",
+]
+expect_message = [
+    "FAIL: test_too_few_windows_FAILS_by_name (",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "missing-luma-judged"
+gate = "min-luma-needs-measurement"
+file = "scripts/rig/motion_probe.py"
+anchor = "        if luma is None:\n            return (\"refuse\","
+replace = "        if False:\n            return (\"refuse\","
+test = [
+    "scripts.tests.test_motion_probe.LumaGateTests.test_min_luma_without_a_measurement_REFUSES",
+]
+expect_message = [
+    "ERROR: test_min_luma_without_a_measurement_REFUSES (",
+    "TypeError",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "failures-pass"
+gate = "verdict-fail"
+file = "scripts/rig/motion_probe.py"
+anchor = "        return \"fail\", \"\\n\".join(failures), longest"
+replace = "        return \"ok\", \"\\n\".join(failures), longest"
+test = [
+    "scripts.tests.test_motion_probe.MinWindowsGateTests.test_too_few_windows_FAILS_by_name",
+]
+expect_message = [
+    "FAIL: test_too_few_windows_FAILS_by_name (",
+    "'ok' != 'fail'",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "min-luma-nan-accepted"
+gate = "min-luma-finite"
+file = "scripts/rig/motion_probe.py"
+anchor = "(\"--max-static\", args.max_static), (\"--min-luma\", args.min_luma)):"
+replace = "(\"--max-static\", args.max_static)):"
+test = [
+    "scripts.tests.test_motion_probe.NonFiniteLumaTests.test_a_non_finite_min_luma_is_REFUSED",
+]
+expect_message = [
+    "FAIL: test_a_non_finite_min_luma_is_REFUSED (",
+    "'--min-luma must be a finite number' not found in",
+]
+expect_failures = 2
+
+[[mutant]]
+name = "luma-never-measured"
+gate = "min-luma-wired"
+file = "scripts/rig/motion_probe.py"
+anchor = "    result[\"luma\"] = frame_luma(frames)  # gate:min-luma-wired"
+replace = "    pass  # gate:min-luma-wired"
+test = [
+    "scripts.tests.test_motion_probe.EndToEndTests.test_min_luma_fails_a_black_take_through_the_CLI",
+]
+expect_message = [
+    "FAIL: test_min_luma_fails_a_black_take_through_the_CLI (",
+    "2 != 1",
+]
+expect_failures = 1
+
+[[mutant]]
+name = "min-luma-not-passed"
+gate = "min-luma-wired"
+file = "scripts/rig/motion_probe.py"
+anchor = "args.min_windows,\n                                            args.min_luma)"
+replace = "args.min_windows,\n                                            None)"
+test = [
+    "scripts.tests.test_motion_probe.EndToEndTests.test_min_luma_fails_a_black_take_through_the_CLI",
+]
+expect_message = [
+    "FAIL: test_min_luma_fails_a_black_take_through_the_CLI (",
+    "0 != 1",
+]
+expect_failures = 1

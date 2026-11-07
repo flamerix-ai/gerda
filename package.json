@@ -1,0 +1,29 @@
+{
+  "name": "gerda-bot",
+  "version": "4.0.0",
+  "private": true,
+  "license": "MPL-2.0",
+  "description": "Modpack-agnostic autonomous mining bot for jsMacros (GraalJS) — TypeScript kernel + capabilities",
+  "type": "module",
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src test-ts examples",
+    "lint:defensive": "bun run scripts/check-defensive.ts",
+    "format": "biome format --write src test-ts examples",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "deploy": "bun run build && python3 scripts/ops/sync.py -s dist/__gerda_bot.bundle.js",
+    "check": "bun run typecheck && bun run lint && bun run lint:defensive && bun run test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "fast-check": "^4.8.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "trustedDependencies": [
+    "@biomejs/biome"
+  ]
+}

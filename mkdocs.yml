@@ -1,0 +1,63 @@
+site_name: Gerda
+site_description: Open-source bot framework for Minecraft on jsMacros, with Gerda Bot — an autonomous GregTech mining fleet — as the reference implementation.
+site_url: https://flamerix-ai.github.io/gerda/
+repo_url: https://github.com/flamerix-ai/gerda
+repo_name: flamerix-ai/gerda
+docs_dir: docs
+
+# Private working material is stripped from the public snapshot by the publish script;
+# excluding it here keeps a local `just docs-build` / `docs-serve` of the private checkout
+# identical to the public site. A `name/` entry matches only a dir named exactly that. The deployed
+# site is built from the leak-scanned tree by scripts/docs_publish.sh.
+exclude_docs: |
+  private/
+  adr/
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      toggle: { icon: material/weather-night, name: Dark mode }
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      toggle: { icon: material/weather-sunny, name: Light mode }
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting started:
+      - Setup from zero: SETUP.md
+      - Works on your MC version: PORTABILITY.md
+      - Dedicated server: SERVER_SETUP.md
+      - Bot instances: BOT_INSTANCE_SETUP.md
+  - Guides:
+      - How Gerda works: ARCHITECTURE.md
+      - Test your mod in a real game: MOD_TESTING.md
+      - Build your own bot: BUILD_YOUR_OWN_BOT.md
+      - Missions reference: MISSIONS.md
+      - Fleet playbook: FLEET_PLAYBOOK.md
+      - Filming & headless rig: RIG.md
+      - Extending Gerda Bot: EXTENDING.md
+      - Testing (3 layers): TESTING.md
+      - Scenario files reference: SCENARIOS.md
+      - Safety tiers: SAFETY.md
+      - Bridge & IPC contract: IPC.md
+      - Bridge command reference: COMMANDS.md
+      - Eyes & hands: EYES_HANDS.md
+      - Navigator benches: navbench.md
+  - Build story: BUILD_STORY.md

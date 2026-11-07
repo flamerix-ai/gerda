@@ -1,0 +1,20 @@
+{
+  "desc": "snow-surface drill — descend a shaft through snow_block (+ a snow layer on top, the exact surface-stall repro) down to an iron vein. Verifies the aimAt-lookAt + break-cell + stall-watchdog fixes: reaches the vein, no DRILL_STALL.",
+  "ops": [
+    { "op": "clear", "from": [-3, 95, -3], "to": [4, 114, 3] },
+    { "op": "fill", "from": [0, 101, 0], "to": [0, 107, 0], "block": "minecraft:snow_block" },
+    { "op": "set", "pos": [0, 100, 0], "block": "minecraft:snow_block" },
+    { "op": "set", "pos": [-1, 107, 0], "block": "minecraft:snow" },
+    { "op": "set", "pos": [0, 108, 0], "block": "minecraft:snow" },
+    { "op": "set", "pos": [2, 101, 0], "block": "minecraft:iron_ore" },
+    { "op": "set", "pos": [2, 100, 0], "block": "minecraft:snow_block" },
+    { "op": "clearinv" },
+    { "op": "give", "item": "minecraft:diamond_pickaxe" },
+    { "op": "give", "item": "minecraft:cobblestone", "count": 64 },
+    { "op": "select", "slot": 0 },
+    { "op": "player", "pos": [0, 108, 0] }
+  ],
+  "marker": { "ore": "iron", "x": 0, "z": 0 },
+  "mission": { "name": "drill", "params": { "ore": "iron" } },
+  "expect": { "events": ["DRILL_VEIN_REACHED"], "timeout": 50 }
+}
