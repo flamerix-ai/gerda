@@ -1,0 +1,1425 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-source bot framework for Minecraft on jsMacros, with Gerda Bot — an autonomous GregTech mining fleet — as the reference implementation.">
+      
+      
+      
+        <link rel="canonical" href="https://flamerix-ai.github.io/gerda/TESTING/">
+      
+      
+        <link rel="prev" href="../EXTENDING/">
+      
+      
+        <link rel="next" href="../SCENARIOS/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Testing (3 layers) - Gerda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#testing-the-three-layers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gerda" class="md-header__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gerda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Testing (3 layers)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gerda" class="md-nav__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gerda
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup from zero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PORTABILITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Works on your MC version
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SERVER_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dedicated server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOT_INSTANCE_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bot instances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Gerda works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MOD_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test your mod in a real game
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_YOUR_OWN_BOT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build your own bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MISSIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FLEET_PLAYBOOK/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fleet playbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RIG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filming & headless rig
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXTENDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending Gerda Bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing (3 layers)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing (3 layers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#layer-1-the-mock-suite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 1 — the mock suite
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Layer 1 — the mock suite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mutants-of-the-host-tool-guards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mutants of the host-tool guards
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layer-2-facade-smoke-gerda-smoke" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 2 — facade smoke (./gerda smoke)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layer-3-the-arena-gate-just-gate-live" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 3 — the arena gate (just gate-live)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Layer 3 — the arena gate (just gate-live)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-an-arena" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding an arena
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#navigator-benches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Navigator benches
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SCENARIOS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenario files reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAFETY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety tiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IPC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge & IPC contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMMANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge command reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EYES_HANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eyes & hands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navbench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigator benches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_STORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build story
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#layer-1-the-mock-suite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 1 — the mock suite
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Layer 1 — the mock suite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mutants-of-the-host-tool-guards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mutants of the host-tool guards
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layer-2-facade-smoke-gerda-smoke" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 2 — facade smoke (./gerda smoke)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layer-3-the-arena-gate-just-gate-live" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 3 — the arena gate (just gate-live)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Layer 3 — the arena gate (just gate-live)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-an-arena" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding an arena
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#navigator-benches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Navigator benches
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="testing-the-three-layers">Testing — the three layers<a class="headerlink" href="#testing-the-three-layers" title="Permanent link">&para;</a></h1>
+<p>The bot is tested at three levels. <strong>There is no CI.</strong> The versioned git hooks (<code>just hooks</code>)
+are the gate, and they run layer 1. Layers 2 and 3 need a live game, so you run them by hand
+before merging in-game behaviour changes.</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>What</th>
+<th>Runs where</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Mock suite</td>
+<td>Pure domain logic, capability and mission loops on the mock runtime; the Python host-tool suites; the mutants of the host-tool guards</td>
+<td>git hooks: pre-commit the TS half and the gate-tag lint, pre-push all of it</td>
+<td><code>just check-ts</code>, <code>just check</code></td>
+</tr>
+<tr>
+<td>2. Facade smoke</td>
+<td>The raw-Java facade methods, executed in the real worker</td>
+<td>a live bot</td>
+<td><code>./gerda smoke</code></td>
+</tr>
+<tr>
+<td>3. Arena gate</td>
+<td>Real missions in built arenas, plus navigator leg benches</td>
+<td>a live, opped test bot</td>
+<td><code>just gate-live</code> (<code>./gerda gate</code>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>pre-commit</strong> runs <code>just check-ts</code>, the TS half of <code>just check</code> plus the gate-tag lint
+(<code>just gate-tags</code>), so a commit takes seconds; <strong>pre-push</strong> runs the full <code>just check</code> (the TS
+half again, the Python suites and the mutants, <code>just mutants</code>), builds the bundle
+and validates it
+(<code>just validate-bundle</code>: the deploy step's checks, <code>validate_bundle()</code> in <code>scripts/ops/sync.py</code>).
+Pre-push builds from the checkout, so it refuses to push a commit other than HEAD that shares
+history with it — check out the commit you push. (A maintainer-only leak scan also runs when
+<code>scripts/private/</code> exists; a fork skips it.)
+Run from a shell without the dev shell's tools (an IDE, a plain terminal), a hook re-enters the
+flake dev shell through <code>nix develop</code> when nix is installed; without nix it runs as is.
+Do not skip either hook with <code>--no-verify</code>. Pre-push writes its output to <code>pre-push.log</code> in the
+worktree's git dir (<code>git rev-parse --git-path pre-push.log</code>) and prints one summary line. On
+failure it prints the failing command and the last 40 log lines. <code>just smoke-clean</code>
+(<code>./gerda smoke-clean</code>) is a separate check: it brings the toolchain up on a clean distro in a
+rootless container.</p>
+<h2 id="layer-1-the-mock-suite">Layer 1 — the mock suite<a class="headerlink" href="#layer-1-the-mock-suite" title="Permanent link">&para;</a></h2>
+<p><code>just check</code> = <code>just check-ts</code> (the gate-tag lint, then <code>bun run check</code>: <code>tsc --noEmit</code> +
+<code>biome check</code> + the defensive-code checker + <code>vitest</code>) plus the Python <code>unittest</code> suites
+(<code>just test-py</code>) plus the mutants of the host-tool guards (<code>just mutants</code>, below).</p>
+<p><strong>Test count.</strong> This is the one place the docs state it: over <strong>1,000 vitest tests</strong> in
+<code>test-ts/</code> and about <strong>870 Python tests</strong> (<code>scripts/tests/</code> for host tooling,
+<code>scripts/objective/tests/</code> for the objective engine). Count them yourself with
+<code>node_modules/.bin/vitest list</code> and <code>just test-py</code>.</p>
+<p>The vitest suites run the pure <code>shared/domain/</code> logic and every capability and mission against
+<code>core/runtime/mock.ts</code>, which implements the same interface as the real runtime, so it cannot
+drift. The planner also has property-based tests (fast-check) for legality, determinism and
+completeness on generated terrain. The suite boots no game.</p>
+<p>It does <strong>not</strong> cover live movement physics, synthetic-input reach, mod-API calls or the
+service harness. Layers 2 and 3 do.</p>
+<h3 id="mutants-of-the-host-tool-guards">Mutants of the host-tool guards<a class="headerlink" href="#mutants-of-the-host-tool-guards" title="Permanent link">&para;</a></h3>
+<p>A guard in a host tool — a check in the sandbox scripts (<code>scripts/sandbox/sbx.sh</code>,
+<code>provision.sh</code>, <code>Containerfile</code>), the arena check rules in <code>scripts/dev/arena.py</code>, the
+<code>--min-luma</code> gate of <code>scripts/rig/motion_probe.py</code> — counts as tested only when some test goes
+red without it. We keep that evidence as data. A <strong>mutant</strong> is one literal edit that breaks one
+guarded line, together with the tests that must then fail and the message they must print.
+<code>scripts/dev/mutants.py</code> runs them.</p>
+<ul>
+<li><strong>Tags.</strong> Every die-shaped line in those files carries <code># gate:&lt;id&gt;</code> or <code># not-a-gate:
+  &lt;reason&gt;</code> (a reason of three or more words). Die-shaped is a fixed list of failure shapes
+  the lint knows: in shell every <code>return</code>/<code>exit</code> but <code>0</code>, every <code>||</code> but <code>|| true</code>, every
+  <code>false</code>, fail helper, unguarded <code>test</code>/<code>[</code>, and checksum check; in a Containerfile every
+  <code>RUN</code>; in the listed Python functions every <code>return</code>, <code>raise</code>, <code>assert</code>, exit call and
+  <code>.append</code>. A guard in another shape is not flagged — for example a bare <code>grep -q</code>, <code>cmp</code> or
+  <code>diff</code> under <code>set -e</code>, <code>(( … ))</code>, <code>${1:?}</code>, a <code>trap … ERR</code>, or a Python failure recorded with
+  <code>+=</code> or <code>ok = False</code>. Such a guard counts as tested only when its author tags it and a
+  reviewer checks that, so the lint is a floor, not a proof that every guard is known. Every
+  gate tagged today has a mutant that kills it. A file in the scope where the rule finds
+  nothing fails the lint. A tag on a comment-only line covers the next line and its <code>\</code>
+  continuations.</li>
+<li><strong>Mutant files</strong> are <code>scripts/dev/mutants/&lt;area&gt;.toml</code>: the gate ids (<code>[gates]</code>), the files
+  the lint reads (<code>[scope]</code>), and one <code>mutant</code> table per edit — <code>file</code>, <code>anchor</code> (the text to
+  replace; it must occur exactly once), <code>replace</code>, <code>test</code> (test ids), <code>expect_message</code>
+  (substrings the failing run prints) and <code>expect_failures</code> (the exact number of failing tests).</li>
+<li><strong><code>just gate-tags</code></strong> (pre-commit) fails on an untagged die-shaped line, a <code>gate:&lt;id&gt;</code> that no
+  mutant file declares, a declared gate id that no line carries, and a mutant whose anchor does
+  not occur exactly once, is not on a line tagged with its gate id, or names a test that does
+  not exist.</li>
+<li><strong><code>just mutants [area [mutant ...]]</code></strong> (pre-push) copies the tree to a temp dir per mutant —
+  the checkout is never changed — makes the edit and runs the named tests. Each area first
+  prints a CONTROL row: the same tests on an unedited copy, with their exit code and <code>Ran N
+  tests</code> line. A red CONTROL stops the run, because a red run of a mutant only means something
+  when the same tests pass without the edit. Then one row per mutant: <code>killed</code> (the only green
+  result), <code>survived</code>, <code>wrong_failure</code>, or a broken mutant (<code>anchor_missing</code>,
+  <code>anchor_ambiguous</code>, <code>unparsable</code>, <code>run_failed</code>, <code>skipped</code>). <code>python3 scripts/dev/mutants.py
+  list</code> prints every mutant.</li>
+</ul>
+<p>Adding a guard: tag the line <code># gate:&lt;id&gt;</code>, write the test that fails without it, and add the
+mutant that removes exactly that guard; <code>just gate-tags</code> and <code>just mutants &lt;area&gt; &lt;name&gt;</code> show
+that it works.</p>
+<h2 id="layer-2-facade-smoke-gerda-smoke">Layer 2 — facade smoke (<code>./gerda smoke</code>)<a class="headerlink" href="#layer-2-facade-smoke-gerda-smoke" title="Permanent link">&para;</a></h2>
+<p>Some facade methods call raw Java (player sensors via SRG names, eat/respawn on the render
+thread). They can pass the mock suite and still fail in-game on a wrong SRG name or a
+wrong-thread closure. <code>scripts/ops/facade_smoke.py</code> runs the worker's <code>smoke</code> command
+(<code>src/bot/capabilities/diagnostics.ts</code>), which executes those probes in the real worker and
+reports one line per check. It exits non-zero on any failure. Run it when you touch
+<code>src/core/runtime/</code>. <code>--eat</code> also takes one real bite and verifies that food rose. Needs a
+running bot; <code>--port</code> picks one other than the loopback default 55544:</p>
+<div class="highlight"><pre><span></span><code>./gerda smoke --port 55545          # read-only probes, one line per check
+./gerda smoke --port 55545 --json   # the same, machine-readable
+</code></pre></div>
+<h2 id="layer-3-the-arena-gate-just-gate-live">Layer 3 — the arena gate (<code>just gate-live</code>)<a class="headerlink" href="#layer-3-the-arena-gate-just-gate-live" title="Permanent link">&para;</a></h2>
+<p><code>scripts/dev/gate_live.py</code> builds and runs the declarative test <strong>arenas</strong>
+(<code>scenarios/arenas/*.json</code>) against a connected bot and rolls every PASS/FAIL into one exit
+code.</p>
+<div class="highlight"><pre><span></span><code>just gate-live                       # FULL gate: every asserting arena + navigator leg benches
+just gate-live --quick               # the curated 5-arena core, no benches
+just gate-live mine-vein drill-vein  # a named subset (no benches)
+just gate-live --bench-only          # only the navigator leg benches
+python scripts/dev/gate_live.py --port &lt;port&gt; …  # target a specific bot (default 55544; ports: mc-bots.json)
+python scripts/dev/gate_live.py --list           # list arenas/benches + gate status
+</code></pre></div>
+<p>The full gate set is <strong>derived</strong>: every arena whose spec asserts (non-empty <code>expect.events</code>, or
+<code>checks</code>) is gated. Build-only fixtures (<code>bridge-engine</code>, <code>parkour-gap2</code>, <code>mine-down</code>, …) are left out,
+because they would pass trivially. The navigator's movement sub-machines are gated by the
+<strong>leg benches</strong> (<code>scenarios/bench/*.json</code> with <code>legs</code>): each leg is driven through the nav
+probe, and PASS = arrived (one retry allowed, because live physics is noisy). Mission benches
+(<code>drill-throughput</code>, <code>ore-room</code>) measure throughput and stay out of the gate.</p>
+<p>Each arena (spec: <code>scripts/dev/arena.py</code>) builds a structure, kits and teleports the bot,
+starts a mission, and asserts that the expected log events fire with <strong>no
+<code>TRANSITION → ERROR</code></strong> within a timeout. A missing event or an ERROR is a FAIL. <code>gate_live.py</code>
+clears each arena's region afterwards, pass or fail.</p>
+<p>Build and clean each hold a <code>/forceload</code> ticket on the arena's chunks while they write, so an
+arena far from every player (a fresh world, where nobody has been near 0,0) is loaded before the
+first <code>/fill</code>. The ticket is removed when the writes are done.</p>
+<p><strong>Exit codes:</strong> <code>0</code> all passed · <code>1</code> one or more failed · <code>2</code> no verdict: preflight failed (no
+bot on the bridge), or the bridge stopped answering mid-gate. In the second case the summary
+lists the arenas that did not run; check the client's <code>latest.log</code>, then run those by name.</p>
+<p><strong>Give it CPU.</strong> A worker tick that takes seconds (software rendering, a loaded host) makes
+missions time out, and the arenas FAIL for that reason, not for the mission logic. Run the gate
+on a machine with a real GPU or an idle CPU.</p>
+<p><strong>Use an opped test bot.</strong> Arena setup uses operator commands (<code>/fill</code>, <code>/tp</code>, kit items).
+Fleet bots are non-op players, so op a dedicated test bot for the session and de-op it when
+done (<a href="../FLEET_PLAYBOOK/">FLEET_PLAYBOOK</a>). The gate is not meant for headless CI.</p>
+<p><strong>Use a clean sandbox.</strong> Arenas build at fixed world coordinates. On a live world those
+coordinates can land inside terrain or your base, and the bot's world memory (known hazards,
+veins) can change what a mission does. Build a flat test area and run the gate there.</p>
+<p><strong>Check it is the bot, not you.</strong> The default bridge port (55544) can be your own client. The
+preflight prints the connected player name — confirm it is the test bot.</p>
+<h3 id="adding-an-arena">Adding an arena<a class="headerlink" href="#adding-an-arena" title="Permanent link">&para;</a></h3>
+<p>Add <code>scenarios/arenas/&lt;name&gt;.json</code> (ops + <code>mission</code> + <code>expect.events</code>); a non-empty
+<code>expect.events</code> puts it in the full gate. Every key and op, with its default and the code that
+reads it: <a href="../SCENARIOS/">SCENARIOS.md</a>. <code>scenarios/scenario.schema.json</code> holds the shape of every
+scenario file, and <code>scripts/tests/test_scenario_schema.py</code> checks each tracked file against it.</p>
+<p>An arena can also assert game state with no mission: <code>checks</code>, a list of <code>jeval</code> expressions
+with the JSON value each must return. A <code>known_bad</code> arena marks its wrong-on-purpose checks
+<code>"wrong": true</code>: a marked check passes only on a different value from a jeval that succeeded,
+and every other check must pass as usual (no verdict is inverted). This is the mod-testing
+path, with a worked GregTech CEu pair (<code>gtceu-ore-harvest-tier</code> and its known-bad twin):
+<a href="../MOD_TESTING/">MOD_TESTING.md</a>. Add it to <code>CORE</code> in <code>scripts/dev/gate_live.py</code> only
+if it guards a core behaviour that breaks easily (keep <code>--quick</code> small). Arenas must not overlap
+in world space: each <code>build</code> clears only its own region.</p>
+<p><strong>A film set is not an arena.</strong> Staging captured from the live world lives in
+<code>scenarios/sets/&lt;name&gt;.json</code> (no <code>mission</code>/<code>plan</code>/<code>expect</code>, plus a <code>snapshot</code> declaration) and
+is outside the gate. See <a href="../RIG/">RIG.md</a>.</p>
+<p><strong>Assert behaviours, not state-dependent side effects.</strong> <code>expect.events</code> should name events the
+mission emits on every run: <code>ORE_FOUND</code>, <code>DRILL_VEIN_REACHED</code>, <code>GOTO_ARRIVED</code>, <code>PLACE_CELL</code>. Do
+not assert events that depend on accumulated world state or config latches. <code>WAYPOINT</code> is
+deduplicated against existing vein markers within <code>cfg.scan.veinRadius</code>, and <code>VEINS_DEPLETED</code> needs
+the mining slice's <code>exhausted</code> latch plus nearby waypoints. The mock suite covers those. This is
+why <code>mine-vein</code>/<code>drill-vein</code> assert only the mined/reached event.</p>
+<h2 id="navigator-benches">Navigator benches<a class="headerlink" href="#navigator-benches" title="Permanent link">&para;</a></h2>
+<p><code>scripts/dev/navbench.py</code> (<code>./gerda bench</code>) measures the navigator in-game: leg benches for
+arrival and wall-clock ticks, planner A/B (A* vs D* Lite), and whole-mission throughput. See
+<a href="../navbench/">navbench.md</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

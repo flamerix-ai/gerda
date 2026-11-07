@@ -1,0 +1,2168 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-source bot framework for Minecraft on jsMacros, with Gerda Bot — an autonomous GregTech mining fleet — as the reference implementation.">
+      
+      
+      
+        <link rel="canonical" href="https://flamerix-ai.github.io/gerda/RIG/">
+      
+      
+        <link rel="prev" href="../FLEET_PLAYBOOK/">
+      
+      
+        <link rel="next" href="../EXTENDING/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Filming & headless rig - Gerda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#rigmd-booting-bot-clients-off-screen-filming-and-headless-running" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gerda" class="md-header__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gerda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Filming & headless rig
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gerda" class="md-nav__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gerda
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup from zero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PORTABILITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Works on your MC version
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SERVER_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dedicated server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOT_INSTANCE_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bot instances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Gerda works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MOD_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test your mod in a real game
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_YOUR_OWN_BOT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build your own bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MISSIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FLEET_PLAYBOOK/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fleet playbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filming & headless rig
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filming & headless rig
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#shared-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shared topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-filmed-scenes-stage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the filmed scenes stage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capture_rigsh-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        capture_rig.sh flags
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#film-hands-free-capture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Film — hands-free capture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Film — hands-free capture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0-deploy-before-the-camera-boots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. Deploy before the camera boots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-boot-the-worker-and-wait-for-its-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Boot the worker and wait for its bridge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-stage-the-scene" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Stage the scene
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-boot-the-camera-with-a-ready-hook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Boot the camera with a READY hook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-encode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Encode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-verify-and-tear-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Verify and tear down
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camera-posing-aiming-shot-runner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Camera — posing, aiming, shot runner
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Camera — posing, aiming, shot runner">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cinema-commands-extjs-camera-bridge-55546" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cinema commands (ext.js, camera bridge 55546)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shot-runner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shot runner
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#take-acceptance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Take acceptance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#static-hook-shots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Static hook shots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gui-inserts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GUI inserts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shader-camera-instance-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shader camera instance (optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sets-restage-the-world-from-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sets — restage the world from data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edit-cut-list-deliverable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edit — cut list → deliverable
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Edit — cut list → deliverable">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#showcase-and-console-cards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Showcase and console cards
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-one-client-headless-no-camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run — one client, headless, no camera
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relocating-the-scene" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relocating the scene
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXTENDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending Gerda Bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing (3 layers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SCENARIOS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenario files reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAFETY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety tiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IPC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge & IPC contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMMANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge command reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EYES_HANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eyes & hands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navbench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigator benches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_STORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build story
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#shared-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shared topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-filmed-scenes-stage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the filmed scenes stage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capture_rigsh-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        capture_rig.sh flags
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#film-hands-free-capture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Film — hands-free capture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Film — hands-free capture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0-deploy-before-the-camera-boots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. Deploy before the camera boots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-boot-the-worker-and-wait-for-its-bridge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Boot the worker and wait for its bridge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-stage-the-scene" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Stage the scene
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-boot-the-camera-with-a-ready-hook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Boot the camera with a READY hook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-encode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Encode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-verify-and-tear-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Verify and tear down
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camera-posing-aiming-shot-runner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Camera — posing, aiming, shot runner
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Camera — posing, aiming, shot runner">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cinema-commands-extjs-camera-bridge-55546" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cinema commands (ext.js, camera bridge 55546)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shot-runner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shot runner
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#take-acceptance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Take acceptance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#static-hook-shots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Static hook shots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gui-inserts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GUI inserts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shader-camera-instance-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shader camera instance (optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sets-restage-the-world-from-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sets — restage the world from data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edit-cut-list-deliverable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edit — cut list → deliverable
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Edit — cut list → deliverable">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#showcase-and-console-cards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Showcase and console cards
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-one-client-headless-no-camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run — one client, headless, no camera
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relocating-the-scene" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relocating the scene
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="rigmd-booting-bot-clients-off-screen-filming-and-headless-running">RIG.md — booting bot clients off-screen: filming and headless running<a class="headerlink" href="#rigmd-booting-bot-clients-off-screen-filming-and-headless-running" title="Permanent link">&para;</a></h1>
+<p>Two flows over one boot script, <code>scripts/ops/capture_rig.sh</code>:</p>
+<ul>
+<li><strong>Film</strong> — record the bot doing real work (mine → smelt → restock), hands-free.</li>
+<li><strong>Run</strong> — boot one bot client invisibly and drive it over the bridge. No camera.</li>
+</ul>
+<p>Both start Minecraft inside an independent <strong>headless sway</strong> compositor (output <code>HEADLESS-1</code>).
+Nothing appears on your monitor or steals focus. The script's header explains the capture model.
+Two agent skills in Claude Code format, <code>/gerda-film</code> and <code>/gerda-run</code> (<code>.claude/skills/</code>),
+follow this doc.</p>
+<p><strong>Tested on:</strong> Linux, NVIDIA GPU (proprietary driver), sway headless (wlroots) + Xwayland,
+wf-recorder, ffmpeg, FreesmLauncher, Nix. It has run live only on the maintainer's machine.
+Automated checks cover build and <code>just check</code> in a clean container; none boots a client.</p>
+<h2 id="shared-topology">Shared topology<a class="headerlink" href="#shared-topology" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>role</th>
+<th>instance</th>
+<th>account</th>
+<th>bridge</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>worker</td>
+<td><code>Monifactory_bot_1</code></td>
+<td><code>bot_1</code></td>
+<td>55545</td>
+<td>non-op, runs the bundle</td>
+</tr>
+<tr>
+<td>camera</td>
+<td><code>Monifactory_bot_2</code></td>
+<td>your op account</td>
+<td>55546</td>
+<td>op spectator: camera and item source</td>
+</tr>
+<tr>
+<td>camera + shader (optional)</td>
+<td>a copy of the camera instance</td>
+<td>your op account</td>
+<td>the camera's port</td>
+<td>replaces the camera; never boot both</td>
+</tr>
+</tbody>
+</table>
+<p>Examples assume the default assignment (worker 55545, camera 55546); substitute the ports
+<code>mc-bots.json</code> gave your instances.</p>
+<ul>
+<li><strong>Ports</strong> come from the machine-local <code>mc-bots.json</code> (gitignored); <code>just sync</code> keeps an
+  instance's existing port. Verify after every sync: the file is
+  <code>&lt;instanceDir&gt;/minecraft/config/jsMacros/Macros/bridge_port.txt</code>, a <code>mc_bridge_port</code> GlobalVar
+  overrides it, and on a running client <code>python3 scripts/ops/bridge_ctl.py --port &lt;port&gt;
+  bridge_diag</code> reports the live value (it answers even when main is deaf). Machine state files
+  (<code>mc-bots.json</code>, <code>mc-tasks.json</code>, <code>local.config.json</code>) resolve from <code>git rev-parse
+  --git-common-dir</code> (<code>scripts/machine_root.py</code>), so every worktree shares one registry;
+  <code>--separate-git-dir</code> clones are unsupported.</li>
+<li><strong>Names</strong> come from <code>local.config.json</code> (copy the <code>.example</code>; env vars win):
+  <code>cameraAccountName</code> / <code>MC_CAMERA_ACCOUNT_NAME</code> is the op camera account
+  (<code>python3 scripts/local_config.py camera_account_name</code>); <code>serverRoot</code> / <code>MC_SERVER_ROOT</code> locates
+  the server (<code>python3 scripts/local_config.py server_dir</code>, see <a href="../SERVER_SETUP/">SERVER_SETUP.md</a>).
+  The demo scripts refuse to run without them.</li>
+<li><strong>Server:</strong> <code>"$(python3 scripts/local_config.py server_ctl)" {start|status|cmd "&lt;console&gt;"|log}</code>
+  — always day, peaceful, offline mode, <code>localhost:25565</code>. The console has full op authority.</li>
+<li><strong>The bot plays like a real player:</strong> no cheats; its only server privilege is teleport. What
+  the filmed scenes hand it and reset around it is listed in
+  <a href="#what-the-filmed-scenes-stage">What the filmed scenes stage</a>.</li>
+<li><strong>Devshell:</strong> boot and record commands run under <code>nix develop .#capture -c …</code> (sway, Xwayland,
+  wf-recorder, ffmpeg, grim, fontconfig, python3). <code>freesmlauncher</code> must be on <code>PATH</code>. Bridge
+  driving is plain <code>python3</code>.</li>
+<li><strong>Boot serially.</strong> Two modded clients booting at once deadlock mod loading. Worker first, wait
+  for its bridge, then the camera.</li>
+<li><strong>Co-launch guard.</strong> A same-name login kicks whoever holds the account, so <code>capture_rig.sh</code>
+  refuses to launch while another launcher client runs. Booting the camera over your own worker
+  needs <code>ALLOW_CONCURRENT=1</code>.</li>
+</ul>
+<h2 id="what-the-filmed-scenes-stage">What the filmed scenes stage<a class="headerlink" href="#what-the-filmed-scenes-stage" title="Permanent link">&para;</a></h2>
+<p>The filmed scenes are staged. Scripts, the server console and the op camera build each scene,
+supply the bot and reset the scene between laps. Once a mission or plan runs, the bot's moves are
+its own.</p>
+<p>No <code>/give</code> targets the bot. Every item it is handed goes the same way: the server console gives
+it to the op camera account, the camera drops it, and the bot picks it up.</p>
+<ul>
+<li><strong>Sets.</strong> The server console builds the sustain-loop stage (<code>sustain_live.py build</code>). The
+  other sets were built live (console fills) and later captured as data; <code>arena.py build</code>
+  restages them (see § Sets below).</li>
+<li><strong>Position.</strong> The shot list's <code>console</code> lines teleport the bot into place for <code>01_clutch</code>,
+  <code>02a_prospect</code> and <code>05_economy</code> (<code>scenarios/shots/teaser.json</code>).</li>
+<li><strong>Stage seal</strong> (sustain loop). <code>sustain_live.py build</code> also makes the stage floor bedrock and
+  lays a ring of invisible barrier blocks around it, so the bot cannot dig a pit or walk off,
+  and it empties the bot's cached prospect veins so that the plan does not walk to a far vein.
+  <code>sustain_live.py storage</code> places the deposit chest and registers it with the bot
+  (<code>storage_add</code>).</li>
+<li><strong>Starter kit</strong> (sustain loop). The camera gets 32 coal, 32 cobblestone and 1 crafting table
+  and drops them; a console <code>tp @e[type=item]</code> moves the dropped items onto the bot
+  (<code>sustain_live.py supply</code>). Film staging only — fleet play never hands the bot items (see
+  <a href="../FLEET_PLAYBOOK/#1-the-server-and-how-the-bots-play-read-first">FLEET_PLAYBOOK § 1</a>).</li>
+<li><strong>Pickaxe</strong> (sustain loop). The bot's diamond pickaxe came the same way, as a manual step
+  before filming; no script does it. The plan crafts only the spare
+  (<code>src/bot/plans/sustain-cycle.ts</code>).</li>
+<li><strong>Between laps</strong> (sustain loop). Each lap (driven by <code>sustain_live.py loop</code>) aborts the
+  plan, replaces the three furnaces with empty ones, refills the 25-block iron-ore patch, teleports the bot back to
+  (3, 101, 1) and fills the two outer furnaces with console data so that they glow. The bot loads
+  only the centre furnace. Each lap ends by restarting the plan; <code>loop</code> waits <code>LAP_DWELL_S</code>
+  seconds after each lap.</li>
+<li><strong>Vein shot</strong> (<code>03_vein</code>). The bot mines a built room lined with iron ore and lit by invisible
+  light blocks (set <code>03_ore_chamber</code>).</li>
+<li><strong>Shaft shot</strong> (<code>02b_shaft</code>). The vein is chosen in advance; for the filmed take the marker was
+  edited by hand. On a restage, the <code>marker</code> op of set <code>03_ore_chamber</code> writes an
+  iron vein on column (-343, -70) into the world store of the instance in <code>MC_INST</code> (the bot's
+  instance, see § Sets), so <code>drill</code> sinks its shaft there, through natural rock into the ore room.</li>
+<li><strong>Clutch shot</strong> (<code>01_clutch</code>). The water bucket came the same way, as a manual step; the shot
+  list notes it, and no script runs it. <code>scripts/demo/walk_off.sh</code> presses the forward key for
+  500 ms to step the bot off the ledge. The water placement and the scoop back are the bot's
+  reflex.</li>
+</ul>
+<p>The teaser caption "Every block earned — no /give, no cheats" describes the bot: no <code>/give</code>
+targets it, and it runs no cheat command. "Every block earned" is not literal: the kit's
+cobblestone and crafting table were dropped to the bot, and the console places and refills the
+ore it mines in the sustain loop. The scene around the bot is staged as listed here.</p>
+<h2 id="capture_rigsh-flags"><code>capture_rig.sh</code> flags<a class="headerlink" href="#capture_rigsh-flags" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>-a account  -l instance   FreesmLauncher profile + instance dir (required)
+-s host:port              join a server after boot (else title screen)
+-R WxH                    headless resolution (default 1920x1080, always @60Hz)
+-c codec                  encoder (default libx264; h264_nvenc only once NVENC works on your driver)
+-o out.mp4  -t seconds    record file / duration (0 = until client exit or Ctrl-C)
+-H "cmd"                  READY hook, run once before recording
+-K                        boot and keep alive; do not record
+-P                        use the capture options profile; restore the playing one on exit
+</code></pre></div>
+<p><code>-P</code> swaps <code>options.txt</code> for the recording profile: no view bob, no FOV pulse, no screen warp,
+gamma 1.0, FOV about 90, render distance 16, <code>enableVsync:false</code>. Use it on the camera for every
+take. A failed swap is fatal. <code>scripts/rig/teardown.sh</code> also restores the profile, so a client
+killed from outside does not stay on it.</p>
+<p>The <code>-H</code> hook gets <code>CAM_WAYLAND</code> (the camera's sway display), <code>CAM_SWAYSOCK</code>, <code>CAM_XDISPLAY</code>,
+<code>MC_INSTANCE</code> and <code>MC_LOG</code>. A hook failure is a warning.</p>
+<hr />
+<h2 id="film-hands-free-capture">Film — hands-free capture<a class="headerlink" href="#film-hands-free-capture" title="Permanent link">&para;</a></h2>
+<h3 id="0-deploy-before-the-camera-boots">0. Deploy before the camera boots<a class="headerlink" href="#0-deploy-before-the-camera-boots" title="Permanent link">&para;</a></h3>
+<p>A sync rewrites the service files in every instance; jsMacros restarts them, and the camera's
+per-frame Forge listener (from <code>harness/ext.js</code>) cannot be unregistered, so the camera crashes.
+<strong>Deploy first, boot the camera second.</strong> If the camera is already up:</p>
+<div class="highlight"><pre><span></span><code>./gerda sync --skip &lt;camera-instance&gt;     # or: just sync --skip &lt;camera-instance&gt;
+</code></pre></div>
+<p><code>--skip</code> is repeatable, excludes the instance from bundle, services and <code>bridge_port.txt</code>, and
+errors on an unknown name. The worker tolerates a live sync.</p>
+<h3 id="1-boot-the-worker-and-wait-for-its-bridge">1. Boot the worker and wait for its bridge<a class="headerlink" href="#1-boot-the-worker-and-wait-for-its-bridge" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>nix develop .#capture -c scripts/ops/capture_rig.sh \
+  -a bot_1 -l Monifactory_bot_1 -s localhost:25565 -K &amp;
+python3 scripts/ops/bridge_ctl.py --port 55545 --wait-ready 90 status
+</code></pre></div>
+<p><code>--wait-ready</code> retries until <code>status</code> answers. <code>--wait</code> only waits for the port to open (the bridge
+listens from the title screen but answers only in-world), and <code>--timeout</code> does not wait at all. For
+a guaranteed in-world state, check that <code>get_state</code> reports a position.</p>
+<h3 id="2-stage-the-scene">2. Stage the scene<a class="headerlink" href="#2-stage-the-scene" title="Permanent link">&para;</a></h3>
+<p><code>scripts/demo/sustain_live.py</code> builds the <code>sustain-cycle</code> arena through the server console:</p>
+<div class="highlight"><pre><span></span><code>python3 scripts/demo/sustain_live.py build     # floor + 25-block ore patch + 3 furnaces, sealed; clears prospect cache
+python3 scripts/demo/sustain_live.py supply    # drop coal/cobble/table for the bot — needs the camera on 55546
+python3 scripts/demo/sustain_live.py storage   # place + register the deposit chest — after supply
+</code></pre></div>
+<p>Order: <code>build</code>, boot the camera (step 3), then <code>supply</code> and <code>storage</code> (the step 3 hook runs
+them). <code>supply</code> acts through the op player on <code>CAM_PORT</code> (55546, or <code>SHOOT_CAM_PORT</code>); <code>storage</code>
+places the chest from the console and registers it over the bot's bridge. The sealed floor and barrier walls keep the bot
+in the arena; the cleared cache makes a mined-out patch return <code>PROSPECT_EMPTY</code> at once. <code>loop</code>
+re-arms the patch every 30 s.</p>
+<h3 id="3-boot-the-camera-with-a-ready-hook">3. Boot the camera with a READY hook<a class="headerlink" href="#3-boot-the-camera-with-a-ready-hook" title="Permanent link">&para;</a></h3>
+<p><code>$RIG_TMP</code> is any scratch dir (<code>export RIG_TMP=$(mktemp -d)</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># $RIG_TMP/film_hook.sh</span>
+<span class="nb">set</span><span class="w"> </span>-e
+<span class="nb">cd</span><span class="w"> </span>&lt;repo&gt;
+python3<span class="w"> </span>scripts/demo/sustain_live.py<span class="w"> </span><span class="nb">wait</span><span class="w">       </span><span class="c1"># hook fires at the title menu: block until in-world</span>
+python3<span class="w"> </span>scripts/demo/sustain_live.py<span class="w"> </span>supply<span class="w">     </span><span class="c1"># kit drop — puts the camera in survival on the bot</span>
+python3<span class="w"> </span>scripts/demo/sustain_live.py<span class="w"> </span>storage<span class="w">    </span><span class="c1"># place + register the deposit chest</span>
+python3<span class="w"> </span>scripts/demo/sustain_live.py<span class="w"> </span>frame<span class="w">      </span><span class="c1"># LAST: camera pose + spectator + HUD off</span>
+<span class="nv">WAYLAND_DISPLAY</span><span class="o">=</span><span class="nv">$CAM_WAYLAND</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="nv">ON_START</span><span class="o">=</span><span class="s2">"python3 scripts/demo/sustain_live.py loop 3 &amp;"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>scripts/rig/record.sh<span class="w"> </span><span class="s2">"</span><span class="nv">$RIG_TMP</span><span class="s2">/sustain_raw.mp4"</span><span class="w"> </span><span class="m">150</span><span class="w"> </span>HEADLESS-1<span class="w"> </span><span class="m">60</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>ALLOW_CONCURRENT=1 nix develop .#capture -c scripts/ops/capture_rig.sh \
+  -a "$(python3 scripts/local_config.py camera_account_name)" -l Monifactory_bot_2 -s localhost:25565 \
+  -K -t 170 -H "bash $RIG_TMP/film_hook.sh"
+</code></pre></div>
+<ul>
+<li><strong>Use <code>-K</code>.</strong> <code>record.sh</code> in the hook owns the recording; without <code>-K</code> a second recorder starts
+  and its frame guard kills the keep-alive.</li>
+<li><strong><code>wait</code> is the hook's first line.</strong> The hook runs before the camera's bridge listens; without it
+  <code>supply</code> and <code>frame</code> get <code>Connection refused</code>.</li>
+<li><strong><code>frame</code> runs after <code>supply</code>.</strong> <code>supply</code> switches the camera to survival and moves it onto the
+  bot to drop the kit; <code>frame</code> puts it back in spectator at its pose. In the other order the take
+  records from the bot's spawn cell.</li>
+<li><strong><code>record.sh</code> runs wf-recorder with <code>-D</code></strong>, so a static scene still records at a constant frame
+  rate. If its frame guard fires anyway, the output is stuck: check <code>swaymsg -t get_outputs</code> (dead
+  sway, wrong output name, mode not @60Hz).</li>
+</ul>
+<h3 id="4-encode">4. Encode<a class="headerlink" href="#4-encode" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>nix develop .#capture -c scripts/rig/encode.sh "$RIG_TMP/sustain_raw.mp4" release/gerda_sustain_demo.mp4
+</code></pre></div>
+<p>h264, crf 20, preset slow, +faststart, no audio. A trailing <code>1440</code>/<code>1080</code>/<code>720</code> downscales.
+<code>release/</code> is gitignored.</p>
+<h3 id="5-verify-and-tear-down">5. Verify and tear down<a class="headerlink" href="#5-verify-and-tear-down" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>ffprobe</code> the encode and extract a few frames (<code>ffmpeg -ss &lt;t&gt; -i out.mp4 -frames:v 1 f.png</code>):
+  bot mining, furnace lit, bot hauling to the chest.</li>
+<li>Check motion with <code>scripts/rig/motion_probe.py</code> (§ Take acceptance).</li>
+<li><code>scripts/rig/teardown.sh Monifactory_bot_1 Monifactory_bot_2</code> — kills the clients, leaves server
+  and compositor up, restores any capture profile.</li>
+</ul>
+<hr />
+<h2 id="camera-posing-aiming-shot-runner">Camera — posing, aiming, shot runner<a class="headerlink" href="#camera-posing-aiming-shot-runner" title="Permanent link">&para;</a></h2>
+<h3 id="cinema-commands-extjs-camera-bridge-55546">Cinema commands (ext.js, camera bridge 55546)<a class="headerlink" href="#cinema-commands-extjs-camera-bridge-55546" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>command</th>
+<th>args</th>
+<th>effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cam_pose</code></td>
+<td><code>x,y,z,yaw?,pitch?,spectator?</code></td>
+<td>teleport the camera (<code>/tp</code>, optional <code>/gamemode spectator</code>)</td>
+</tr>
+<tr>
+<td><code>cam_aim</code></td>
+<td><code>yaw,pitch,roll?,smooth?</code></td>
+<td>set target angles; the per-frame hook eases toward them</td>
+</tr>
+<tr>
+<td><code>cam_look_at</code></td>
+<td><code>x,y,z,smooth?</code></td>
+<td>aim at a world point</td>
+</tr>
+<tr>
+<td><code>cam_free</code></td>
+<td>—</td>
+<td>release the hook</td>
+</tr>
+<tr>
+<td><code>cam_spectate</code></td>
+<td><code>target?</code></td>
+<td><code>/spectate &lt;player&gt;</code>; no arg releases</td>
+</tr>
+<tr>
+<td><code>cam_hud</code></td>
+<td><code>hide?</code></td>
+<td>toggle <code>Options.hideGui</code> (F1)</td>
+</tr>
+<tr>
+<td><code>cam_state</code></td>
+<td>—</td>
+<td>mode, hooked, frame count, angles, last error</td>
+</tr>
+</tbody>
+</table>
+<p>Scripted rotation is applied per tick and vanilla does not interpolate it, so the camera uses a
+Forge <code>ViewportEvent.ComputeCameraAngles</code> listener that eases angles every frame. From GraalJS,
+register with the explicit overload <code>addListener(priority, receiveCancelled, EventClass, consumer)</code>
+and wrap floats in <code>Math.fround</code>. <strong>Liveness:</strong> <code>cam_state.frames</code> climbs at about 60/s. 20/s means
+a tick fallback; 0 means the hook never registered (see <code>cam_state.error</code>).</p>
+<h3 id="shot-runner">Shot runner<a class="headerlink" href="#shot-runner" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>python3 scripts/demo/shoot.py list  scenarios/shots/teaser.json               # list shots
+python3 scripts/demo/shoot.py pose  scenarios/shots/teaser.json 05_economy    # frame only
+just shoot 05_economy                                                         # roll one or more ids
+SHOTLIST=scenarios/shots/other.json just shoot 03_vein                        # another shot list
+</code></pre></div>
+<p>A shot declares camera pose, optional <code>track</code> (aim at the bot about 4×/s), console staging, bot
+command and duration. <code>shoot.py</code> poses, drives, records and writes <code>&lt;out_dir&gt;/&lt;id&gt;.mp4</code>. It boots
+nothing: bring up the worker and the camera (<code>-K</code>, camera with <code>-P</code>) first. A shot whose staging
+fails is skipped.</p>
+<ul>
+<li><strong>Roll with <code>just shoot</code>.</strong> It runs inside the capture devShell and finds the camera's display
+  from the client on the camera port (<code>SHOOT_CAM_PORT</code>, default 55546). <code>CAM_WAYLAND=wayland-N</code>
+  pins it (still verified). Every miss exits non-zero before staging.</li>
+<li><strong>A take counts only if ffprobe opens it</strong> and its duration is at least 0.8 × the shot's
+  <code>seconds</code> (<code>MIN_TAKE_RATIO</code>). <code>record.sh</code> fails the take on any recorder error (135 = SIGBUS,
+  137 = SIGKILL). File size is never the verdict.</li>
+<li><strong>Open-world shots</strong> (<code>teaser.json</code> 01–04) have no camera coords. Fly the camera, screenshot,
+  write the pose into the JSON, <code>pose</code> to confirm, then roll. Read the camera's screenshot from its
+  own instance: <code>MC_INST=&lt;instances&gt;/Monifactory_bot_2/minecraft python3 scripts/ops/mc_shot.py
+  --file -s 0.4</code>. Without <code>MC_INST</code>, <code>mc_shot.py</code> reads the human instance.</li>
+</ul>
+<h3 id="take-acceptance">Take acceptance<a class="headerlink" href="#take-acceptance" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>python3 scripts/rig/motion_probe.py take.mp4                                   # full frame
+python3 scripts/rig/motion_probe.py take.mp4 --crop 780,420,360x360            # around the bot
+python3 scripts/rig/motion_probe.py take.mp4 --in 20.6 --out 24.2              # only the used range
+python3 scripts/rig/motion_probe.py take.mp4 --crop 780,420,360x360 --max-static 2.0   # as a gate
+python3 scripts/rig/motion_probe.py 01_clutch.mp4 --in 3.2 --out 5.3 --preset static-hook
+./gerda motion-probe take.mp4 --json
+</code></pre></div>
+<p><code>motion_probe.py</code> measures the mean absolute difference (MAD) between neighbouring downsampled
+frames and prints live windows, static runs and the longest freeze. <code>--max-static N</code> gates on the
+longest freeze: exit 1 = fail, exit 2 = could not measure.</p>
+<ul>
+<li><strong>Run it twice:</strong> full frame (does the world move?) and <code>--crop</code> around the bot (does the bot
+  move?). Crop coords are source pixels.</li>
+<li><strong>Read <code>duty</code></strong> — the share of live samples. The gate sees only the longest freeze, so a take of
+  short blinks passes it. Duty is reported, never gated.</li>
+<li><strong>Measure the used range</strong> with <code>--in</code>/<code>--out</code>; timestamps stay absolute. A range that is empty,
+  inverted or not fully inside the file exits 2, and the message says whether the take is short or
+  the container's <code>start_time</code> is offset (then subtract it or re-mux). The last ~0.2 s of a range
+  (2/<code>--fps</code>) carries no measurement.</li>
+<li><strong>A short take plays fast.</strong> wf-recorder writes 60 fps timestamps, so a recorder that falls
+  behind yields a shorter, sped-up file. The 0.8 duration floor is the only detector. A healthy
+  take is 3.5–4 s longer than <code>seconds</code>.</li>
+</ul>
+<p>Read duty relatively; there is no absolute floor. For reference, these values come from the
+maintainer's teaser takes: accepted segments of <code>scenarios/shots/teaser_cut.json</code> span 0–74 %
+(defaults, full frame), for example:</p>
+<table>
+<thead>
+<tr>
+<th>segment</th>
+<th>take</th>
+<th>in–out</th>
+<th>duty</th>
+<th>longest static</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>economy_mine</code></td>
+<td>05_economy</td>
+<td>20.6–24.2</td>
+<td>74.3 %</td>
+<td>0.6 s</td>
+</tr>
+<tr>
+<td><code>climb</code></td>
+<td>04_nav</td>
+<td>0.6–5.8</td>
+<td>56.9 %</td>
+<td>0.1 s</td>
+</tr>
+<tr>
+<td><code>vein</code></td>
+<td>03_vein</td>
+<td>6.0–60.0</td>
+<td>10.4 %</td>
+<td>18.0 s</td>
+</tr>
+<tr>
+<td><code>hook_clutch</code></td>
+<td>01_clutch</td>
+<td>3.2–5.3</td>
+<td>0.0 %</td>
+<td>2.0 s</td>
+</tr>
+</tbody>
+</table>
+<p>Static shots (in-pit camera, GUI insert, timelapse) read 0.0 % by design. Judge a take against a
+comparable reference — the same shot's good take, or its crop run. (A maintainer-only test pins
+these rows against the original footage; it skips without it.)</p>
+<p><strong>Driver log.</strong> A shot's <code>during</code> command logs to <code>&lt;out_dir&gt;/&lt;id&gt;.during.log</code>. <code>sustain_live.py</code>
+writes a plan witness per lap (<code>STARTED</code> / <code>UNKNOWN_PLAN</code> / <code>no-evidence</code>) and a <code>mission_status</code>
+line every 10 s, read from the worker journal
+<code>&lt;instances&gt;/Monifactory_bot_1/minecraft/config/jsMacros/Macros/miner.ndjson</code>
+(<code>MC_WORKER_JOURNAL</code> overrides). The probe says when the picture froze; the log says why.</p>
+<h3 id="static-hook-shots">Static hook shots<a class="headerlink" href="#static-hook-shots" title="Permanent link">&para;</a></h3>
+<p>A static hook is a still camera around one brief event: the <code>01_clutch</code> water clutch, about 0.3 s
+of motion in the 3.2–5.3 cut. The defaults miss it. <code>--preset static-hook</code> uses measured values
+and gates on the event:</p>
+<table>
+<thead>
+<tr>
+<th>knob</th>
+<th>preset</th>
+<th>default</th>
+<th>why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--thresh</code></td>
+<td>0.3</td>
+<td>1.0</td>
+<td>well above dead-footage noise, well below the event's motion</td>
+</tr>
+<tr>
+<td><code>--min-live</code></td>
+<td>0.2 s</td>
+<td>0.5 s</td>
+<td>2 samples; a brief event holds about 3</td>
+</tr>
+<tr>
+<td>gate</td>
+<td><code>--min-windows 1</code></td>
+<td>—</td>
+<td>on a still shot the question is "did the event happen"</td>
+</tr>
+<tr>
+<td><code>--fps</code> / <code>--scale</code> / <code>--bridge</code></td>
+<td>10 / 192x108 / 0.5</td>
+<td>same</td>
+<td>calibration values</td>
+</tr>
+</tbody>
+</table>
+<p>The preset runs full frame; <code>--crop</code> is refused (exit 2). An explicit sensitivity flag overrides it
+with a <code>WARN</code>. On the maintainer's takes, the preset finds the clutch as one live window and fails
+both the clutch's dead tail and a parked-bot shot; the defaults find no window in any of them.</p>
+<p>Limit: a single odd frame yields two MADs, which 0.2 s accepts; the threshold guards against it.</p>
+<h3 id="gui-inserts">GUI inserts<a class="headerlink" href="#gui-inserts" title="Permanent link">&para;</a></h3>
+<p>wf-recorder records an output, not a window. To film the bot's own GUI (<code>02a_prospect</code>), make the
+bot's window fullscreen on the shared output:</p>
+<div class="highlight"><pre><span></span><code>scripts/rig/fullscreen.sh --list                 # MC windows, instances, outputs
+scripts/rig/fullscreen.sh Monifactory_bot_1      # bot's screen is recorded
+scripts/rig/fullscreen.sh Monifactory_bot_2      # camera back
+</code></pre></div>
+<p><code>SWAYSOCK</code> (or <code>CAM_SWAYSOCK</code>) pins one compositor. Needs the capture devShell.</p>
+<h3 id="shader-camera-instance-optional">Shader camera instance (optional)<a class="headerlink" href="#shader-camera-instance-optional" title="Permanent link">&para;</a></h3>
+<p>A shader camera is not required. To film with shaders:</p>
+<ol>
+<li>Copy the camera instance to a new instance. Name it <code>Monifactory_cam_shader</code> and
+   <code>./gerda bind-accounts</code> gives it the camera's account; under any other name, set the
+   account yourself.</li>
+<li>Add Oculus to its <code>mods/</code> and a shaderpack to its <code>shaderpacks/</code>, and enable the pack in
+   <code>config/oculus.properties</code> (<code>shaderPack=…</code>, <code>enableShaders=true</code>).</li>
+<li>
+<p>Give it the camera's account and bridge port (set its <code>port</code> in <code>mc-bots.json</code> to the
+   camera's). It replaces the camera: never boot both, and pass <code>--skip &lt;shader-instance&gt;</code> to a
+   sync while it runs.</p>
+</li>
+<li>
+<p>Keep <code>enableVsync:false</code> (every rig instance): with vsync on, an off-screen window stops rendering.</p>
+</li>
+<li>Read the frame rate: <code>python3 scripts/ops/bridge_ctl.py --port &lt;camera-port&gt; send jeval
+  '{"code":"Client.getMinecraft()[srg(\"Minecraft\",\"getFps\")]()"}'</code>.</li>
+<li>Screenshots: <code>MC_INST=&lt;instances&gt;/&lt;shader-instance&gt;/minecraft python3 scripts/ops/mc_shot.py --file -s 0.4</code>.</li>
+</ol>
+<hr />
+<h2 id="sets-restage-the-world-from-data">Sets — restage the world from data<a class="headerlink" href="#sets-restage-the-world-from-data" title="Permanent link">&para;</a></h2>
+<p>A film set is staged scenery stored as data: the arena spec format without a mission.</p>
+<div class="highlight"><pre><span></span><code>scenarios/arenas/&lt;name&gt;.json   ops + mission + expect   → `just gate-live` runs these
+scenarios/sets/&lt;name&gt;.json     ops + snapshot, no mission → staging only, never in the gate
+</code></pre></div>
+<p>Shipped sets: <code>03_ore_chamber</code> (shots 03_vein, 02b_shaft; carries the drill <code>marker</code>), <code>04b_gap</code>
+(shot 04b), <code>02_mesa_clutch</code> (shot 01_clutch). A set that declares <code>mission</code>/<code>plan</code>/<code>expect</code> is
+refused.</p>
+<div class="highlight"><pre><span></span><code>python3 scripts/dev/arena.py list                                          # arenas + sets
+python3 scripts/dev/arena.py snapshot sets/03_ore_chamber --port 55546     # live world → ops
+python3 scripts/dev/arena.py build    sets/03_ore_chamber --port 55546     # data → world
+python3 scripts/dev/arena.py clean    sets/03_ore_chamber --port 55546     # back to air
+</code></pre></div>
+<ul>
+<li><strong>Keys:</strong> <a href="../SCENARIOS/#film-sets">SCENARIOS.md § Film sets</a>.</li>
+<li><strong>Always pass <code>--port</code>.</strong> The default, 55544, is the human's instance.</li>
+<li><strong>Spec shape.</strong> <code>snapshot.boxes</code> is the input; <code>ops_generated</code> is written by <code>snapshot</code> — never
+  by hand. Hand-written setup (<code>marker</code>, <code>give</code>, <code>player</code>, <code>select</code>, <code>wait</code>) goes in <code>ops</code>.
+  <code>build</code> applies <code>ops_generated</code>, then <code>ops</code>.</li>
+<li><strong>Snapshot before you change the world</strong>; a set restores only what was captured. Capture is 1:1
+  including air, by block id only: stairs and slabs restage in default orientation, so put them
+  in <code>ops</code>. Oversized boxes, bad reads, unloaded chunks and builds over 2000 ops abort.</li>
+<li><strong><code>build</code> needs an op client</strong> (chat <code>/fill</code>, <code>/setblock</code>): drive it from the camera, or op a test
+  bot for the session and de-op after. It re-reads a sub-box and aborts on a mismatch.</li>
+<li><strong><code>snapshot</code> needs loaded chunks, no fluids in the box</strong> (a fluid restages as a permanent
+  source), and stamps the dimension; <code>build</code> refuses a client in another dimension.</li>
+<li><strong><code>marker</code> writes the world store of the instance in <code>MC_INST</code></strong> (default: human). For a drill
+  target: <code>MC_INST=&lt;instances&gt;/Monifactory_bot_1/minecraft python3 scripts/dev/arena.py build
+  sets/03_ore_chamber --port 55546</code>.</li>
+</ul>
+<hr />
+<h2 id="edit-cut-list-deliverable">Edit — cut list → deliverable<a class="headerlink" href="#edit-cut-list-deliverable" title="Permanent link">&para;</a></h2>
+<p><code>scenarios/shots/&lt;name&gt;.json</code> is the shoot half; <code>&lt;name&gt;_cut.json</code> is the edit half (take, in/out,
+speed, reason). <code>scripts/rig/assemble.py</code> cuts the film in one ffmpeg call:</p>
+<div class="highlight"><pre><span></span><code>python3 scripts/rig/assemble.py scenarios/shots/teaser_cut.json --dry-run     # command + durations
+python3 scripts/rig/assemble.py scenarios/shots/teaser_cut.json               # cut it
+python3 scripts/rig/assemble.py scenarios/shots/teaser_cut.json --only vein,finale
+</code></pre></div>
+<p>Segments are trimmed (optional <code>speed</code>, per-segment <code>filters</code>), normalised to the list's
+<code>width</code>/<code>height</code>/<code>fps</code>, concatenated and faded, with <code>encode.sh</code>'s delivery settings. A missing
+take, an <code>out</code> past the source, <code>out &lt;= in</code>, an unknown <code>--only</code> id or a bad <code>speed</code> aborts.</p>
+<p><strong>Captions</strong> (<code>captions.cues[]</code>) anchor to a segment (<code>seg</code>, <code>at</code>/<code>dur</code> in output seconds). Layers:
+<code>label</code> (caps tag, top left) and <code>line</code> (narrative, bottom third). They render to <code>&lt;out&gt;.en.ass</code>
+and are burned in. Readability limits live in <code>assemble.py</code> (<code>MIN_HOLD_S</code>, <code>MAX_LINE</code>, <code>MAX_CPS</code>)
+and abort the cut. Write a segment's speed as <code>{speed}</code>, not a typed <code>3×</code>; write sizes unspaced
+(<code>3×3</code>). Fonts must resolve in <code>fc-match</code>.</p>
+<p><strong>Measure every <code>in</code>/<code>out</code> on the take</strong> (<code>ffmpeg -ss &lt;t&gt; -i take.mp4 -frames:v 1 f.png</code>, or the
+static runs from <code>motion_probe.py</code>) and put the reason in the segment's <code>note</code>.</p>
+<h3 id="showcase-and-console-cards">Showcase and console cards<a class="headerlink" href="#showcase-and-console-cards" title="Permanent link">&para;</a></h3>
+<p><code>scenarios/shots/showcase.json</code> and <code>showcase_cut.json</code> are a second shoot/edit pair: one
+goal-driven chain from a worn stone pickaxe to a crafted iron one, then the live gate. Its
+<code>in</code>/<code>out</code> values are placeholders until the takes are measured, and its <code>_doc</code> blocks list the
+shoot-day order and the poses still to measure. The two console inserts are takes rendered by
+<code>scripts/rig/console_card.py</code> from <code>scenarios/shots/cards/*.json</code> at the cut's size and fps. A
+number that only a run can give is a <code>&lt;FILL:name&gt;</code> token copied from that run: a render with an
+unfilled token aborts, and <code>--draft</code> previews the layout. The gate card is the literal all-PASS
+summary of the default gate set. It carries <code>from_log</code>, so its render needs <code>--log</code> with the log
+of a real run and refuses unless that log prints the same lines, the <code>[gate] N/M passed</code> line
+included. The script's docstring holds the spec schema; it needs the
+capture devShell (ffmpeg, fontconfig).</p>
+<hr />
+<h2 id="run-one-client-headless-no-camera">Run — one client, headless, no camera<a class="headerlink" href="#run-one-client-headless-no-camera" title="Permanent link">&para;</a></h2>
+<p>Commands and missions: <a href="../FLEET_PLAYBOOK/">FLEET_PLAYBOOK.md</a>, <a href="../EXTENDING/">EXTENDING.md</a>.</p>
+<p>Run the launcher once with a display first and finish its first-run wizard (language,
+account). A headless launch stops on that wizard and never boots the game; under a <code>C</code> locale
+the language page comes back every start until <code>Language=en_US</code> is set in the launcher's
+<code>freesmlauncher.cfg</code>.</p>
+<div class="highlight"><pre><span></span><code># boot one client, keep-alive, no recording (drop -s for single-player)
+nix develop .#capture -c scripts/ops/capture_rig.sh -a bot_1 -l Monifactory_bot_1 -s localhost:25565 -K &amp;
+python3 scripts/ops/bridge_ctl.py --port 55545 --wait-ready 120 status
+
+# drive it (or the `mc` MCP tools: mc_get_state / mc_send / mc_fleet_*)
+python3 scripts/ops/bridge_ctl.py --port 55545 get_state
+python3 scripts/ops/bridge_ctl.py --port 55545 send mission_start '{"name":"mine"}'   # or plan_start '{"name":"sustain-cycle"}'
+
+# see its screen, read from THAT instance
+python3 scripts/ops/bridge_ctl.py --port 55545 send screenshot
+MC_INST=$(python3 scripts/local_config.py instances_root)/Monifactory_bot_1/minecraft \
+  python3 scripts/ops/mc_shot.py --file -s 0.4
+
+scripts/rig/teardown.sh Monifactory_bot_1
+</code></pre></div>
+<p><code>get_logs</code> tails a file. For live progress read the worker journal (<code>…/Macros/miner.ndjson</code>) and
+check its mtime.</p>
+<hr />
+<h2 id="rules">Rules<a class="headerlink" href="#rules" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Capture through headless sway.</strong> gamescope → PipeWire records black on the NVIDIA driver.</li>
+<li><strong>Run the client under Xwayland.</strong> The modded client crashes on native Wayland.</li>
+<li><strong>The headless output must be <code>@60Hz</code></strong>, or it emits no frame callbacks and records one frame.</li>
+<li><strong>Never <code>pkill -f</code> / <code>pgrep -f</code> an instance name</strong> — it matches your own shell and kills it
+  (exit 144). Use <code>scripts/rig/teardown.sh</code>. To list or count clients use
+  <code>scripts/rig/mc_clients.sh [instance]</code> (<code>… | grep -c .</code> counts).</li>
+<li><strong>Furnace input caps at 64</strong>; smelt-load fails if it cannot load the whole stack.
+  <code>sustain_live.py loop</code> empties each furnace per lap.</li>
+<li><strong>Hide the HUD on the camera</strong>; <code>sustain_live.py frame</code> does it and warns loudly if it cannot.</li>
+</ul>
+<h2 id="relocating-the-scene">Relocating the scene<a class="headerlink" href="#relocating-the-scene" title="Permanent link">&para;</a></h2>
+<p>The <code>sustain-cycle</code> plan targets the furnace bank at <code>cfg.sustain.basePos = {5,101,1}</code>
+(<code>src/bot/profile/pack.ts</code>, compiled into the bundle). To film elsewhere, change <code>basePos</code>, rebuild,
+redeploy, and set <code>ANCHOR</code> in <code>sustain_live.py</code>. <code>ANCHOR=(0,0,0)</code> equals the arena fixture.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

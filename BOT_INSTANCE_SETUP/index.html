@@ -1,0 +1,1441 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-source bot framework for Minecraft on jsMacros, with Gerda Bot — an autonomous GregTech mining fleet — as the reference implementation.">
+      
+      
+      
+        <link rel="canonical" href="https://flamerix-ai.github.io/gerda/BOT_INSTANCE_SETUP/">
+      
+      
+        <link rel="prev" href="../SERVER_SETUP/">
+      
+      
+        <link rel="next" href="../ARCHITECTURE/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Bot instances - Gerda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#per-bot-client-instance-setup-tuning" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gerda" class="md-header__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gerda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Bot instances
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gerda" class="md-nav__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gerda
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup from zero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PORTABILITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Works on your MC version
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SERVER_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dedicated server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bot instances
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bot instances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-create-a-bot-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Create a bot instance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Create a bot instance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#naming-accounts-and-ports-the-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naming, accounts and ports — the contract
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-tune-it-for-minimum-resource-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Tune it for minimum resource use
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Tune it for minimum resource use">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#combat-ready-vs-minimal-the-dial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Combat-ready vs minimal — the dial
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-apply-to-the-already-running-bots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Apply to the already-running bots
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Gerda works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MOD_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test your mod in a real game
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_YOUR_OWN_BOT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build your own bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MISSIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FLEET_PLAYBOOK/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fleet playbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RIG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filming & headless rig
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXTENDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending Gerda Bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing (3 layers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SCENARIOS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenario files reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAFETY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety tiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IPC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge & IPC contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMMANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge command reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EYES_HANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eyes & hands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navbench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigator benches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_STORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build story
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-create-a-bot-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Create a bot instance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Create a bot instance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#naming-accounts-and-ports-the-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naming, accounts and ports — the contract
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-tune-it-for-minimum-resource-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Tune it for minimum resource use
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Tune it for minimum resource use">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#combat-ready-vs-minimal-the-dial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Combat-ready vs minimal — the dial
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-apply-to-the-already-running-bots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Apply to the already-running bots
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="per-bot-client-instance-setup-tuning">Per-bot client instance setup &amp; tuning<a class="headerlink" href="#per-bot-client-instance-setup-tuning" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>How to add <strong>one bot</strong> as its own launcher instance (Prism/MultiMC/FreesmLauncher — adjust to
+your launcher) and tune it to use the least host resources while still able to mine and fight.
+Companion to the <a href="../SERVER_SETUP/">server runbook</a>. Each bot is an ordinary MC <strong>client</strong>
+running the bundle inside jsMacros.</p>
+</blockquote>
+<h2 id="why-this-matters">Why this matters<a class="headerlink" href="#why-this-matters" title="Permanent link">&para;</a></h2>
+<p>Each bot is a full modded Minecraft client, so the host ceiling for <em>N</em> of them is
+<strong>memory</strong>, not CPU. On hosts with strict memory overcommit (<code>vm.overcommit_memory=2</code>), a
+client crashes with <code>mmap failed</code> once the system-wide <code>Committed_AS</code> reaches <code>CommitLimit</code>,
+even with RAM free. Modpack instances often ship a large heap; at, say, <strong><code>-Xmx16G -Xms8G</code> per
+instance</strong>, four bots would reserve 64 GB. Nobody watches a bot, so desktop render settings (render distance 12, 90 fps, fancy
+graphics, AO, mipmaps, shadows) are waste × N. A low heap and a render floor make 4+ bots on one
+host viable.</p>
+<h2 id="1-create-a-bot-instance">1. Create a bot instance<a class="headerlink" href="#1-create-a-bot-instance" title="Permanent link">&para;</a></h2>
+<p>Each bot = its own instance so its <code>options.txt</code>, account, mods, and <strong>bridge port</strong> are
+independent (two bridges cannot share one port).</p>
+<ol>
+<li><strong>Clone the play instance.</strong> In your launcher, right-click <code>Monifactory</code> → <strong>Copy instance</strong>,
+   name it <code>Monifactory_bot_&lt;N&gt;</code> (the <code>_bot_</code> part matters, see the naming contract below).
+   Cloning guarantees the exact mod-set + version the server handshake requires — see the
+   monilabs parity note in
+   <a href="../SERVER_SETUP/#3a-monilabs-crashes-the-dedicated-server-bump-it">SERVER_SETUP § 3a</a>.</li>
+<li><strong>Offline account.</strong> Accounts → add an <strong>offline</strong> account with a unique username
+   (<code>bot_&lt;N&gt;</code>). Then pin each instance to its account, so no instance rides the launcher's
+   globally active one. Close the launcher GUI first (it rewrites <code>instance.cfg</code> on close):</li>
+</ol>
+<div class="highlight"><pre><span></span><code>./gerda<span class="w"> </span>bind-accounts<span class="w">   </span><span class="c1"># = python3 scripts/ops/bind_instance_accounts.py; idempotent</span>
+</code></pre></div>
+<p>It binds <code>Monifactory_bot_1</code>…<code>_4</code> to <code>bot_1</code>…<code>bot_4</code>, your play instance to
+   <code>humanAccountName</code> and the shader camera to <code>cameraAccountName</code>; both names come from
+   <code>local.config.json</code> (<code>local.config.json.example</code>), and it stops with an error if one is
+   missing.
+3. <strong>Connect.</strong> Launch it, Multiplayer → Direct Connection → <code>127.0.0.1:25565</code> (or launch with
+   the launcher's <code>-s 127.0.0.1:25565</code> flag, which joins on its own). Leave the bot
+   non-op: it plays like a real player
+   (<a href="../FLEET_PLAYBOOK/#1-the-server-and-how-the-bots-play-read-first">FLEET_PLAYBOOK § 1</a>).
+4. <strong>Deploy the bundle.</strong> <code>just sync</code> (or <code>./gerda sync</code> = <code>scripts/ops/sync.py</code>) ships the
+   bundle to <em>every</em> instance and gives each its own bridge port. Verify:
+   <code>./gerda ctl --bot Monifactory_bot_&lt;N&gt; ping</code> → <code>pong</code>.</p>
+<h3 id="naming-accounts-and-ports-the-contract">Naming, accounts and ports — the contract<a class="headerlink" href="#naming-accounts-and-ports-the-contract" title="Permanent link">&para;</a></h3>
+<p>The host tools find instances by name. This is the one place the rules are written down:</p>
+<ul>
+<li><strong>Your play instance</strong> keeps its plain name: <code>Monifactory</code> by default. If yours is named
+  differently, set <code>humanInstance</code> in <code>local.config.json</code>. Host tools that read <em>your</em> screen
+  or quest book use it.</li>
+<li><strong>Every bot instance name contains <code>_bot_</code>.</strong> The fleet hub dispatches queued tasks and
+  pushes its routine updates only to <code>*_bot_*</code> instances, and refuses to pin a task to any
+  other name, so it never drives your own client unasked. <code>Monifactory_bot_&lt;N&gt;</code> is the
+  convention. An instance that runs a bot under another name (one game instance, with the bot
+  account in it) joins the fleet when you list it in <code>local.config.json</code>
+  <code>"fleetInstances": ["Monifactory"]</code>.</li>
+<li><strong>Instance name vs player name.</strong> <code>--bot</code>, the MCP <code>target=</code> and <code>mc-bots.json</code> use the
+  instance name (<code>Monifactory_bot_2</code>). In game and in the server console, the bot is its
+  account name (<code>bot_2</code>).</li>
+<li><strong>One offline account per instance</strong>, each with a unique username. The server runs
+  <code>online-mode=false</code>, so no paid account is needed. Two instances cannot be online under the
+  same username at once.</li>
+<li><strong>Bridge ports.</strong> <code>just sync</code> gives every instance that has a jsMacros <code>Macros</code> folder its own
+  bridge port, writes it to that instance's <code>bridge_port.txt</code>, and records it in the
+  gitignored <code>mc-bots.json</code> (two bridges cannot share a port). A newly seen instance gets the
+  lowest free port from 55544 up, and keeps it on every later sync. On a first sync the
+  instances are taken in name order, so <code>Monifactory</code> gets 55544 and <code>Monifactory_bot_1</code> gets
+  55545; an instance you add later takes the next free port. <code>mc-bots.json</code> holds the actual
+  ports, and <code>--bot &lt;instance&gt;</code> looks them up there.</li>
+<li><strong>The tuner's default set.</strong> <code>./gerda tune</code> with no arguments tunes every instance whose name
+  contains <code>_bot_</code> that <code>mc-bots.json</code> or your launcher's instances folder knows. It never tunes
+  your play instance (<code>humanInstance</code>), and it stops with an error when it finds no bot
+  instance. Name an instance to tune only that one.</li>
+</ul>
+<h2 id="2-tune-it-for-minimum-resource-use">2. Tune it for minimum resource use<a class="headerlink" href="#2-tune-it-for-minimum-resource-use" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># stop the bot first — a RUNNING MC rewrites options.txt on quit and would clobber the edit.</span>
+./gerda<span class="w"> </span>tune<span class="w"> </span>Monifactory_bot_&lt;N&gt;<span class="w">     </span><span class="c1"># = python3 scripts/ops/tune_bot_instance.py</span>
+<span class="c1"># no args = every *_bot_* instance in mc-bots.json or the instances folder (never humanInstance)</span>
+</code></pre></div>
+<p><code>./gerda tune</code> (<code>scripts/ops/tune_bot_instance.py</code>) is idempotent and edits two files. It deliberately leaves
+<strong><code>enableVsync:false</code></strong> (off-screen screenshots need it) and <strong><code>guiScale:4</code></strong> (the eyes/hands
+click math is screenshot-pixel ÷ 4) untouched.</p>
+<p><strong><code>options.txt</code> (render floor):</strong></p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>value</th>
+<th>why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>renderDistance</code> / <code>simulationDistance</code></td>
+<td><code>5</code></td>
+<td>~64-block sensory horizon — enough for mining, local nav, melee hunt; the bot's <code>World.getBlock</code>/entity sensing only sees loaded chunks, and the server simulates in MP anyway</td>
+</tr>
+<tr>
+<td><code>maxFps</code></td>
+<td><code>30</code></td>
+<td>the bot tick runs on the <strong>worker thread</strong>, not the render thread, so it isn't fps-bound; screenshots/clicks are event-driven. 30 just trims GPU/CPU</td>
+</tr>
+<tr>
+<td><code>graphicsMode</code></td>
+<td><code>0</code> (fast)</td>
+<td>no fancy/fabulous</td>
+</tr>
+<tr>
+<td><code>ao</code> <code>entityShadows</code> <code>renderClouds</code> <code>bobView</code></td>
+<td>off</td>
+<td>cosmetic-only</td>
+</tr>
+<tr>
+<td><code>biomeBlendRadius</code> / <code>mipmapLevels</code></td>
+<td><code>0</code></td>
+<td>drop colour-blend + texture-mip work</td>
+</tr>
+<tr>
+<td><code>entityDistanceScaling</code></td>
+<td><code>0.75</code></td>
+<td>render-cull only — entities still <strong>exist</strong> in the client world for hunt sensing</td>
+</tr>
+<tr>
+<td><code>particles</code></td>
+<td><code>2</code> (minimal)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>soundCategory_master</code></td>
+<td><code>0.0</code></td>
+<td>mute → no sound-engine cost</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>instance.cfg</code> (heap):</strong> <code>OverrideMemory=true</code>, <code>MinMemAlloc=2048</code>, <code>MaxMemAlloc=4096</code>.
+4 GB max fits a render-5 bot; low <code>Xms</code> stops the JVM from committing a large heap up front at launch. <strong>Bump
+to 5–6 GB only if a specific bot OOMs</strong> under heavy chunk loading (GTCEu registry spikes).</p>
+<blockquote>
+<p><strong>GOTCHA — <code>instance.cfg</code> is launcher-owned, not game-owned.</strong> Prism, MultiMC and
+FreesmLauncher cache each instance's settings in memory and <strong>rewrite <code>instance.cfg</code> from that
+cache</strong> (on instance launch / settings-dialog save / launcher exit), so editing the file
+<strong>while the launcher is running is clobbered</strong> — the bot launches with the old heap and you
+get duplicate keys. Set the heap one of two ways: <strong>(a) in the GUI</strong> — Edit Instance →
+Settings → Memory → override → Max 4096 / Min 2048 (authoritative, writes the file cleanly);
+or <strong>(b) run the tuner with the launcher fully CLOSED</strong>, then reopen. The tuner detects your
+own running Prism, MultiMC or FreesmLauncher by process name and then skips the heap edit;
+another user's launcher and a defunct (zombie) launcher process do not count. A launcher that
+runs under another process name is not detected, so close it yourself first.
+<code>options.txt</code> has no such problem — it's
+read by <strong>MC itself</strong> at game launch, so the tuner's render edits stick as long as that bot is
+stopped when you run it.</p>
+</blockquote>
+<h3 id="combat-ready-vs-minimal-the-dial">Combat-ready vs minimal — the dial<a class="headerlink" href="#combat-ready-vs-minimal-the-dial" title="Permanent link">&para;</a></h3>
+<p>The bot stays fully combat-capable under all of the above: bot logic reads server-driven
+world and entity state on the worker thread, independent of render quality. Two knobs trade
+capability for resources:</p>
+<ul>
+<li><strong><code>renderDistance</code></strong> is the bot's sensory horizon. 5 is the floor for mine/hunt; raise to 6–8
+  if a mission needs more lookahead, drop to 4 for absolute minimum.</li>
+<li><strong><code>maxFps</code></strong> can go to 10–15 for the leanest GPU footprint; keep ≥30 if you screenshot-drive
+  the GUI rapidly (each <code>screenshot</code> forces a render, but a higher cap keeps the off-screen
+  frame fresher between shots).</li>
+</ul>
+<h2 id="3-apply-to-the-already-running-bots">3. Apply to the already-running bots<a class="headerlink" href="#3-apply-to-the-already-running-bots" title="Permanent link">&para;</a></h2>
+<p>Editing a <em>running</em> instance's <code>options.txt</code> is futile — MC overwrites it from memory on quit.
+So tune each running bot <strong>while stopped</strong>: in the launcher, stop bot → run the tuner for it →
+relaunch. The heap change (<code>instance.cfg</code>) only takes effect on the next launch regardless.</p>
+<h2 id="non-goals">Non-goals<a class="headerlink" href="#non-goals" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A no-GL client: vanilla MC needs a GL context. For an off-screen client see
+  <a href="../RIG/#run-one-client-headless-no-camera">RIG.md § Run</a>.</li>
+<li>Removing mods: client-only mods (jsMacros, EMI, JourneyMap) power the bot's own features, and
+  removing server-matched mods breaks the handshake. Render settings give the savings without
+  that risk.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

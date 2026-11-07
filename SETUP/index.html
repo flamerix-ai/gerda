@@ -1,0 +1,1675 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-source bot framework for Minecraft on jsMacros, with Gerda Bot — an autonomous GregTech mining fleet — as the reference implementation.">
+      
+      
+      
+        <link rel="canonical" href="https://flamerix-ai.github.io/gerda/SETUP/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../PORTABILITY/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Setup from zero - Gerda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#setup-from-zero-to-a-driven-bot" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gerda" class="md-header__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gerda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Setup from zero
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gerda" class="md-nav__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gerda
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup from zero
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup from zero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quickstart
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quickstart">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-get-the-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Get the code
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-install-the-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Install the tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-get-the-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Get the game
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-install-jsmacros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Install jsMacros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-build-and-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Build and deploy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-register-the-services-in-game-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Register the services (in-game, once)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-check-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Check it works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wire-the-mcp-server-optional-for-llm-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wire the MCP server (optional, for LLM operators)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#push-metrics-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Push metrics (optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-a-mission" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run a mission
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-further" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going further
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PORTABILITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Works on your MC version
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SERVER_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dedicated server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOT_INSTANCE_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bot instances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Gerda works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MOD_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test your mod in a real game
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_YOUR_OWN_BOT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build your own bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MISSIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FLEET_PLAYBOOK/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fleet playbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RIG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filming & headless rig
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXTENDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending Gerda Bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing (3 layers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SCENARIOS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenario files reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAFETY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety tiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IPC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge & IPC contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMMANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge command reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EYES_HANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eyes & hands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navbench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigator benches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_STORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build story
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quickstart
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quickstart">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-get-the-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Get the code
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-install-the-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Install the tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-get-the-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Get the game
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-install-jsmacros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Install jsMacros
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-build-and-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Build and deploy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-register-the-services-in-game-once" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Register the services (in-game, once)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-check-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Check it works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wire-the-mcp-server-optional-for-llm-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wire the MCP server (optional, for LLM operators)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#push-metrics-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Push metrics (optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-a-mission" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run a mission
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-further" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going further
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="setup-from-zero-to-a-driven-bot">Setup — from zero to a driven bot<a class="headerlink" href="#setup-from-zero-to-a-driven-bot" title="Permanent link">&para;</a></h1>
+<p>For anyone running the bot in a real game for the first time. Follow the Quickstart in order:
+it starts on a machine with nothing installed and ends with a bot that answers over the
+bridge. Steps 1–2 need no game; steps 3–4 install it; step 5 deploys into it; steps 6–7 need
+it running.
+For more than one bot, do this once, then see <a href="../SERVER_SETUP/">SERVER_SETUP.md</a> and
+<a href="../BOT_INSTANCE_SETUP/">BOT_INSTANCE_SETUP.md</a>.</p>
+<p>What you end up with: a Minecraft 1.20.1 Forge instance of the <strong>Monifactory</strong> modpack with
+the <strong>jsMacros</strong> mod, and this repo deploying the bot into it. The bot's GTCEu intelligence
+(prospector, ore registry, quest tooling) is tuned to that pack. Budget about 8 GB of RAM for
+one game client.</p>
+<p><strong>Another Minecraft version, or no modpack?</strong> The harness (bridge, <code>./gerda ctl</code>, MCP,
+screenshots) runs on every version that has a jsMacros build, Forge or Fabric; Gerda Bot's
+movement needs Forge. <a href="../PORTABILITY/">PORTABILITY.md</a> has the tested support matrix and a
+short recipe for a plain vanilla + jsMacros instance — follow it instead of step 3 below.</p>
+<h2 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">&para;</a></h2>
+<h3 id="1-get-the-code">1. Get the code<a class="headerlink" href="#1-get-the-code" title="Permanent link">&para;</a></h3>
+<p>You need <code>git</code>, <code>curl</code>, <code>unzip</code> and Python 3.11 or newer. Ubuntu/Debian:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>git<span class="w"> </span>curl<span class="w"> </span>unzip<span class="w"> </span>python3
+</code></pre></div>
+<p>Fedora: <code>sudo dnf install git curl unzip python3</code>. macOS: <code>xcode-select --install</code> gives git;
+curl and unzip are preinstalled. Windows: <code>winget install --id=Git.Git</code> (Git Bash comes with
+it).</p>
+<p>Clone the repo and enter it — every command below runs from its root:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/flamerix-ai/gerda.git
+<span class="nb">cd</span><span class="w"> </span>gerda
+</code></pre></div>
+<p>Clone it; do not download the ZIP. The commit gates (<code>just hooks</code>) and several tools need the
+<code>.git</code> directory.</p>
+<h3 id="2-install-the-tools">2. Install the tools<a class="headerlink" href="#2-install-the-tools" title="Permanent link">&para;</a></h3>
+<p><strong>Have Nix on x86_64 Linux? Then this step is one command.</strong> The repo's <code>flake.nix</code> pins every
+tool below:</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>develop<span class="w">      </span><span class="c1"># or, with nix-direnv: `direnv allow` once — the shell then loads on every cd</span>
+</code></pre></div>
+<p>The default shell carries bun, Node 22, Python 3.12, just, ffmpeg with ffprobe, <code>fd</code> and <code>entr</code>
+(for <code>just watch</code>), git, and Vineflower with JDK 21 (for <code>./gerda decompile</code>). The filming rig
+has its own shell, <code>nix develop .#capture</code> (headless sway, wf-recorder, grim) — see
+<a href="../RIG/">RIG.md</a>. The flake does not carry uv, which only the MCP server needs:
+<code>nix shell nixpkgs#uv</code>. Then skip to <code>bun install</code> and <code>just hooks</code> below — those two are still
+yours to run. The flake declares <code>x86_64-linux</code> only; on macOS or ARM, use the installers.</p>
+<p>Without Nix: <a href="https://bun.sh">bun</a> builds the bot, <a href="https://github.com/casey/just">just</a> runs the recipes,
+<a href="https://ffmpeg.org">ffmpeg</a> (with its <code>ffprobe</code>) is needed by <code>just check</code>, whose python suites
+run real clips, and <a href="https://docs.astral.sh/uv/">uv</a> runs the MCP server (optional — only for
+LLM operators).</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Linux / macOS</span>
+curl<span class="w"> </span>-fsSL<span class="w"> </span>https://bun.sh/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash<span class="w">        </span><span class="c1"># bun</span>
+curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh<span class="w"> </span><span class="c1"># uv (optional, for the MCP server)</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>just<span class="w"> </span>ffmpeg<span class="w">                    </span><span class="c1"># Ubuntu 24.04+; dnf / pacman -S / brew install just ffmpeg</span>
+</code></pre></div>
+<p>Both installers add their directory to <code>PATH</code> through your shell profile: open a new terminal
+before you go on.</p>
+<div class="highlight"><pre><span></span><code><span class="c"># Windows (PowerShell)</span>
+<span class="n">powershell</span> <span class="n">-c</span> <span class="s2">"irm bun.sh/install.ps1 | iex"</span>    <span class="c"># bun</span>
+<span class="n">winget</span> <span class="n">install</span> <span class="p">-</span><span class="n">-id</span><span class="p">=</span><span class="n">astral-sh</span><span class="p">.</span><span class="n">uv</span>                <span class="c"># uv (optional)</span>
+<span class="n">winget</span> <span class="n">install</span> <span class="p">-</span><span class="n">-id</span><span class="p">=</span><span class="n">Python</span><span class="p">.</span><span class="n">Python</span><span class="p">.</span><span class="n">3</span><span class="p">.</span><span class="n">12</span>         <span class="c"># python</span>
+<span class="n">winget</span> <span class="n">install</span> <span class="p">-</span><span class="n">-id</span><span class="p">=</span><span class="n">Casey</span><span class="p">.</span><span class="n">Just</span>                  <span class="c"># just</span>
+<span class="n">winget</span> <span class="n">install</span> <span class="p">-</span><span class="n">-id</span><span class="p">=</span><span class="n">Gyan</span><span class="p">.</span><span class="n">FFmpeg</span>                 <span class="c"># ffmpeg + ffprobe</span>
+</code></pre></div>
+<p>winget and the bun installer add their directories to <code>PATH</code> for new terminals only (<code>Path
+environment variable modified; restart your shell</code>), so open a new Git Bash before you go on.</p>
+<p><strong>On Windows</strong>, run the commands of this guide in <strong>Git Bash</strong> (it came with Git in step 1):
+<code>just</code> runs its recipes through Git's bash, which it finds through the <code>PATH</code> of Git Bash; from
+cmd or PowerShell it stops with "could not find the shell <code>env</code>", unless Git's <code>usr\bin</code> is on
+the system <code>PATH</code>. With WSL installed, a bare <code>bash</code> typed in cmd or PowerShell is WSL's
+<code>bash.exe</code>, not Git's. Two names differ in Git Bash:</p>
+<ul>
+<li><code>python</code>, not <code>python3</code>. The Python installer provides <code>python</code> and <code>py</code>; <code>python3</code> starts
+  the Microsoft Store stub (<code>Python was not found</code>, exit 49). The <code>just</code> recipes pick <code>python</code>
+  on their own.</li>
+<li><code>python gerda &lt;cmd&gt;</code>, not <code>./gerda &lt;cmd&gt;</code>: the script's first line asks for <code>python3</code>. From
+  cmd or PowerShell, <code>gerda.cmd &lt;cmd&gt;</code> works too, but the JSON of <code>ctl send</code> needs other
+  quoting there than in the examples below.</li>
+</ul>
+<p>The Python host-tool suites assume Linux or macOS, so <code>just check</code> and the pre-push hook fail on
+Windows. Run <code>just check-ts</code>, the TypeScript half that the pre-commit hook runs, and contribute
+from WSL.</p>
+<p>Then install the TypeScript toolchain and point git at the repo's gates:</p>
+<div class="highlight"><pre><span></span><code>bun<span class="w"> </span>install<span class="w">     </span><span class="c1"># the TS toolchain, into node_modules/</span>
+just<span class="w"> </span>hooks<span class="w">      </span><span class="c1"># the versioned git hooks (no CI — they ARE the gate; stages: docs/TESTING.md)</span>
+</code></pre></div>
+<p>Optional extras:</p>
+<ul>
+<li><code>just watch</code> (rebuild + redeploy on every save) needs <code>fd</code> and <code>entr</code>. Ubuntu names the <code>fd</code>
+  binary <code>fdfind</code>: <code>sudo apt install fd-find entr</code>, then
+  <code>mkdir -p ~/.local/bin &amp;&amp; ln -s "$(command -v fdfind)" ~/.local/bin/fd</code>.</li>
+<li><code>./gerda decompile</code> needs vineflower and a JDK; <code>./gerda capture</code> and
+  <code>./gerda parkour --video</code> need the Nix capture shell (Wayland tools). Each one's <code>-h</code> says what it needs.</li>
+</ul>
+<h3 id="3-get-the-game">3. Get the game<a class="headerlink" href="#3-get-the-game" title="Permanent link">&para;</a></h3>
+<p>A launcher keeps each modpack in its own <strong>instance</strong>: a folder <code>instances/&lt;name&gt;/</code> with its
+own mods, configs and worlds; the game files live in <code>instances/&lt;name&gt;/minecraft/</code>. The bot
+deploys into that <code>minecraft/</code> folder.</p>
+<ol>
+<li><strong>Install a MultiMC-format launcher.</strong> <a href="https://github.com/FreesmTeam/FreesmLauncher/releases">FreesmLauncher</a>
+   (supports offline accounts; on Linux the portable tarball or the AppImage, on Windows the
+   <code>FreesmLauncher-Windows-MSVC-Setup-&lt;version&gt;.exe</code> installer, <code>-MSVC-arm64-Setup-</code> on ARM) or
+   <a href="https://prismlauncher.org">Prism Launcher</a> (offline accounts need one Microsoft login
+   first). The launcher downloads the Java the game needs; you do not install Java for the
+   client. (A dedicated server needs a system Java — <a href="../SERVER_SETUP/">SERVER_SETUP.md</a>.)</li>
+<li><strong>Add an account.</strong> Accounts → Add Offline → a name such as <code>bot_1</code>. If the launcher's
+   first-run wizard offers to fetch the official launcher's key, skip it; this pack does not
+   need it.</li>
+<li><strong>Import the Monifactory 0.13.4 client.</strong> Add Instance → Import → paste
+   <code>https://github.com/Omicron-Industries/Monifactory/releases/download/0.13.4/Monifactory-Beta.0.13.4-client.zip</code>
+   and name the instance <strong><code>Monifactory</code></strong> — the tools assume that name for your own instance
+   (<a href="../BOT_INSTANCE_SETUP/#1-create-a-bot-instance">BOT_INSTANCE_SETUP § 1</a> has the naming
+   rules). Accept the optional-mods dialog. The launcher then downloads about 220 mods; this
+   takes a few minutes. Keep the client on 0.13.4: a dedicated server must run the same
+   version. Joining the dedicated server? Swap monilabs on this client too
+   (<a href="../SERVER_SETUP/">SERVER_SETUP §3a</a>).</li>
+<li><strong>Tell the repo where the instances are.</strong> <code>just sync</code> autodetects the launcher's
+   <code>instances/</code> dir only for installed launchers (<code>~/.local/share/{FreesmLauncher,PrismLauncher,MultiMC}</code>,
+   the Prism flatpak, and the macOS/Windows equivalents). A <strong>portable</strong> launcher (the
+   FreesmLauncher tarball, MultiMC) keeps <code>instances/</code> next to its own binary, and autodetect
+   misses it. The launcher opens that folder from its toolbar: Folders → Instances. Set it
+   once:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>local.config.json.example<span class="w"> </span>local.config.json
+<span class="c1"># edit local.config.json: "instancesRoot": "~/apps/FreesmLauncher/instances"</span>
+<span class="c1"># (or: export MC_INSTANCES_ROOT=~/apps/FreesmLauncher/instances)</span>
+</code></pre></div>
+<p>For one bot, <code>instancesRoot</code> is the only key you need; the account keys in the example are
+   for the multi-bot and filming tools, which ask for them when they run.</p>
+<h3 id="4-install-jsmacros">4. Install jsMacros<a class="headerlink" href="#4-install-jsmacros" title="Permanent link">&para;</a></h3>
+<p>The bot runs inside the <a href="https://jsmacros.wagyourtail.xyz/">jsMacros</a> mod. Download ONE file —
+jsMacros 1.9.2 for Forge 1.20.1 — into the instance's <code>mods/</code> folder:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">MODS</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>python3<span class="w"> </span>scripts/local_config.py<span class="w"> </span>instance_dir<span class="w"> </span>Monifactory<span class="k">)</span><span class="s2">/minecraft/mods"</span>
+curl<span class="w"> </span>-L<span class="w"> </span>-o<span class="w"> </span><span class="s2">"</span><span class="nv">$MODS</span><span class="s2">/jsmacros-1.20.1-1.9.2-forge.jar"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://cdn.modrinth.com/data/3wGWhm8A/versions/7kPvvJff/jsmacros-1.20.1-1.9.2-forge.jar
+</code></pre></div>
+<p>(The same file is on <a href="https://modrinth.com/mod/jsmacros/versions">Modrinth</a> — Forge, 1.20.1 —
+and in the <a href="https://github.com/wagyourtail/JsMacros/releases">jsMacros GitHub releases</a>.)
+The jar already contains the JavaScript language (GraalJS, ES2022 — what the bundle targets)
+and unpacks it into <code>config/jsMacros/LanguageExtensions/</code> on the first start; there is no
+separate extension to install.</p>
+<p>Start the instance from the launcher, wait for the title screen, and quit (Quit Game). Then do
+it <strong>once more</strong>. The first start creates <code>minecraft/config/jsMacros/Macros/</code> — <code>just sync</code>
+deploys into it — and a <code>config/jsMacros/options.json</code> with <code>"version": 2</code>; the second start
+migrates that file to <code>"version": 3</code> and empties its service list. Services registered before
+that migration are lost, so step 6 waits for version 3. A <code>Config Failed To Load</code> line in the
+first log is harmless.</p>
+<h3 id="5-build-and-deploy">5. Build and deploy<a class="headerlink" href="#5-build-and-deploy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>just<span class="w"> </span>check<span class="w">      </span><span class="c1"># tsc + biome + defensive-checker + vitest + python suites — offline, no game needed</span>
+just<span class="w"> </span>build<span class="w">      </span><span class="c1"># tsup → dist/__gerda_bot.bundle.js</span>
+just<span class="w"> </span>sync<span class="w">       </span><span class="c1"># build + copy the bundle and the service harness into the instance</span>
+</code></pre></div>
+<p><code>just sync</code> writes the bundle plus the services (<code>bridge.js</code>, <code>main.js</code>, <code>worker.js</code>,
+<code>ext.js</code>, shared modules) into <code>&lt;instance&gt;/minecraft/config/jsMacros/Macros/</code> of <strong>every</strong>
+instance that has that folder, and gives each a distinct bridge port (<code>bridge_port.txt</code>;
+registry in the gitignored <code>mc-bots.json</code>, which keeps existing ports across syncs). How
+instances are named and how ports are handed out:
+<a href="../BOT_INSTANCE_SETUP/#1-create-a-bot-instance">BOT_INSTANCE_SETUP.md § 1</a>. If it says
+<code>No deploy targets</code>, go back to step 4: the game has not been started with jsMacros yet.
+Rewriting the service files under a running client restarts its jsMacros services, so while
+another client is running, keep it out with <code>just sync --skip &lt;thatInstance&gt;</code> (repeatable).</p>
+<p><strong>Generate the SRG name map (once per Minecraft version).</strong> Forge keeps obfuscated SRG names
+for class members (<code>m_7583_</code>). The harness resolves them through <code>harness/srg_names.json</code>, a
+generated file that is not in the repo. Build it from the mappings your launcher downloaded
+when you started the instance in step 4, then deploy it:</p>
+<div class="highlight"><pre><span></span><code>./gerda<span class="w"> </span>srg<span class="w"> </span>--build<span class="w">                           </span><span class="c1"># index the on-disk mappings</span>
+./gerda<span class="w"> </span>srg<span class="w"> </span>--export<span class="w"> </span>harness/srg_names.json<span class="w">   </span><span class="c1"># write the SRG → Mojang map</span>
+just<span class="w"> </span>sync<span class="w">                                     </span><span class="c1"># ship it next to the services</span>
+</code></pre></div>
+<p>This enables the <code>srg()</code> helper in <code>jeval</code>, the Mojang names in <code>reflect</code>, and the boot
+self-check of every hardcoded SRG name (<code>diag</code> reports it as <code>srgCheck</code>). Without the file
+the bot still runs, but the self-check is skipped and <code>srgCheck</code> reads <code>unknown</code>.
+Regenerate it after a Minecraft or Forge version change.</p>
+<h3 id="6-register-the-services-in-game-once">6. Register the services (in-game, once)<a class="headerlink" href="#6-register-the-services-in-game-once" title="Permanent link">&para;</a></h3>
+<p><code>bridge.js</code> and <code>main.js</code> are jsMacros <strong>Service</strong> scripts; register each once. Do not register
+<code>worker.js</code>: <code>main.js</code> registers and starts it itself. First check that
+<code>&lt;instance&gt;/minecraft/config/jsMacros/options.json</code> says <code>"version": 3</code> — if it says 2, start
+the game once more and quit (step 4).</p>
+<p><strong>In the game (GUI).</strong> Start the game and enter a world (single-player, or your server).</p>
+<ol>
+<li>Open the jsMacros GUI: Esc → <strong>Mods</strong> → search <code>JS</code> (the mod is listed as "JS Macros";
+   searching <code>jsmacros</code> finds nothing) → <strong>JS Macros</strong> → <strong>Config</strong>. jsMacros' default key <code>J</code>
+   does not work in Monifactory — JourneyMap takes it. For a hotkey, rebind "JS Macros GUI"
+   under Options → Controls → Key Binds.</li>
+<li>Open the <strong>Services</strong> tab.</li>
+<li>Click <strong>+</strong>, type <code>main</code>, Confirm. In the new row, click the file cell (<code>./</code>), pick
+   <code>main.js</code>, Select. Click <strong>Disabled</strong> so it reads Enabled, and <strong>Stopped</strong> so it reads
+   Running.</li>
+<li>The same for <code>bridge</code>: <strong>+</strong> → <code>bridge</code> → Confirm → file <code>bridge.js</code> → Enabled → Running.
+   The file picker truncates names: <code>bridge.js</code> and <code>bridge_port.txt</code> both show as <code>bridge…</code>;
+   <code>bridge.js</code> is the first.</li>
+<li>Leave with Esc, and end the session with Quit Game: jsMacros saves the list on a clean quit,
+   and a crash loses changes made in that session.</li>
+</ol>
+<p><strong>Without the GUI (config file).</strong> With the game closed, add both services to <code>core.services</code>
+in <code>options.json</code>. The <code>file</code> path is relative to <code>config/jsMacros/Macros/</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">"services"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"main"</span><span class="p">:</span><span class="w">   </span><span class="p">{</span><span class="nt">"file"</span><span class="p">:</span><span class="w"> </span><span class="s2">"main.js"</span><span class="p">,</span><span class="w">   </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"bridge"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"file"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bridge.js"</span><span class="p">,</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Or let a script make that edit (game closed, file at version 3):</p>
+<div class="highlight"><pre><span></span><code><span class="nv">OPTS</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>python3<span class="w"> </span>scripts/local_config.py<span class="w"> </span>instance_dir<span class="w"> </span>Monifactory<span class="k">)</span><span class="s2">/minecraft/config/jsMacros/options.json"</span>
+python3<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import json,sys; p=sys.argv[1]; o=json.load(open(p)); assert o["version"]==3, "start the game once more first"; o["core"]["services"].update({"main":{"file":"main.js","enabled":True},"bridge":{"file":"bridge.js","enabled":True}}); json.dump(o,open(p,"w"),indent=2)'</span><span class="w"> </span><span class="s2">"</span><span class="nv">$OPTS</span><span class="s2">"</span>
+</code></pre></div>
+<p>Edit the file only while the game is closed: a running game keeps the list in memory and
+writes it back over the file. On the next start the services start by themselves, before you
+join a world.</p>
+<p>From then on everything reloads headlessly (<code>reload_main</code>, <code>reload_ext</code>, <code>reload_worker</code>
+bridge commands) — you never need the GUI again.</p>
+<h3 id="7-check-it-works">7. Check it works<a class="headerlink" href="#7-check-it-works" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>./gerda<span class="w"> </span>ctl<span class="w"> </span>ping<span class="w">        </span><span class="c1"># → pong (bridge reachable)</span>
+./gerda<span class="w"> </span>ctl<span class="w"> </span>status<span class="w">      </span><span class="c1"># services + worker heartbeat</span>
+./gerda<span class="w"> </span>ctl<span class="w"> </span>get_state<span class="w">   </span><span class="c1"># position, health, held tool, worker status</span>
+./gerda<span class="w"> </span>ctl<span class="w"> </span>send<span class="w"> </span>mission_start<span class="w"> </span><span class="s1">'{"name": "goto", "params": {"x": 100, "y": 64, "z": 200}}'</span><span class="w">   </span><span class="c1"># the navigator walks there</span>
+</code></pre></div>
+<p>For <code>goto</code>, pick a point about 20 blocks from the <code>pos</code> that <code>get_state</code> printed: a far target
+in unexplored terrain takes long to reach. In single-player the game pauses while its window
+does not have focus, and the bot stops with it. To keep it running while you type in the
+terminal, press F3+P in the game once, or set <code>pauseOnLostFocus:false</code> in the instance's
+<code>options.txt</code> with the game closed.</p>
+<p>With no bridge, <code>ctl</code> prints one <code>ERR: no bridge at &lt;host&gt;:&lt;port&gt; …</code> line saying what to check
+(the game running, in a world, with <code>main</code> and <code>bridge</code> enabled). If the bot bundle did not
+load, every bot command answers <code>no module loaded</code>, <code>ctl status</code> exits 1 with an
+<code>ERR: worker load_failed: …</code> line, and <code>get_state</code> has the detail under <code>worker.fatal</code>.</p>
+<p><code>./gerda</code> is the repo-root CLI fronting every host tool; <code>./gerda ctl</code> is sugar for
+<code>python3 scripts/ops/bridge_ctl.py</code>. Run <code>./gerda</code> bare for the full list, and
+<code>./gerda &lt;cmd&gt; -h</code> for any tool's help. None of this starts the autonomous loop; the <code>goto</code>
+mission walks only to the point you give it (<a href="../MISSIONS/#goto">MISSIONS.md § goto</a>). Note
+that <code>./gerda ctl goto x y z</code> is something else: a Baritone <code>#goto</code> chat command, which without
+Baritone only posts <code>#goto …</code> in chat — on a server, for everyone to read.</p>
+<h2 id="wire-the-mcp-server-optional-for-llm-operators">Wire the MCP server (optional, for LLM operators)<a class="headerlink" href="#wire-the-mcp-server-optional-for-llm-operators" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>.mcp.json.example<span class="w"> </span>.mcp.json<span class="w">    </span><span class="c1"># gitignored; adjust port if not 55544</span>
+</code></pre></div>
+<p>Claude Code started in the repo root reads that file. For any other MCP client, register the
+stdio command <code>uv run mcp/server.py</code> in that client, with the same environment variables.
+Either way the client gets the <code>mc_*</code> tools: <code>mc_ping</code>, <code>mc_get_state</code>, and the generic
+<code>mc_send(type, args)</code> for every bridge command — discover the full set via the <code>mc://api</code>
+resource. On a single machine, set <code>MC_BRIDGE_HOST</code> to <code>127.0.0.1</code>; <code>auto</code> also tries the WSL
+gateway. Details, environment variables, and the fleet tools:
+<a href="https://github.com/flamerix-ai/gerda/blob/main/mcp/README.md">mcp/README.md</a>. The
+server reads its config once at startup — reconnect it after changing <code>.mcp.json</code>.</p>
+<h2 id="push-metrics-optional">Push metrics (optional)<a class="headerlink" href="#push-metrics-optional" title="Permanent link">&para;</a></h2>
+<p>Telemetry is off by default. The bot can push its counters and gauges (blocks mined, phase,
+health, deaths, …) as Prometheus text to a VictoriaMetrics import endpoint. To turn it on, put
+the URL in the gitignored <code>config/local.overrides.json</code>, then <code>just sync</code> and
+<code>./gerda reload-worker</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">"telemetry"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"pushUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://127.0.0.1:8428/api/v1/import/prometheus"</span><span class="p">}}</span>
+</code></pre></div>
+<p>Metric names start with <code>miner_</code> (<code>cfg.telemetry.prefix</code>); a push goes out every
+<code>cfg.telemetry.interval</code> ticks. If the endpoint is down, the journal gets one
+<code>TELEMETRY_PUSH_FAIL</code> per outage and a <code>TELEMETRY_PUSH_RECOVERED</code> when pushes work again.</p>
+<h2 id="run-a-mission">Run a mission<a class="headerlink" href="#run-a-mission" title="Permanent link">&para;</a></h2>
+<p>First, once, give the bot a home on a safe spot. Its recovery and low-health retreat teleport
+there with <code>/home base</code>:</p>
+<div class="highlight"><pre><span></span><code>./gerda<span class="w"> </span>ctl<span class="w"> </span>send<span class="w"> </span>chat<span class="w"> </span><span class="s1">'{"message": "/sethome base"}'</span>
+</code></pre></div>
+<p>Then a mission a fresh bot can do with an empty bag:</p>
+<div class="highlight"><pre><span></span><code>./gerda<span class="w"> </span>ctl<span class="w"> </span>send<span class="w"> </span>mission_start<span class="w"> </span><span class="s1">'{"name": "chop", "params": {"count": 4}}'</span>
+./gerda<span class="w"> </span>ctl<span class="w"> </span>send<span class="w"> </span>mission_status
+./gerda<span class="w"> </span>ctl<span class="w"> </span>pause<span class="w">     </span><span class="c1"># hand control back</span>
+./gerda<span class="w"> </span>ctl<span class="w"> </span>resume
+</code></pre></div>
+<p><code>chop</code> finds trees near the bot, walks to them and fells them; it stops after 4 logs, or sooner
+if it finds no more. Without an axe it logs <code>MISSION_TOOL_MISSING</code> and breaks the logs by hand,
+slowly. Trees inside spawn protection can't be cut: the server refuses a non-op player's break
+within the <code>spawn-protection</code> radius of <code>server.properties</code> (16 blocks by default) and inside
+claimed chunks. Walk or teleport a few dozen blocks away from spawn first.</p>
+<p>The other missions need gear the bot has to earn first. <code>mine {"count": 8}</code> breaks the ore it
+scans and needs a pickaxe of the ore's tier. <code>drill</code> needs a pickaxe and a prospected vein,
+which needs a charged HV prospector (mid-game): on a fresh install it pauses with
+<code>DRILL_NEEDS_PROSPECT</code> (see <a href="../MISSIONS/#drill">MISSIONS.md § drill</a>).</p>
+<p>The bot also yields on its own: low health → home, worn tool → hot-swap, and <strong>any
+manual movement input → PAUSED</strong>, so you can take over just by moving.</p>
+<h2 id="going-further">Going further<a class="headerlink" href="#going-further" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Multiple bots / co-op fleet: <a href="../FLEET_PLAYBOOK/">FLEET_PLAYBOOK.md</a> +
+  <a href="../BOT_INSTANCE_SETUP/">BOT_INSTANCE_SETUP.md</a>.</li>
+<li>Writing missions/capabilities/ext plugins: <a href="../EXTENDING/">EXTENDING.md</a>.</li>
+<li>The three test layers incl. in-game arenas: <a href="../TESTING/">TESTING.md</a>.</li>
+</ul>
+<h2 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The bridge binds loopback only (<code>127.0.0.1:&lt;port&gt;</code>); override via the
+  <code>mc_bridge_host</code> GlobalVar only if you know what you're exposing.</li>
+<li>The bot's world knowledge (waypoints, storages, prospected veins) persists to
+  <code>&lt;Macros&gt;/mc_world.json</code>; the NDJSON journal is <code>&lt;Macros&gt;/miner.ndjson</code> (<code>get_logs</code>
+  tails it).</li>
+<li>Headless screenshots need <code>enableVsync:false</code> in the instance's <code>options.txt</code>
+  (otherwise off-screen frames go stale). Screenshots and GUI clicks:
+  <a href="../EYES_HANDS/">Eyes &amp; hands</a>.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

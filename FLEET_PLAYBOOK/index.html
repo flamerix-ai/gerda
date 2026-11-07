@@ -1,0 +1,1476 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-source bot framework for Minecraft on jsMacros, with Gerda Bot — an autonomous GregTech mining fleet — as the reference implementation.">
+      
+      
+      
+        <link rel="canonical" href="https://flamerix-ai.github.io/gerda/FLEET_PLAYBOOK/">
+      
+      
+        <link rel="prev" href="../MISSIONS/">
+      
+      
+        <link rel="next" href="../RIG/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Fleet playbook - Gerda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fleet-playbook-playing-alongside-the-bots" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gerda" class="md-header__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gerda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fleet playbook
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gerda" class="md-nav__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gerda
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup from zero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PORTABILITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Works on your MC version
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SERVER_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dedicated server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOT_INSTANCE_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bot instances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Gerda works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MOD_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test your mod in a real game
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_YOUR_OWN_BOT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build your own bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MISSIONS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fleet playbook
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fleet playbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-server-and-how-the-bots-play-read-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The server and how the bots play (read first)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-driving-the-fleet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Driving the fleet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Driving the fleet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#20-driving-a-bot-from-in-game-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0 Driving a bot from in-game chat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21-launching-relaunching-and-reconnecting-a-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Launching, relaunching and reconnecting a bot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-ftb-quests-read-complete-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. FTB Quests (read, complete, claim)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-charging-the-prospector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Charging the prospector
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-seeing-players-and-peers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Seeing players and peers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-coordination-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Coordination features
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RIG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filming & headless rig
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXTENDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending Gerda Bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing (3 layers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SCENARIOS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenario files reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAFETY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety tiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IPC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge & IPC contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMMANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge command reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EYES_HANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eyes & hands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navbench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigator benches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_STORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build story
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-server-and-how-the-bots-play-read-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The server and how the bots play (read first)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-driving-the-fleet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Driving the fleet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Driving the fleet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#20-driving-a-bot-from-in-game-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0 Driving a bot from in-game chat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21-launching-relaunching-and-reconnecting-a-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Launching, relaunching and reconnecting a bot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-ftb-quests-read-complete-claim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. FTB Quests (read, complete, claim)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-charging-the-prospector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Charging the prospector
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-seeing-players-and-peers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Seeing players and peers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-coordination-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Coordination features
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="fleet-playbook-playing-alongside-the-bots">Fleet playbook — playing alongside the bots<a class="headerlink" href="#fleet-playbook-playing-alongside-the-bots" title="Permanent link">&para;</a></h1>
+<p>How to drive the co-op fleet on the dedicated server: the server rules, fleet and chat control,
+FTB Quests, and prospector charging. For adding missions and plugins see
+<a href="../EXTENDING/">EXTENDING.md</a>.</p>
+<hr />
+<h2 id="1-the-server-and-how-the-bots-play-read-first">1. The server and how the bots play (read first)<a class="headerlink" href="#1-the-server-and-how-the-bots-play-read-first" title="Permanent link">&para;</a></h2>
+<p>Dedicated server: <code>&lt;server-root&gt;/monifactory-&lt;version&gt;/</code>, controlled with
+<code>./server-ctl.sh {start|stop|cmd|status|log}</code> (<a href="../SERVER_SETUP/">SERVER_SETUP.md</a>).</p>
+<ul>
+<li><strong>In fleet play, each bot plays like a real player:</strong> no cheats, no handouts. Bots
+  (<code>bot_1</code>..<code>bot_N</code>) are not op; only your own account <code>&lt;your-account&gt;</code> is. Keep it that way —
+  hand-feeding a bot items bypasses the economy the bot is built to run.</li>
+<li><strong>Teleport is the bots' one privilege:</strong> FTB Essentials <code>/home</code>, <code>/back</code>, <code>/spawn</code>, <code>/rtp</code>
+  (FTB Essentials does not op-gate these by default; check its config). The bot's own recovery
+  uses <code>/home</code> and <code>/back</code> (<code>src/bot/missions/mine/home-return.ts</code>, <code>homeCommand</code>/<code>backCommand</code> in
+  <code>src/shared/config/schema.ts</code>). Give every bot its home once, on a safe spot:
+  <code>./gerda ctl send chat '{"message": "/sethome base"}'</code>. Without it, <code>/home base</code> answers
+  <code>Unknown destination!</code> and the bot does not move. After <code>cfg.safety.homeNoEffectLimit</code> such
+  recovery sends in a row, each from a spot away from the bot's recorded home, the bot stops
+  sending <code>/home</code> and logs <code>HOME_COMMAND_DISABLED</code> (the server kicks a non-op player who repeats
+  commands too fast). A bot with no recorded home yet (it records one only where the mine mission's
+  HOME leg <code>/home</code> moved it) counts every such send. It sends again <code>cfg.safety.homeRearmTicks</code> later, or at once after a chat
+  <code>home</code>. Keep the <code>/home</code> cooldown at 0 (<a href="../SERVER_SETUP/#4-configure-run">SERVER_SETUP § 4</a>).</li>
+<li><strong>Scaffolding goes through the server console or your op account:</strong> <code>./server-ctl.sh cmd
+  "setblock …"</code>, <code>cmd "give &lt;your-account&gt; …"</code>, <code>cmd "tp bot_N x y z"</code>. Arena and film-set builds
+  (<code>scripts/dev/arena.py</code>) need an op client: your op account, or a test bot opped for one
+  <code>just gate-live</code> session and de-opped after.</li>
+<li><strong>Server settings:</strong> always day (<code>doDaylightCycle=false</code>), difficulty peaceful (no hunger, no
+  hostile mobs), <code>online-mode=false</code>, <code>enforce-secure-profile=false</code>, no whitelist (trusted LAN).
+  Generate a fresh world with a random seed on first setup.</li>
+</ul>
+<h2 id="2-driving-the-fleet">2. Driving the fleet<a class="headerlink" href="#2-driving-the-fleet" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Names.</strong> <code>target=</code> and registry names are instance dirs (<code>Monifactory_bot_1</code>…); in-game and
+  console names are <code>bot_1</code>….</li>
+<li><strong>Tools.</strong> The <code>mc_*</code> tools come from the <code>mc</code> MCP server; wire it once
+  (<a href="../SETUP/#wire-the-mcp-server-optional-for-llm-operators">SETUP.md § Wire the MCP server</a>). Every MCP call
+  has a shell equivalent: <code>./gerda ctl --bot &lt;instance&gt; …</code> for one bot, <code>./gerda fleet …</code> for
+  the hub.</li>
+<li><strong>One bot:</strong> <code>mc_send</code> / <code>mc_get_state</code> / <code>mc_ping</code> with <code>target=Monifactory_bot_N</code>, or
+  <code>./gerda ctl --bot Monifactory_bot_N status</code>. Talks to that bot's bridge directly; no hub
+  needed.</li>
+<li><strong>Fleet state:</strong> <code>mc_fleet_status</code> / <code>mc_fleet_map</code> / <code>mc_fleet_claims</code> / <code>mc_fleet_assign</code> /
+  <code>mc_fleet_unassign</code> need the coordinator hub: <code>./gerda hub</code> (<code>scripts/ops/fleet_hub.py</code>,
+  port 8849). Track its PID; do not <code>pkill -f fleet_hub</code> (the pattern can match your own shell
+  and kill it). From a shell,
+  <code>./gerda fleet status|map|claims|queue|want|enqueue|cancel|assign|unassign</code> talks to the same hub:</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code>./gerda<span class="w"> </span>hub<span class="w"> </span>--http<span class="w"> </span><span class="m">127</span>.0.0.1:8849<span class="w"> </span>--interval<span class="w"> </span><span class="m">2</span>.0<span class="w">          </span><span class="c1"># the hub (a daemon; keep it running)</span>
+./gerda<span class="w"> </span>fleet<span class="w"> </span>want<span class="w"> </span>iron<span class="w"> </span>--bots<span class="w"> </span><span class="m">2</span><span class="w">                          </span><span class="c1"># two bots drill iron</span>
+./gerda<span class="w"> </span>fleet<span class="w"> </span>enqueue<span class="w"> </span>drill<span class="w"> </span><span class="s1">'{"ore":"iron"}'</span><span class="w"> </span>--bot<span class="w"> </span>Monifactory_bot_2<span class="w"> </span>--ttl<span class="w"> </span><span class="m">1800</span>
+./gerda<span class="w"> </span>fleet<span class="w"> </span>assign<span class="w"> </span>Monifactory_bot_1<span class="w"> </span>-520<span class="w"> </span>-460<span class="w"> </span>-380<span class="w"> </span>-320<span class="w">  </span><span class="c1"># region lease: minX maxX minZ maxZ</span>
+</code></pre></div>
+- <strong>Regions</strong> keep two bots off one vein: <code>mc_fleet_assign {bot, allowed:{minX,maxX,minZ,maxZ}}</code>.
+  The hub pushes each bot its <code>allowed</code> box plus <code>forbidden</code> = the peers' boxes (<code>mc_assignment</code>).
+  The assignment has no TTL — always <code>mc_fleet_unassign</code>.
+- <strong>Task queue</strong> — say what you need; free bots pick it up:
+  <code>curl -X POST localhost:8849/fleet/enqueue -d '{"mission":"drill","params":{"ore":"iron"}}'</code>. Optional
+  <code>"bot":"Monifactory_bot_2"</code> pins it, <code>"ttl":1800</code> bounds it; without <code>bot</code> the first free bot
+  takes it (FIFO). Only online, IDLE, untasked fleet instances are dispatched: <code>*_bot_*</code> names,
+  plus the instances listed in <code>local.config.json</code> <code>"fleetInstances": ["Monifactory"]</code> (env
+  <code>MC_FLEET_INSTANCES</code>). Any other instance counts as the human's own client and gets no task.
+  On the one-instance setup of SETUP.md, list <code>Monifactory</code> there, or the queue never runs; while
+  no fleet instance is online, <code>enqueue</code> and <code>want</code> reply with a <code>warning</code> that says so.
+  Outcome is read from the bot: finished run = done; PAUSED = done and aborted;
+  ERROR = failed and aborted; bot offline = bounded requeue; TTL as backstop. <code>GET /fleet/queue</code>
+  lists, <code>POST /fleet/cancel {id}</code> cancels. The queue persists in <code>mc-tasks.json</code>. MCP:
+  <code>mc_fleet_enqueue</code> / <code>mc_fleet_queue</code> / <code>mc_fleet_cancel</code>.
+- <strong>Want presets</strong> — ask for a resource:
+  <code>curl -X POST localhost:8849/fleet/want -d '{"resource":"iron"}'</code> enqueues the mission that produces it
+  (<code>bots:N</code> fans out, <code>bot:</code> pins, <code>ttl:</code> bounds). Ore words → <code>drill {ore}</code> (prospect → shaft →
+  mine); <code>wood</code> → <code>chop</code>; <code>food</code> → <code>hunt</code> (<code>WANT_PRESETS</code> in <code>fleet_hub.py</code>). Unknown words become
+  <code>drill {ore:&lt;word&gt;}</code>, which skips gracefully if no vein is found. MCP: <code>mc_fleet_want</code>.</p>
+<h3 id="20-driving-a-bot-from-in-game-chat">2.0 Driving a bot from in-game chat<a class="headerlink" href="#20-driving-a-bot-from-in-game-chat" title="Permanent link">&para;</a></h3>
+<p>A player near the bots can drive them from chat — no bridge, no MCP:</p>
+<div class="highlight"><pre><span></span><code>!&lt;botname|all&gt; &lt;verb&gt; [args…]      e.g.  !bot_2 goto 120 70 -40      !all pause
+</code></pre></div>
+<ul>
+<li><strong>Addressing.</strong> <code>!bot_2 …</code> reaches the bot named <code>bot_2</code> (case-insensitive); <code>!all …</code> reaches
+  every bot in earshot. Lines for other bots are ignored; a bot never acts on its own output.</li>
+<li><strong>Verbs:</strong> <code>status</code>, <code>pause</code>, <code>resume</code>, <code>stop</code>/<code>abort</code>, <code>home</code>, <code>mine</code>, <code>drill [ore]</code>,
+  <code>chop [n]</code>, <code>hunt [n]</code>, <code>goto &lt;x&gt; &lt;y&gt; &lt;z&gt;</code>, <code>follow &lt;player&gt;</code>. Each routes through the same
+  commands as the bridge, so the reply reports what actually happened (<code>failed: …</code> on a no-op).
+  <code>home</code> stops movement and the mission, then sends the <code>cfg.homeCommand</code> teleport, also when the
+  bot had disabled it after <code>HOME_COMMAND_DISABLED</code>. Numbers must
+  be whole decimals within <code>chat.maxCoordXZ</code> / <code>minCoordY</code> / <code>maxCoordY</code> / <code>maxCount</code>; <code>chop -5</code>,
+  <code>goto 0x10 70 0</code> and surplus args are refused with a reply.</li>
+<li><strong>Trust.</strong> <code>cfg.chat.trustedPlayers</code> in <code>src/shared/config/schema.ts</code> is empty by default, which
+  admits nobody. The shipped pack profile (<code>src/bot/profile/pack.ts</code>) sets <code>["*"]</code> (anyone) for a
+  private, peaceful, offline-mode server. On a shared server list your own names:
+  <code>chat: { trustedPlayers: ["Alex", "…"] }</code>. Matching is exact and case-sensitive. This is not
+  authentication — on an offline-mode server anyone can log in under any name. Untrusted lines
+  addressed by name get one refusal per sender per <code>chat.denyReplyTicks</code>; untrusted broadcasts are
+  logged, never answered.</li>
+<li><strong>Replies</strong> start with <code>cfg.chat.replyPrefix</code> (<code>[gerda]</code>), so a reply never parses as a
+  command. The <code>home</code> teleport is sent verbatim.</li>
+<li><strong>Troubleshooting.</strong> Chat is queued on the listener thread (bounded by <code>chat.queueCapacity</code>,
+  drop-oldest) and handled on the tick thread. The parser expects vanilla <code>&lt;Name&gt; text</code>; on a
+  server that decorates chat, look for <code>CHAT_NO_PARSE</code> in <code>get_logs</code>. If nothing shows, lower the
+  log level (<code>trace</code>) and look for <code>CHAT_SELF</code> (DBG): it proves the bot hears chat; its absence
+  means the listener never fired.</li>
+</ul>
+<h3 id="21-launching-relaunching-and-reconnecting-a-bot">2.1 Launching, relaunching and reconnecting a bot<a class="headerlink" href="#21-launching-relaunching-and-reconnecting-a-bot" title="Permanent link">&para;</a></h3>
+<p>Four levels of restart — use the lightest that works:</p>
+<ul>
+<li><strong><code>reload_ext</code></strong> — re-evaluates <code>ext.js</code> (mod-API plugins).</li>
+<li><strong><code>reload_main</code></strong> — re-reads <code>main.js</code> headlessly; the worker keeps running.</li>
+<li><strong><code>reload_worker</code></strong> — restarts the worker (kernel + bundle) off-thread: <code>./gerda reload-worker</code>
+  (<code>scripts/ops/reload_worker.py</code>). It dials the same bridge as <code>./gerda ctl</code>: <code>--port</code> or <code>--bot</code>,
+  else <code>MC_BRIDGE_PORT</code>, else 55544. Do not send a bare <code>halt</code> to a stuck worker: it blocks
+  main.js's tick and the whole bridge goes deaf.
+  Example: <code>./gerda reload-worker --bot Monifactory_bot_1 --timeout 60</code>. On an ack timeout it
+  reports and does not retry; check <code>./gerda ctl --bot Monifactory_bot_1 status</code> before you
+  send it again.
+  If one worker tick runs for minutes (a CPU-starved client, software rendering), the reload
+  waits behind it. Then <code>./gerda ctl restart_service worker</code> stops the worker from bridge.js and
+  leaves it stopped; <code>./gerda ctl start</code> starts it again. <code>get_state.worker.tickPace</code> counts the
+  slow ticks.</li>
+<li><strong>Cold JVM launch</strong> — full client restart, for a crashed or wedged client or a new account
+  binding. Launch and join in one launcher command (adjust for your launcher):</li>
+</ul>
+<div class="highlight"><pre><span></span><code>freesmlauncher<span class="w"> </span>-l<span class="w"> </span>Monifactory_bot_1<span class="w"> </span>-s<span class="w"> </span>localhost:25565<span class="w"> </span>-a<span class="w"> </span>bot_1
+</code></pre></div>
+<p><code>-l</code> instance dir, <code>-s host:port</code> joins on launch, <code>-a</code> offline account. Stop the old client
+  first (<code>kill -TERM &lt;javaPID&gt;</code>; find it by <code>-Djava.library.path=…/instances/&lt;inst&gt;/natives</code> in
+  <code>ps</code>). Ports: <code>./gerda sync</code> assigns each instance a bridge port from 55544 up, keeps it
+  across deploys and records it in <code>mc-bots.json</code>. A cold boot starts the worker in IDLE once
+  the world loads; survival reflexes are always on, no <code>start</code> needed.
+- <strong>Reconnect after a disconnect screen.</strong> Drive it headless: <code>click{i:0}</code> → Multiplayer →
+  <code>click "Direct Connection"</code> → <code>click "Join Server"</code> (the address field keeps the last host). A
+  relog returns the player to where it logged out; if that spot is unsafe, move it from the
+  console (<code>server-ctl.sh cmd "tp bot_N x y z"</code>).
+- <strong>Keep-alive timeouts.</strong> A freshly booted modded client can stall past the server's keep-alive
+  window if loaded hard at once (bulk <code>/fill</code>, teleports into loading chunks). Let chunks settle
+  10–20 s after boot.</p>
+<h2 id="3-ftb-quests-read-complete-claim">3. FTB Quests (read, complete, claim)<a class="headerlink" href="#3-ftb-quests-read-complete-claim" title="Permanent link">&para;</a></h2>
+<p>The bot drives FTB Quests through its native API — no GUI or screenshots.</p>
+<ul>
+<li><strong>Read the tree from disk:</strong> ids, grid positions, <code>dependencies</code>, task <code>type</code> and items live in
+  <code>$INST/config/ftbquests/quests/chapters/*.snbt</code>; title keys (<code>{moni.quest.*}</code>, <code>{moni.task.*}</code>)
+  resolve via <code>$INST/kubejs/assets/ftbquests/lang/en_us.json</code>. <code>$INST =
+  &lt;instances-root&gt;/Monifactory/minecraft</code>; <code>./gerda config instances_root</code> prints the root.</li>
+<li><strong>Live state and actions</strong> (ext.js bridge commands):</li>
+<li><code>quests {…}</code> — quest and task state from <code>ClientQuestFile</code>.</li>
+<li><code>count_item {…}</code> — how many of an item the bot holds.</li>
+<li><code>quest_complete {…}</code> — <strong>mutating</strong>: submits task(s) via <code>SubmitTaskMessage</code>. Item tasks need
+    the item in inventory (not consumed when <code>consume_items=false</code>); <code>checkmark</code> tasks complete on
+    submit.</li>
+<li><code>quest_claim {…}</code> — <strong>mutating</strong>: claims only the named quest's rewards (<code>ClaimRewardMessage</code>
+    per reward).</li>
+<li>Quest and reward ids are 16-hex unsigned longs: <code>java.lang.Long.parseUnsignedLong(hex,16)</code>.</li>
+<li><strong>Autopilot:</strong> <code>scripts/objective/</code> (mod-agnostic; FTB adapter in <code>sources/ftb_quests.py</code>) runs
+  multi-step chains behind an approve-each gate. Use the raw commands for one-offs. Needs a
+  running bot; preview first, then approve one quest:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>./gerda<span class="w"> </span>objective<span class="w"> </span>--dry-run<span class="w"> </span>--chapter<span class="w"> </span>genesis<span class="w">   </span><span class="c1"># next objective + its plan, mutates nothing</span>
+./gerda<span class="w"> </span>objective<span class="w"> </span>--once<span class="w"> </span>--chapter<span class="w"> </span>genesis<span class="w">      </span><span class="c1"># asks, then acts on at most one quest</span>
+</code></pre></div>
+<p><code>--chapter</code> takes a chapter file name from <code>chapters/*.snbt</code>, <code>--quest &lt;16-hex id&gt;</code> targets
+  one quest, and <code>--mode auto --allow-mine</code> runs unattended with the mining tier on.
+- <strong>Item tasks</strong> detect the item when the bot holds it: the bot mines or crafts the item, holds it,
+  then <code>quest_complete</code>.</p>
+<h2 id="4-charging-the-prospector">4. Charging the prospector<a class="headerlink" href="#4-charging-the-prospector" title="Permanent link">&para;</a></h2>
+<p>The HV prospector runs on EU and is charged the way a player charges it:</p>
+<ul>
+<li>A <strong>Turbo Charger</strong> (quest "Charging Items", id <code>06E9B9DDDB245F38</code>) charges RF and EU. The
+  Tinker's Workstation and Wireless Charger are RF-only and do not charge it.</li>
+<li><code>prospector_status</code> reads the stored charge (<code>lowPct</code> threshold, default 15 %). When the
+  prospector is empty, prospecting reports "out of energy" and the drill pauses instead of
+  failing. Put the prospector in the charger, then run <code>prospect</code> and <code>resume</code>. Operating GTCEu
+  machines is the player's part of the co-op — the bot runs the basic vanilla economy.</li>
+</ul>
+<h2 id="5-seeing-players-and-peers">5. Seeing players and peers<a class="headerlink" href="#5-seeing-players-and-peers" title="Permanent link">&para;</a></h2>
+<p>The mob feed (<code>publishMobs</code>) excludes players. Players and other bots come from a separate feed:</p>
+<ul>
+<li><strong><code>mc_peers</code></strong> — <code>main.js</code> publishes player positions, <code>worker.js</code> mirrors them to
+  <code>__MC_PEERS</code>, and the facade exposes <code>world.peers()</code>. The <code>follow</code> mission uses it.</li>
+<li><strong>Peers are obstacles</strong> — the planner treats columns near peers as blocked
+  (<code>cfg.nav.peerObstacle</code>, rebuilt from <code>world.peers()</code> every plan); the goal column is exempt, so
+  <code>follow</code> can still walk to a peer.</li>
+<li><strong>One-off scouting without a mission:</strong> poll <code>./server-ctl.sh cmd "data get entity &lt;name&gt; Pos"</code>
+  and push a <code>greedy_drive</code> target every few ticks.</li>
+</ul>
+<h2 id="6-coordination-features">6. Coordination features<a class="headerlink" href="#6-coordination-features" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Vein claims</strong> — the hub reads each bot's drill target (<code>mission_status</code> → <code>drill.vein</code>) and
+  leases <code>vein:x,z</code> for it (TTL 90 s, renewed per poll). Peers skip veins within
+  <code>cfg.fleetVeinClaimRadius</code> (8) of another bot's claim (<code>DRILL_CLAIM_SKIP</code>).</li>
+<li><strong>Shared hazards</strong> — each bot records ravines and drowned columns in <code>mc_world.json</code> <code>hazards</code>.
+  The hub merges them per dimension and pushes <code>assignment.hazards</code> to every bot, so one bot's
+  hazard is avoided by all.</li>
+<li><strong>Pushes</strong> go only to region-claimed bots and online <code>*_bot_*</code> instances (never the human's
+  client) and are skipped when unchanged. Offline tests: <code>test-ts/fleet-coordination.test.ts</code>.</li>
+<li><strong>Live gate:</strong> <code>just gate-live</code> runs every asserting arena plus the navigator benches with one
+  exit code (<code>--quick</code> = core set). It needs a live opped test bot, so you run it locally by hand
+  (<a href="../TESTING/">TESTING.md</a>).</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

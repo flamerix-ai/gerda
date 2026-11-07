@@ -1,0 +1,2477 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Open-source bot framework for Minecraft on jsMacros, with Gerda Bot — an autonomous GregTech mining fleet — as the reference implementation.">
+      
+      
+      
+        <link rel="canonical" href="https://flamerix-ai.github.io/gerda/MISSIONS/">
+      
+      
+        <link rel="prev" href="../BUILD_YOUR_OWN_BOT/">
+      
+      
+        <link rel="next" href="../FLEET_PLAYBOOK/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Missions reference - Gerda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#missions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Gerda" class="md-header__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gerda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Missions reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Gerda" class="md-nav__button md-logo" aria-label="Gerda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Gerda
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/flamerix-ai/gerda" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flamerix-ai/gerda
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup from zero
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PORTABILITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Works on your MC version
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SERVER_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dedicated server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOT_INSTANCE_SETUP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bot instances
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Gerda works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MOD_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test your mod in a real game
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_YOUR_OWN_BOT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build your own bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#contract-notes-that-apply-to-all-missions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contract notes that apply to all missions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#registered-missions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registered missions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Registered missions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        drill
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        chop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fetch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fetch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stash
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loot-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        loot-run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        search
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smelt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        smelt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#craft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        craft
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        goto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prospect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        prospect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hunt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hunt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#follow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        follow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        interact
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mission-chaining" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mission chaining
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FLEET_PLAYBOOK/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fleet playbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RIG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filming & headless rig
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EXTENDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending Gerda Bot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing (3 layers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SCENARIOS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenario files reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAFETY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Safety tiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IPC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge & IPC contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COMMANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridge command reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EYES_HANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eyes & hands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navbench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Navigator benches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BUILD_STORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build story
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#contract-notes-that-apply-to-all-missions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contract notes that apply to all missions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#registered-missions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registered missions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Registered missions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        drill
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        chop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fetch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fetch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stash
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loot-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        loot-run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        search
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smelt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        smelt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#craft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        craft
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#goto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        goto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prospect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        prospect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hunt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hunt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#follow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        follow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        interact
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mission-chaining" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mission chaining
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="missions">Missions<a class="headerlink" href="#missions" title="Permanent link">&para;</a></h1>
+<p>The reference for the bot's mission system. A <strong>mission</strong> is a pluggable goal
+state-machine (<code>src/shared/kernel/mission.ts</code>). The kernel loads ALL missions into a
+registry and runs <strong>exactly one</strong> at a time,
+switchable at runtime with <code>mission_start</code> and no reload. A mission brings its own
+<code>initialPhase</code>, <code>edges</code>, per-phase <code>handlers</code>, <code>params</code>, an optional completion check
+(<code>isDone</code>) and result (<code>outputs</code>), plus <code>movementPhases</code> and <code>onAbort</code>. Reflexes (see
+<a href="../SAFETY/#reaction-tier-survival-vs-mission-progress-reflexes">SAFETY.md § Reaction tier</a>)
+and the global handlers (RECOVER, lifecycle) live in the kernel, mission-agnostic, and run
+under every mission.</p>
+<p>Drive missions over the bridge:</p>
+<ul>
+<li><code>mission_start {name, params?}</code> — activate a mission by name (no reload).</li>
+<li><code>mission_abort</code> — stop the active mission → IDLE.</li>
+<li><code>mission_status</code> — log the active mission + phase.</li>
+<li><code>missions</code> — log the registered mission names (each self-describes its <code>params</code>).</li>
+</ul>
+<p>Coordinates in the examples below are placeholders: use your own chest's, furnace's or
+destination's coordinates.</p>
+<p>A <strong>plan</strong> (the orchestrator, <code>src/bot/orchestrator/</code>) chains missions into an ordered
+sequence; a completed mission's <code>outputs</code> can feed the next step's params — see
+<a href="#mission-chaining">Mission chaining</a> below.</p>
+<p><strong>Writing a new mission:</strong> read <a href="../EXTENDING/"><code>docs/EXTENDING.md</code></a> § Writing a mission
+(the two authoring styles, the facade contract, the SRG workflow). The worked template
+is <a href="https://github.com/flamerix-ai/gerda/blob/main/examples/advanced/patrol-mission.ts"><code>examples/advanced/patrol-mission.ts</code></a> — a
+complete, small mission that exercises every part of the contract.</p>
+<h2 id="contract-notes-that-apply-to-all-missions">Contract notes that apply to all missions<a class="headerlink" href="#contract-notes-that-apply-to-all-missions" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Two authoring styles.</strong> <code>missionFromCaps(name, caps, opts)</code> composes a mission from
+  capability modules (their handlers/guards/edges merged) — used by <code>mine</code>, <code>chop</code>,
+  <code>drill</code>. <strong>Caveat:</strong> the composed capability <code>init</code>s do NOT receive <code>mission_start</code>
+  params, so a composed mission's params (e.g. <code>count</code>, <code>ore</code>) are read in the
+  mission-level <code>init</code> and pushed into shared slices before the caps tick. All other
+  missions are hand-written <code>Mission</code> objects (so their <code>init(ctx, params)</code> sees params).</li>
+<li><strong>Params are self-described</strong> (a <code>ParamSpec</code> list: <code>name</code>/<code>type</code>/<code>required</code>/<code>desc</code>).
+  Types are <code>string | int | float | bool</code>. Parsing is normalized via <code>_params.ts</code>
+  (<code>parseIdList</code>, <code>intParam</code>, <code>intParamOr</code>, <code>toSet</code>).</li>
+<li><strong><code>required</code> is a description, not an enforced gate here.</strong> The coordinate missions
+  (<code>goto</code>/<code>fetch</code>/<code>stash</code>/<code>interact</code>) parse x/y/z with the strict <code>intParam</code>; a
+  missing/invalid coordinate leaves the target <code>null</code> and the first tick <strong>finishes as a
+  graceful no-op</strong> (<code>*_GAVE_UP</code>/"no target"), it does not ERROR. <code>smelt</code>'s
+  <code>output</code> is declared <code>required</code> but <code>init</code> defaults it to <code>""</code>.</li>
+<li><strong>The shared GOTO leg (<code>walkTo</code>, <code>_goto-leg.ts</code>).</strong> Every "walk to a fixed stand, then
+  arrive / time-out / give-up-when-blocked" phase uses this one driver (goto, fetch,
+  stash, prospect, storage, loot-run, search). It owns the arrival radius
+  (<code>cfg.nav.gotoArrivalDist</code>), the phase timeout (<code>cfg.nav.gotoTimeoutTicks</code>), the greedy
+  step, and the <code>arrived | blocked_no_path</code> verdict; the caller supplies the
+  arrive/blocked/timeout callbacks. It is a <strong>column (Y-free), best-effort</strong> approach: a
+  block ends the leg, no ore-style dig escalation. <code>interact</code>, <code>hunt</code>, <code>follow</code> use
+  bespoke legs (moving targets / interact-anyway-when-in-reach).</li>
+<li><strong><code>movementPhases</code></strong> tells the reflex layer "movement here is bot-driven", so the
+  stuck/human-input reflexes don't read greedy's own <code>key.forward</code> as a human takeover.</li>
+<li><strong>Tunables live in <code>src/shared/config/schema.ts</code></strong> — every default below that reads <code>cfg.*</code>
+  resolves there.</li>
+</ul>
+<h2 id="registered-missions">Registered missions<a class="headerlink" href="#registered-missions" title="Permanent link">&para;</a></h2>
+<p>Only the 15 missions registered in <code>src/bot/entry/worker-bundle.ts</code> are documented.
+<code>src/bot/missions/harvest/</code> is not a mission: it holds the shared ore and wood harvest
+profiles that <code>mine</code>, <code>chop</code> and <code>drill</code> import.</p>
+<table>
+<thead>
+<tr>
+<th>Mission</th>
+<th>What it does</th>
+<th>Key params</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#mine"><code>mine</code></a></td>
+<td>Surface-mine ore: scan → walk → break + vein-follow, auto dump when full</td>
+<td><code>count</code></td>
+</tr>
+<tr>
+<td><a href="#drill"><code>drill</code></a></td>
+<td>Dig a shaft to a cached prospector vein and strip-mine its volume</td>
+<td><code>ore</code></td>
+</tr>
+<tr>
+<td><a href="#chop"><code>chop</code></a></td>
+<td>Fell trees: the mine loop with a wood harvest profile</td>
+<td><code>count</code></td>
+</tr>
+<tr>
+<td><a href="#fetch"><code>fetch</code></a></td>
+<td>Walk to a chest and withdraw items</td>
+<td><code>x</code>,<code>y</code>,<code>z</code>,<code>items</code></td>
+</tr>
+<tr>
+<td><a href="#stash"><code>stash</code></a></td>
+<td>Walk to a chest and deposit whitelisted items (fail-loud)</td>
+<td><code>x</code>,<code>y</code>,<code>z</code>,<code>items</code></td>
+</tr>
+<tr>
+<td><a href="#storage"><code>storage</code></a></td>
+<td>Route items into the base storage network (drawers + chests)</td>
+<td><code>items</code></td>
+</tr>
+<tr>
+<td><a href="#loot-run"><code>loot-run</code></a></td>
+<td>Sweep registered containers and take their contents</td>
+<td><code>items</code>,<code>near</code></td>
+</tr>
+<tr>
+<td><a href="#search"><code>search</code></a></td>
+<td>Serpentine grid survey, recording containers to the world model</td>
+<td><code>cols</code>,<code>rows</code>,<code>step</code></td>
+</tr>
+<tr>
+<td><a href="#smelt"><code>smelt</code></a></td>
+<td>Drive a furnace/machine: load, wait, collect (region-agnostic)</td>
+<td><code>output</code>,<code>input</code>,<code>fuel</code></td>
+</tr>
+<tr>
+<td><a href="#craft"><code>craft</code></a></td>
+<td>Craft a recipe chain via manual grid placement</td>
+<td><code>chain</code>,<code>want</code></td>
+</tr>
+<tr>
+<td><a href="#goto"><code>goto</code></a></td>
+<td>Walk to a fixed x/y/z, best-effort</td>
+<td><code>x</code>,<code>y</code>,<code>z</code></td>
+</tr>
+<tr>
+<td><a href="#prospect"><code>prospect</code></a></td>
+<td>Walk to the nearest cached vein of an ore group</td>
+<td><code>ore</code></td>
+</tr>
+<tr>
+<td><a href="#hunt"><code>hunt</code></a></td>
+<td>Seek → chase → melee huntable mobs</td>
+<td><code>count</code>,<code>targets</code></td>
+</tr>
+<tr>
+<td><a href="#follow"><code>follow</code></a></td>
+<td>Trail a peer at a follow-gap (persistent)</td>
+<td><code>target</code>,<code>gap</code></td>
+</tr>
+<tr>
+<td><a href="#interact"><code>interact</code></a></td>
+<td>Right-click a held item onto a block or item-frame entity</td>
+<td><code>x</code>,<code>y</code>,<code>z</code>,<code>item</code>,<code>profile</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="mine">mine<a class="headerlink" href="#mine" title="Permanent link">&para;</a></h3>
+<p>Surface-mining loop (<code>missionFromCaps</code>, composing <code>inventory</code>, <code>loot</code>, <code>scan</code>,
+<code>navigation</code>, <code>mine</code>, <code>homeReturn</code>, <code>storage</code>). Scans for the configured ore, greedy-walks
+to a reachable side-stand, breaks it and drains the local vein/layer cluster, sheds junk
+and diverts HOME→DUMP→RETURN when the bag fills. Ore selection is <strong>cfg-driven</strong>
+(<code>oreProfile(ctx.cfg)</code>) — there is no <code>ore</code> param.</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>required</th>
+<th>default</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>count</code></td>
+<td>int</td>
+<td>no</td>
+<td><code>0</code> (unlimited)</td>
+<td>stop after N ore broken (0/omit = mine until aborted/exhausted)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phases:</strong> <code>SCAN → GOTO → MINE</code> (with <code>LOOT</code> diverts and <code>HOME → DUMP → RETURN</code> on a
+full bag), the full <code>TRANSITIONS</code> table. <code>movementPhases: {GOTO, HOME, RETURN, LOOT}</code>.
+An unreachable ore is skipped, not fatal (<code>onBlocked: "skip"</code>): a <code>blocked</code> greedy verdict, or
+a GOTO that advances no cell along its planned route for <code>cfg.nav.gotoStallTicks</code>
+(<code>NAV_GOTO_STALL</code> — a detour that leads away first still advances), caches the target
+and returns to SCAN. <code>chop</code> shares both.</p>
+<p><strong>Completion:</strong> <code>isDone</code> = <code>count &gt; 0 &amp;&amp; (broken ≥ count || exhausted)</code> — only a bounded
+batch self-completes; an unlimited run never does (it parks at PAUSED when exhausted).
+<strong>Outputs:</strong> <code>{ mined, origin, exhausted }</code>.</p>
+<p><strong>Notable:</strong> <code>onBlocked = "skip"</code> — when a dense patch walls off the walkable side-stand,
+it caches that ore and re-scans for a reachable one instead of ERRORing the run (contrast
+<code>drill</code>, which digs to it).</p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send mission_start '{"name": "mine", "params": {"count": 64}}'
+</code></pre></div>
+<hr />
+<h3 id="drill">drill<a class="headerlink" href="#drill" title="Permanent link">&para;</a></h3>
+<p>Dig to a prospected vein and strip-mine it (<code>missionFromCaps</code>, composing <code>navigation</code>,
+<code>descend</code>, <code>digTo</code>, <code>excavate</code>, <code>mine</code>, <code>scan</code>). The HV prospector (ext.js <code>prospect</code>,
+run first) caches veins as surface X/Z in <code>mc_world.json</code>; this mission reads the nearest
+cached vein of the requested ore group, walks to its X/Z, digs a 1-wide shaft straight
+down (DESCEND, real hammer) until the shaft exposes the ore, strip-mines the vein VOLUME
+(EXCAVATE), and hands each exposed clump to MINE's vein-follow.</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>required</th>
+<th>default</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ore</code></td>
+<td>string</td>
+<td>no</td>
+<td>via <code>drillProfile(cfg, …)</code></td>
+<td>ore group, e.g. <code>iron</code>/<code>gold</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phases:</strong> <code>GOTO → DESCEND → EXCAVATE ⇄ MINE</code>, with <code>DIG_TO</code> and <code>SCAN</code>.
+<code>movementPhases: {GOTO, DIG_TO, EXCAVATE, DESCEND}</code> (DESCEND's step-1 walk-onto-marker is
+a sustained bot-driven walk).</p>
+<p><strong>Completion:</strong> no <code>isDone</code> override — the mission <strong>never self-completes</strong>; it ends via
+the graceful PAUSE at the end of the corridor plan, or abort. <strong>Outputs:</strong>
+<code>{ mined, vein }</code>.</p>
+<p><strong>Notable:</strong> <code>onBlocked = "dig"</code> — when greedy can't WALK to the next ore (offset/above in
+solid rock), it mines a staircase/tunnel to it (DIG_TO) rather than skipping. No cached
+vein → a graceful PAUSE + <code>DRILL_NEEDS_PROSPECT</code> alert (recoverable by recharge + prospect
++ resume), not a hard ERROR. <code>warnIfMissingTool(pickaxe, ore)</code> warns loudly (not blocking)
+if the bag can't harvest that ore's tier.</p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send mission_start '{"name": "drill", "params": {"ore": "iron"}}'
+</code></pre></div>
+<hr />
+<h3 id="chop">chop<a class="headerlink" href="#chop" title="Permanent link">&para;</a></h3>
+<p>Fell trees — the <strong>same loop as <code>mine</code></strong> (<code>missionFromCaps</code> composing a <code>bagWatch</code>,
+<code>loot</code>, <code>scan</code>, <code>navigation</code>, <code>mine</code>) with the WOOD harvest profile. Scans for logs,
+walks, breaks, and diverts to LOOT so felled logs (which land 2-3 blocks away, outside
+vanilla pickup range) are actually collected.</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>required</th>
+<th>default</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>count</code></td>
+<td>int</td>
+<td>no</td>
+<td><code>0</code> (until none)</td>
+<td>stop after N logs (0/omit = until none)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phases:</strong> <code>SCAN → GOTO → MINE</code> with <code>LOOT</code>. <code>movementPhases: {GOTO, LOOT}</code>.</p>
+<p><strong>Completion:</strong> <code>isDone</code> = <code>count &gt; 0 &amp;&amp; (broken ≥ count || exhausted)</code>. It deliberately
+also completes on <code>exhausted</code> even with a count goal, so a bot in a treeless area (e.g. one
+that respawned somewhere treeless) doesn't spin <code>CHOP_SCAN_EXHAUSTED</code> forever.
+<strong>Outputs:</strong> <code>{ logs, exhausted }</code>. <strong>onAbort:</strong> release keys + nav stop.</p>
+<p><strong>Notable:</strong> <code>onBlocked = "skip"</code> — canopy logs past a safe-fall hazard veto are skipped,
+not walled on (a forest has many trees). <code>bagWatch</code> ends a full-bag run gracefully via the
+shared <code>exhausted</code> path. <code>warnIfMissingTool(axe)</code> (warn-only — felling without an axe works,
+just slowly).</p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send mission_start '{"name": "chop", "params": {"count": 16}}'
+</code></pre></div>
+<hr />
+<h3 id="fetch">fetch<a class="headerlink" href="#fetch" title="Permanent link">&para;</a></h3>
+<p>Walk to a chest and withdraw items. Hand-written to demonstrate a mission authored
+directly (shares nothing with <code>mine</code> except the kernel/reflex/GOTO layer).</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>required</th>
+<th>default</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code></td>
+<td>int</td>
+<td>yes</td>
+<td>—</td>
+<td>chest X</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>int</td>
+<td>yes</td>
+<td>—</td>
+<td>chest Y</td>
+</tr>
+<tr>
+<td><code>z</code></td>
+<td>int</td>
+<td>yes</td>
+<td>—</td>
+<td>chest Z</td>
+</tr>
+<tr>
+<td><code>items</code></td>
+<td>string</td>
+<td>no</td>
+<td>omit = all</td>
+<td>ids to withdraw — JSON array <code>["minecraft:coal"]</code> or CSV; omit → withdraw all</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phases:</strong> <code>GOTO → RESTOCK → IDLE</code> (RESTOCK is an internal <code>OPEN → WITHDRAW</code> sub-step).
+<code>movementPhases: {GOTO}</code>.</p>
+<p><strong>Completion:</strong> <code>isDone</code> after a successful withdraw, immediately if there's no target, or
+if GOTO gives up (no self-heal — one target). <strong>Outputs:</strong> none.
+<strong>onAbort:</strong> close screen + nav stop.</p>
+<p><strong>Notable:</strong> RESTOCK must <code>useOnBlock</code> to open the chest GUI <em>before</em> reading its slots —
+<code>rt.inv.open()</code> reflects only the currently-open screen. <code>stepOpen</code> is <strong>fail-loud</strong>: a
+chest GUI that doesn't open within <code>cfg.containerOpenGraceTicks</code> → ERROR, never a silent
+empty withdraw.</p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send mission_start '{"name": "fetch", "params": {"x": 100, "y": 64, "z": 200, "items": ["minecraft:coal"]}}'
+</code></pre></div>
+<hr />
+<h3 id="stash">stash<a class="headerlink" href="#stash" title="Permanent link">&para;</a></h3>
+<p>Walk to a single chest and deposit whitelisted items. The mirror of <code>fetch</code> for the
+deposit direction; <strong>fail-loud</strong> on a rejected deposit.</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>required</th>
+<th>default</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code></td>
+<td>int</td>
+<td>yes</td>
+<td>—</td>
+<td>chest X</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>int</td>
+<td>yes</td>
+<td>—</td>
+<td>chest Y</td>
+</tr>
+<tr>
+<td><code>z</code></td>
+<td>int</td>
+<td>yes</td>
+<td>—</td>
+<td>chest Z</td>
+</tr>
+<tr>
+<td><code>items</code></td>
+<td>string</td>
+<td>yes</td>
+<td>—</td>
+<td>ids to deposit — JSON array <code>["minecraft:raw_iron"]</code> or CSV</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phases:</strong> <code>GOTO → STASH → IDLE</code> (STASH is an internal <code>OPEN → DEPOSIT → DONE</code>).
+<code>movementPhases: {GOTO}</code>.</p>
+<p><strong>Completion:</strong> <code>isDone</code> after deposit, or immediately if there's no chest target / GOTO
+gives up. <strong>Outputs:</strong> <code>{ deposited }</code>. <strong>onAbort:</strong> close screen + nav stop.</p>
+<p><strong>Notable:</strong> region-agnostic — shift-clicks (vanilla <code>quick</code>) carry slots whose id is on
+the whitelist, highest slot first (so a compacting container doesn't shift indices), and
+<strong>verifies</strong> the bag's count actually dropped. A silent <code>quick()</code> failure → <code>STASH_BLOCKED</code>
++ hard ERROR ("chest full or shift-click rejected"). <code>stepOpen</code> timeout → ERROR too.</p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send mission_start '{"name": "stash", "params": {"x": 100, "y": 64, "z": 200, "items": ["minecraft:raw_iron", "minecraft:raw_copper"]}}'
+</code></pre></div>
+<hr />
+<h3 id="storage">storage<a class="headerlink" href="#storage" title="Permanent link">&para;</a></h3>
+<p>Route items into the base <strong>storage network</strong> (kernel-native). Plans the
+deposit across the registered storages, walks between them, and deposits by kind: drawers
+(stand + aim slot quadrant + <code>useOnBlock</code> per stack) vs chests (open GUI + shift-click
+auto-route).</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>required</th>
+<th>default</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>items</code></td>
+<td>string</td>
+<td>yes</td>
+<td>—</td>
+<td>ids to deposit into the network — JSON array <code>["minecraft:raw_iron"]</code> or CSV</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phases:</strong> <code>GOTO ⇄ STORE</code> (walk to each visit's stand, deposit, advance to the next).
+<code>movementPhases: {GOTO}</code>.</p>
+<p><strong>Completion:</strong> <code>isDone</code> once all planned visits are exhausted (or immediately: nothing to
+deposit, empty registry). <strong>Outputs:</strong> <code>{ deposited, unplaced }</code> (<code>unplaced</code> = ids the
+planner couldn't route). <strong>onAbort:</strong> close screen + nav stop.</p>
+<p><strong>Notable:</strong> the client-sync boundary — drawers are read LIVE (<code>rt.storage.read</code>, contents
+replicate client-side); chests/barrels are server-only headless, so they route from the
+<strong>recorded snapshot</strong> in the registry and a chest visit writes back the updated snapshot
+(the "chest with memory", capped at 27 slots). <strong>Best-effort skip, not ERROR</strong>: an
+unreachable stand, a drawer slot rejecting an item after the grace window
+(<code>STORAGE_DRAWER_BLOCKED</code>), or a chest GUI that won't open (<code>STORAGE_CHEST_NO_GUI</code>) all
+skip and keep the item. The drawer AIM→USE is a deliberate 2-tick gap so the new rotation
+flushes to the server before its use-raycast.</p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send mission_start '{"name": "storage", "params": {"items": ["minecraft:iron_ingot", "minecraft:copper_ingot"]}}'
+</code></pre></div>
+<hr />
+<h3 id="loot-run">loot-run<a class="headerlink" href="#loot-run" title="Permanent link">&para;</a></h3>
+<p>Sweep registered containers and take their contents. Greedy nearest-neighbour walk over
+the container visit list, opening each and quick-taking (whitelisted or all).</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>required</th>
+<th>default</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>items</code></td>
+<td>string</td>
+<td>no</td>
+<td>omit = all</td>
+<td>only take these ids — JSON array or CSV; omit = take everything</td>
+</tr>
+<tr>
+<td><code>near</code></td>
+<td>int</td>
+<td>no</td>
+<td><code>null</code> (all)</td>
+<td>only loot containers within this many blocks of the start</td>
+</tr>
+<tr>
+<td><code>breakBlocked</code></td>
+<td>bool</td>
+<td>no</td>
+<td><code>false</code></td>
+<td>mine off a solid block capping a chest instead of skipping it (leaves a hole; opt-in)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phases:</strong> <code>GOTO ⇄ RANSACK</code> (RANSACK is <code>OPEN → TAKE → CLOSE</code>). <code>movementPhases: {GOTO}</code>.</p>
+<p><strong>Completion:</strong> <code>isDone</code> after the last visit (or immediately if no candidate containers).
+<strong>Outputs:</strong> <code>{ taken, containers }</code>. <strong>onAbort:</strong> close screen + nav stop.</p>
+<p><strong>Notable:</strong> <strong>never ERRORs</strong> — an unreachable container, a chest that won't open, or a
+full inventory all log and advance. Because the GUI is opened (client-synced), the
+<code>recorded</code>/<code>looted</code> snapshot written back to <code>mc_world.json</code> is exact; <code>looted</code> means the
+chest is truly empty (so a whitelist run doesn't permanently hide a chest holding other
+items). Drawers are excluded from <code>LOOTABLE_KINDS</code> (they're the deposit target, not
+loot). A chest capped by a solid block is skipped (<code>LOOT_BLOCKED</code>) unless <code>breakBlocked</code>
+mines the cap.</p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send mission_start '{"name": "loot-run", "params": {"near": 64}}'
+</code></pre></div>
+<hr />
+<h3 id="search">search<a class="headerlink" href="#search" title="Permanent link">&para;</a></h3>
+<p>Serpentine (boustrophedon) grid survey that scans a cuboid at each stop and records any
+containers found into the world model — feeds <code>loot-run</code>/<code>storage</code>.</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>required</th>
+<th>default</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cols</code></td>
+<td>int</td>
+<td>no</td>
+<td><code>cfg.search.cols</code></td>
+<td>grid columns</td>
+</tr>
+<tr>
+<td><code>rows</code></td>
+<td>int</td>
+<td>no</td>
+<td><code>cfg.search.rows</code></td>
+<td>grid rows</td>
+</tr>
+<tr>
+<td><code>step</code></td>
+<td>int</td>
+<td>no</td>
+<td><code>cfg.search.gridStep</code></td>
+<td>blocks between stops</td>
+</tr>
+<tr>
+<td><code>radius</code></td>
+<td>int</td>
+<td>no</td>
+<td><code>cfg.search.scanRadius</code></td>
+<td>scan radius per stop</td>
+</tr>
+<tr>
+<td><code>height</code></td>
+<td>int</td>
+<td>no</td>
+<td><code>cfg.search.scanHeight</code></td>
+<td>± vertical scan reach</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td>int</td>
+<td>no</td>
+<td>bot X</td>
+<td>grid origin X</td>
+</tr>
+<tr>
+<td><code>z</code></td>
+<td>int</td>
+<td>no</td>
+<td>bot Z</td>
+<td>grid origin Z</td>
+</tr>
+<tr>
+<td><code>lanes</code></td>
+<td>int</td>
+<td>no</td>
+<td><code>1</code></td>
+<td>split columns across N bots</td>
+</tr>
+<tr>
+<td><code>lane</code></td>
+<td>int</td>
+<td>no</td>
+<td><code>0</code></td>
+<td>this bot's lane index <code>[0..lanes-1]</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phases:</strong> <code>GOTO ⇄ SCAN</code> (walk to the next stop, voxel-scan spread over ticks, advance).
+<code>movementPhases: {GOTO}</code>.</p>
+<p><strong>Completion:</strong> <code>isDone</code> when all grid points are visited/skipped (or the grid is empty).
+<strong>Outputs:</strong> <code>{ found, stops }</code>. <strong>onAbort:</strong> nav stop.</p>
+<p><strong>Notable:</strong> even rows walk left→right, odd rows reverse — one continuous path. Multi-bot
+lane striping keeps only columns where <code>c % lanes === lane</code>. The scan is budgeted
+(<code>cfg.search.scanPerTick</code>) so it never storms <code>getBlock</code> in one tick. <strong>Never ERRORs</strong> —
+an unreachable stop is logged and skipped (like <code>loot-run</code>).</p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send mission_start '{"name": "search", "params": {"cols": 8, "rows": 8, "step": 16}}'
+</code></pre></div>
+<hr />
+<h3 id="smelt">smelt<a class="headerlink" href="#smelt" title="Permanent link">&para;</a></h3>
+<p>Drive a furnace (or any single-input→single-output machine that honours shift-click) —
+load, wait, collect. <strong>Region-agnostic</strong>: it never hardcodes slot/region names; loading
+rides vanilla shift-click auto-routing and progress is read by matching the output item id
+in the open screen's non-player slots.</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>required</th>
+<th>default</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mode</code></td>
+<td>string</td>
+<td>no</td>
+<td><code>full</code></td>
+<td><code>full</code> (load+wait+collect) | <code>load</code> (load &amp; leave) | <code>collect</code> (drain ready output)</td>
+</tr>
+<tr>
+<td><code>input</code></td>
+<td>string</td>
+<td>no</td>
+<td><code>""</code></td>
+<td>raw item id to smelt; required for full/load, unused for collect</td>
+</tr>
+<tr>
+<td><code>output</code></td>
+<td>string</td>
+<td>yes*</td>
+<td><code>""</code></td>
+<td>expected smelted id (e.g. <code>minecraft:iron_ingot</code>)</td>
+</tr>
+<tr>
+<td><code>fuel</code></td>
+<td>string</td>
+<td>no</td>
+<td><code>null</code></td>
+<td>fuel item id (omit for electric/pre-fueled)</td>
+</tr>
+<tr>
+<td><code>count</code></td>
+<td>int</td>
+<td>no</td>
+<td><code>0</code></td>
+<td>collect ≥ this many output (0 = the loaded batch)</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td>int</td>
+<td>no</td>
+<td>use open screen</td>
+<td>furnace block X</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>int</td>
+<td>no</td>
+<td>use open screen</td>
+<td>furnace block Y</td>
+</tr>
+<tr>
+<td><code>z</code></td>
+<td>int</td>
+<td>no</td>
+<td>use open screen</td>
+<td>furnace block Z</td>
+</tr>
+</tbody>
+</table>
+<p>* <code>output</code> is declared <code>required</code> but <code>init</code> defaults it to <code>""</code> — no hard abort.</p>
+<p><strong>Phases:</strong> one kernel <code>SMELT</code> state driving an internal <code>OPEN → LOAD → WAIT → COLLECT →
+DONE</code> step machine (with mode shortcuts). Stationary — <strong>no <code>movementPhases</code></strong>.</p>
+<p><strong>Completion:</strong> <code>isDone</code> when the step machine reaches <code>DONE</code>. <strong>Outputs:</strong>
+<code>{ smelted, collected }</code>. <strong>onAbort:</strong> close screen + release keys.</p>
+<p><strong>Notable:</strong> the three modes exist for the sustain loop — a furnace cooks server-side in a
+loaded chunk whether or not the bot waits, so <code>load</code> shifts ore+fuel in and returns
+immediately (the bot goes mining) and <code>collect</code> comes back to drain. Verify-convention on
+LOAD (input must leave the bag, else <code>SMELT_LOAD_BLOCKED</code> → ERROR) and COLLECT (re-read the
+output diff). Asymmetric GUI-lost handling: lost screen in OPEN/LOAD/WAIT → ERROR, in
+COLLECT → best-effort finish. <strong>Live-verified on a vanilla furnace only</strong> — GTCEu machine
+GUIs (macerator/EBF) are UNVERIFIED.</p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send mission_start '{"name": "smelt", "params": {"mode": "full", "input": "gtceu:raw_iron", "output": "minecraft:iron_ingot", "fuel": "minecraft:coal", "x": 102, "y": 64, "z": 200}}'
+</code></pre></div>
+<hr />
+<h3 id="craft">craft<a class="headerlink" href="#craft" title="Permanent link">&para;</a></h3>
+<p>Craft a recipe chain by <strong>manual grid placement</strong> (the Monifactory recipe-book API is
+dead — each chain step carries its grid layout and the server computes the result).
+Optionally places a crafting table for 3×3 steps.</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>required</th>
+<th>default</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>chain</code></td>
+<td>string</td>
+<td>no</td>
+<td><code>cfg.craft.defaultChain</code></td>
+<td>JSON <code>[{grid:(id\|null)[], times}]</code> (default → chest from oak logs)</td>
+</tr>
+<tr>
+<td><code>table</code></td>
+<td>bool</td>
+<td>no</td>
+<td><code>true</code></td>
+<td>place a table for the final step</td>
+</tr>
+<tr>
+<td><code>want</code></td>
+<td>string</td>
+<td>no</td>
+<td><code>null</code></td>
+<td>conditional restock: target item id — skip (no-op) if ≥<code>min</code> already carried or materials short</td>
+</tr>
+<tr>
+<td><code>min</code></td>
+<td>int</td>
+<td>no</td>
+<td><code>1</code></td>
+<td>want-mode threshold: craft only when carrying fewer than this many <code>want</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phases:</strong> one kernel <code>CRAFT</code> state driving an internal <code>CLOSE → PRE → PLACE_TABLE →
+OPEN_TABLE → FINAL → DONE</code> step machine. Stationary — <strong>no <code>movementPhases</code></strong>.</p>
+<p><strong>Completion:</strong> <code>isDone</code> when the step machine reaches <code>DONE</code>. <strong>Outputs:</strong>
+<code>{ crafted, tablePos }</code>. <strong>onAbort:</strong> clear grid (returns items) + close screen + release
+keys.</p>
+<p><strong>Notable:</strong> always enters via CLOSE (a prior aborted craft can leave a 3×3 table screen
+open, corrupting a 2×2 recipe). Place→wait-a-tick→take is split because <code>craft_out</code> fills
+the tick after placement. Placement and table-open are <strong>effect-verified</strong> (a "placed"
+interaction can aim into the ground). Reuses an existing adjacent table before consuming
+one. The <code>want</code>/<code>min</code> conditional-restock path is deliberately <strong>skip-safe</strong> (an
+unattended loop must never stall/ERROR on it) — no-ops to DONE when already stocked or
+materials short; a plain craft without <code>want</code> still fails loud on a bad recipe.</p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send mission_start '{"name": "craft", "params": {"want": "minecraft:chest", "min": 1}}'
+</code></pre></div>
+<hr />
+<h3 id="goto">goto<a class="headerlink" href="#goto" title="Permanent link">&para;</a></h3>
+<p>Walk to a fixed x/y/z, best-effort — the standalone form of <code>fetch</code>'s GOTO leg with
+nothing after it (a plan chains it as "walk to the furnace bank" / "return to base").</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>required</th>
+<th>default</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code></td>
+<td>int</td>
+<td>yes</td>
+<td>—</td>
+<td>destination X</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>int</td>
+<td>yes</td>
+<td>—</td>
+<td>destination Y</td>
+</tr>
+<tr>
+<td><code>z</code></td>
+<td>int</td>
+<td>yes</td>
+<td>—</td>
+<td>destination Z</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phases:</strong> <code>GOTO → IDLE</code>. <code>movementPhases: {GOTO}</code>.</p>
+<p><strong>Completion:</strong> <code>isDone</code> once <code>walkTo</code> resolves (arrive / timeout / blocked). <strong>Outputs:</strong>
+<code>{ arrived }</code> (true only on <code>GOTO_ARRIVED</code>; false on any give-up). <strong>onAbort:</strong> nav stop.</p>
+<p><strong>Notable:</strong> column (Y-free) approach, best-effort — a block ends the trip (no ore-style
+dig escalation). A missing target finishes the same tick (<code>GOTO_GAVE_UP</code>, <code>arrived:false</code>).</p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send mission_start '{"name": "goto", "params": {"x": 100, "y": 64, "z": 200}}'
+</code></pre></div>
+<hr />
+<h3 id="prospect">prospect<a class="headerlink" href="#prospect" title="Permanent link">&para;</a></h3>
+<p>Walk to the nearest un-mined cached vein of an ore group — the <code>goto</code> mission with a
+dynamically-resolved target. Makes the sustain loop's "shaft" dynamic: reads the HV
+prospector's vein cache and heads for the closest one.</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>required</th>
+<th>default</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ore</code></td>
+<td>string</td>
+<td>no</td>
+<td><code>cfg.sustain.oreKind</code></td>
+<td>vein kind to seek (a <code>PROSPECT_ORE_GROUPS</code> key)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phases:</strong> <code>GOTO → IDLE</code>. <code>movementPhases: {GOTO}</code>.</p>
+<p><strong>Completion:</strong> <code>isDone</code> the tick it arrives, times out, is blocked, or the cache is
+empty. <strong>Outputs:</strong> <code>{ found, arrived, target }</code>. <strong>onAbort:</strong> nav stop.</p>
+<p><strong>Notable:</strong> an empty cache → <code>PROSPECT_EMPTY</code> + finish (<code>found:false</code>), so a plan can
+branch (pause for a human to run the ext.js <code>prospect</code> scan) rather than stalling. Reads the
+world-scoped model off disk to pick the nearest non-depleted vein.</p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send mission_start '{"name": "prospect", "params": {"ore": "iron"}}'
+</code></pre></div>
+<hr />
+<h3 id="hunt">hunt<a class="headerlink" href="#hunt" title="Permanent link">&para;</a></h3>
+<p>Seek → chase → melee huntable mobs. Picks the nearest huntable mob by uuid, greedy-walks
+to its moving cell, and swings on cooldown when in reach.</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>required</th>
+<th>default</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>count</code></td>
+<td>int</td>
+<td>no</td>
+<td><code>0</code> (until none)</td>
+<td>stop after N kills (0/omit = until none)</td>
+</tr>
+<tr>
+<td><code>targets</code></td>
+<td>string</td>
+<td>no</td>
+<td><code>cfg.hunt.targets</code></td>
+<td>override huntable ids — JSON array <code>["minecraft:cow"]</code> or CSV</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phases:</strong> <code>SEEK → CHASE → STRIKE</code> (STRIKE → CHASE when the target moves out of reach,
+→ SEEK when killed/lost). <code>movementPhases: {CHASE}</code>.</p>
+<p><strong>Completion:</strong> <code>isDone</code> when <code>kills ≥ count</code> (count &gt; 0), or SEEK finds nothing after a
+grace window (<code>cfg.hunt.seekGraceTicks</code>) — never ERROR. <strong>Outputs:</strong> <code>{ kills }</code>.
+<strong>onAbort:</strong> greedy release + release keys + nav stop.</p>
+<p><strong>Notable:</strong> the mob feed is a render-thread snapshot (<code>world.mobs()</code>) bridged main→worker;
+STRIKE is a crosshair <code>attack(uuid)</code> aimed by <code>lookAt</code> (no live entity ref off-thread), and
+a kill is confirmed only by the target vanishing next tick. Best-effort sword auto-equip
+(fists work). No explicit LOOT phase — a kill-spot linger lets vanilla auto-pickup grab the
+drops. SEEK tolerates transient empty snapshots (publish cadence race) before declaring
+done.</p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send mission_start '{"name": "hunt", "params": {"count": 5, "targets": ["minecraft:cow"]}}'
+</code></pre></div>
+<hr />
+<h3 id="follow">follow<a class="headerlink" href="#follow" title="Permanent link">&para;</a></h3>
+<p>Trail a peer at a follow-gap so the bot walks WITH them rather than shoving into them. It
+uses the fleet peer sensor. <strong>Persistent</strong> — runs until halted.</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>required</th>
+<th>default</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>target</code></td>
+<td>string</td>
+<td>no</td>
+<td><code>null</code> (nearest)</td>
+<td>peer username to follow (e.g. <code>Steve</code>); omit = nearest player/bot</td>
+</tr>
+<tr>
+<td><code>gap</code></td>
+<td>int</td>
+<td>no</td>
+<td><code>cfg.follow.gap</code></td>
+<td>hold this many blocks back</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phases:</strong> single <code>FOLLOW</code> phase. <code>movementPhases: {FOLLOW}</code>.</p>
+<p><strong>Completion:</strong> <code>isDone</code> <strong>always false</strong> — only <code>halt</code>/<code>stop</code>/abort ends it. Losing the
+peer stands and re-acquires (by uuid, falling back to name/nearest), it does not end the
+mission. <strong>Outputs:</strong> <code>{ target }</code>. <strong>onAbort:</strong> greedy release + release keys + nav stop.</p>
+<p><strong>Notable:</strong> the target feed is the render-thread peer snapshot (<code>world.peers()</code>) bridged
+main→worker. Hysteresis (a comfort band around <code>gap</code>) prevents walk/stop stutter when the
+leader stands still. A custom <code>progress</code> policy exempts the stall watchdog whenever the bot
+is holding/waiting (a deliberate hold ≠ a wedge) and only watches feet while actively
+driving. <strong>Never ERRORs.</strong></p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send mission_start '{"name": "follow", "params": {"target": "Steve", "gap": 3}}'
+</code></pre></div>
+<hr />
+<h3 id="interact">interact<a class="headerlink" href="#interact" title="Permanent link">&para;</a></h3>
+<p>Right-click a held item onto a target block or item-frame entity — the mission-shaped
+counterpart of the storage drawer's look-aimed use and the <code>interact_place</code> ext primitive.</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>required</th>
+<th>default</th>
+<th>desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code></td>
+<td>int</td>
+<td>yes</td>
+<td>—</td>
+<td>target block X</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>int</td>
+<td>yes</td>
+<td>—</td>
+<td>target block Y</td>
+</tr>
+<tr>
+<td><code>z</code></td>
+<td>int</td>
+<td>yes</td>
+<td>—</td>
+<td>target block Z</td>
+</tr>
+<tr>
+<td><code>item</code></td>
+<td>string</td>
+<td>no</td>
+<td>keep held</td>
+<td>item id to hold + place</td>
+</tr>
+<tr>
+<td><code>face</code></td>
+<td>string</td>
+<td>no</td>
+<td>toward the bot</td>
+<td>face to right-click</td>
+</tr>
+<tr>
+<td><code>profile</code></td>
+<td>string</td>
+<td>no</td>
+<td>(resolved)</td>
+<td>target kind: <code>frame</code> | <code>display</code> | <code>generic</code></td>
+</tr>
+<tr>
+<td><code>verify</code></td>
+<td>string</td>
+<td>no</td>
+<td>(profile default)</td>
+<td>override verify: <code>consumed</code> | <code>none</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Phases:</strong> <code>GOTO → INTERACT → IDLE</code> (INTERACT is an internal <code>AIM → USE → VERIFY</code>).
+<code>movementPhases: {GOTO}</code>.</p>
+<p><strong>Completion:</strong> <code>isDone</code> on a successful VERIFY (<code>INTERACT_DONE</code>) or any give-up
+(<code>INTERACT_GAVE_UP</code>). <strong>Outputs:</strong> <code>{ placed }</code>. <strong>onAbort:</strong> nav stop.</p>
+<p><strong>Notable:</strong> the <code>frame</code> profile targets a vanilla item-frame <strong>entity</strong> (not a block):
+AIM resolves the nearest frame uuid via <code>world.frames()</code> (the <code>mc_frames</code> bridge) and USE
+calls <code>useOnEntity</code> — no frame found → fail loud (never a silent block click).
+<code>display</code>/<code>generic</code> go through <code>useOnBlock</code>. AIM/USE straddle a tick boundary (rotation
+must flush first); VERIFY waits <code>cfg.interact.graceTicks</code> (server-authoritative). GOTO has
+a blocked-but-in-reach fallback — if already within <code>cfg.interact.reach</code>, it interacts
+anyway.</p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send mission_start '{"name": "interact", "params": {"x": 100, "y": 65, "z": 200, "item": "minecraft:diamond", "profile": "frame"}}'
+</code></pre></div>
+<hr />
+<h2 id="mission-chaining">Mission chaining<a class="headerlink" href="#mission-chaining" title="Permanent link">&para;</a></h2>
+<p>The kernel consults exactly one <strong><code>MissionSequencer</code></strong> (<code>src/shared/kernel/sequencer.ts</code>) when a
+mission completes (<code>isDone → true</code>). The default <code>IDLE_SEQUENCER</code> collapses to IDLE; the
+<strong>orchestrator</strong> (<code>src/bot/orchestrator/</code>, an always-on capability wired in
+<code>worker-bundle.ts</code>) installs its own sequencer to run <strong>plans</strong> — ordered lists of mission
+steps. It drives <code>kernel.startMission</code>/<code>abortMission</code> for everything, preserving the
+single-active-mission invariant (it is not itself a mission).</p>
+<p>A plan step names a mission plus optional params, guards, drive mode and control flow
+(loop, retry, branch); the complete step shape is in
+<a href="../EXTENDING/#writing-a-plan-orchestrator">EXTENDING.md § Writing a plan</a>. Each step runs
+autonomously (<code>mode: "auto"</code>) or waits for an operator command
+(<code>proceed</code>/<code>run</code>/<code>step</code>/<code>select</code>), gated on the step's <code>guards</code> (e.g.
+<code>inventoryHasRoom(0.9)</code>). A typo'd mission name parks the plan in <code>failed</code>.</p>
+<p><strong>Outputs feed the next step's params.</strong> A step's <code>params</code> may be a static object OR a
+<code>ParamBinding</code> — <code>(prev) =&gt; params</code>, where <code>prev</code> is the just-completed mission's
+<code>outputs(ctx)</code> (captured before teardown). This is how <code>mine</code>'s <code>{ mined, origin }</code> or
+<code>prospect</code>'s <code>{ target }</code> can bind into the following step.</p>
+<p>Registered plans (built in <code>worker-bundle.ts</code>): <code>gather-and-mine</code> (<code>chop</code> → <code>mine</code>),
+<code>sustain-mine-smelt</code>, and the dynamic <code>sustain-cycle</code> (mine → return → collect → load →
+craft → store → prospect, looping via <code>next: () =&gt; 0</code>). Drive plans with:</p>
+<div class="highlight"><pre><span></span><code>./gerda ctl send plan_start '{"name": "gather-and-mine"}'
+./gerda ctl send run          # flip to auto, drain to completion
+./gerda ctl send plan_status  # cursor + blocked reason + active mission
+./gerda ctl send plans        # the registered plan names
+</code></pre></div>
+<p><code>plan_status</code> replies with <code>result.data</code> = <code>{plan, cursor, status, blockedReason,
+currentStep, activeMission, phase}</code>, and logs the same fields as <code>ORCH_STATUS</code>.</p>
+<p>See <a href="../EXTENDING/"><code>docs/EXTENDING.md</code></a> for authoring plans and the guard/<code>ParamBinding</code>
+API.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>
